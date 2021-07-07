@@ -36,14 +36,10 @@ public class MainActivity extends AppCompatActivity {
 
                     case R.id.chat:
                         transaction.replace(R.id.framelayout, chatFragment).commitAllowingStateLoss();
-
                         break;
-
                     case R.id.alarm:
                             transaction.replace(R.id.framelayout, alarmFragment).commitAllowingStateLoss();
-
                         break;
-
                     case R.id.mypage:
                         transaction.replace(R.id.framelayout, mypageFragment).commitAllowingStateLoss();
                         break;
