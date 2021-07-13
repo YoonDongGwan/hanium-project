@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center"
+    android:background="#ffffff"
     android:orientation="vertical"
     tools:context=".LoginActivity">
     <ImageView
@@ -74,7 +75,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/signup_btn"
+        android:id="@+id/sign_up"
         android:text="회원가입"
         android:textColor="#ff6565"
         android:textStyle="bold"
@@ -85,7 +86,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="아이디/비밀번호 찾기"
+        android:text="비밀번호 찾기"
+        android:id="@+id/find"
         android:textColor="#ff6565"
         android:textStyle="bold"
         android:textSize="15sp"

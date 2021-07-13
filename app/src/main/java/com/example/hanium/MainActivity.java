@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     FragmentManager fragmentManager = getSupportFragmentManager();
     homeFragment homeFragment = new homeFragment();
     chatFragment chatFragment = new chatFragment();
-    alarmFragment alarmFragment = new alarmFragment();
+    logFragment alarmFragment = new logFragment();
     mypageFragment mypageFragment = new mypageFragment();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
