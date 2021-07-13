@@ -25,7 +25,7 @@ public class logFragment extends Fragment {
         adapter.addFragment(new LogThirdFragment());
         viewPager.setAdapter(adapter);
         TabLayout tabLayout = v.findViewById(R.id.tablayout);
-        String[] tabLabel = {"부름 완료","부림 중","부림 완료"};
+        String[] tabLabel = {"부름내역","부림중","부림완료"};
         new TabLayoutMediator(tabLayout, viewPager, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {

@@ -29,17 +29,17 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="부름 완료" />
+            android:text="부름내역" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="부림 중" />
+            android:text="부림중" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="부림 완료" />
+            android:text="부림완료" />
 
     </com.google.android.material.tabs.TabLayout>
 
