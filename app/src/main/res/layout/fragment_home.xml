@@ -1,23 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 <LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintLeft_toLeftOf="parent"
-    >
-    <ImageView
-        android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_baseline_location_on_24"
-        ></ImageView>
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="부름부름"
+            android:textSize="30sp"
+            android:textStyle="italic"/>
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_border"
+            android:backgroundTint="#33808080"
+            android:layout_marginLeft="20dp"
+            android:hint=" 검색"
+            android:textSize="30sp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#ff6565"
+        android:layout_marginTop="10dp">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="140dp"
+            android:src="@drawable/shoppingbag"
+            android:layout_marginLeft="20dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="부름부름 7월 업데이트!"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="새로워진 부름부름"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="심부름! 이제 더 쉽게 찾아보세요"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/homeRecyclerView"/>
+
+
 
 </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
