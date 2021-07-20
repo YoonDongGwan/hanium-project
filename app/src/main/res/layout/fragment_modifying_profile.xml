@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="프로필 수정하기"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:paddingLeft="100dp"
+            android:paddingRight="100dp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="30dp">
+
+        <ImageView
+            android:layout_width="105dp"
+            android:layout_height="105dp"
+            android:src="@drawable/shoppingbag"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/border_button"
+            android:backgroundTint="#55808080"
+            android:text="사진찾기"
+            android:textColor="#ff0000"
+            android:textStyle="bold"
+            android:textSize="15sp"/>
+
+    </LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/underline"/>
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:text="닉네임(8자 이내)"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+    <EditText
+        android:layout_width="330dp"
+        android:layout_height="50dp"
+        android:background="@drawable/edittext_border"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:hint="  너굴맨"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:text="휴대폰 번호(-없이 숫자만 입력)"
+        android:layout_marginTop="10dp"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+    <EditText
+        android:layout_width="330dp"
+        android:layout_height="50dp"
+        android:background="@drawable/edittext_border"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:hint="  01012345678"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:text="현재 비밀번호"
+        android:layout_marginTop="40dp"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+    <EditText
+        android:layout_width="330dp"
+        android:layout_height="50dp"
+        android:background="@drawable/edittext_border"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:hint="  비밀번호"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="* "
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#ff0000"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="현재 비밀번호가 일치해야 프로필 수정을 하실 수 있습니다."
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+    </LinearLayout>
+    <Button
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:background="#ff6565"
+        android:text="작성 완료"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+</LinearLayout>
