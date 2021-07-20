@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     FragmentManager fragmentManager = getSupportFragmentManager();
     homeFragment homeFragment = new homeFragment();
     chatFragment chatFragment = new chatFragment();
-    logFragment alarmFragment = new logFragment();
+    logFragment logFragment = new logFragment();
     mypageFragment mypageFragment = new mypageFragment();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.chat:
                         transaction.replace(R.id.framelayout, chatFragment).commitAllowingStateLoss();
                         break;
-                    case R.id.alarm:
-                            transaction.replace(R.id.framelayout, alarmFragment).commitAllowingStateLoss();
+                    case R.id.log:
+                            transaction.replace(R.id.framelayout, logFragment).commitAllowingStateLoss();
                         break;
                     case R.id.mypage:
                         transaction.replace(R.id.framelayout, mypageFragment).commitAllowingStateLoss();
