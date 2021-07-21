@@ -18,7 +18,7 @@
         app:layout_constraintRight_toRightOf="parent"
         ></ImageView>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="50dp"
@@ -30,9 +30,10 @@
         android:text="이메일"
         android:textSize="14dp"
         android:textStyle="bold"
+        android:layout_marginLeft="70dp"
         ></TextView>
     <EditText
-        android:layout_width="280dp"
+        android:layout_width="match_parent"
         android:layout_height="30dp"
         android:hint="이메일"
         android:textSize="14dp"
@@ -40,6 +41,8 @@
         android:id="@+id/email"
         android:layout_marginTop="10dp"
         android:paddingLeft="5dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="70dp"
         ></EditText>
         <TextView
             android:layout_width="wrap_content"
@@ -49,9 +52,10 @@
             android:textSize="14dp"
             android:textStyle="bold"
             android:layout_marginTop="10dp"
+            android:layout_marginLeft="70dp"
             ></TextView>
     <EditText
-        android:layout_width="280dp"
+        android:layout_width="match_parent"
         android:layout_height="30dp"
         android:hint="비밀번호를 입력해 주세요."
         android:textSize="14dp"
@@ -59,6 +63,8 @@
         android:id="@+id/password"
         android:layout_marginTop="10dp"
         android:paddingLeft="5dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="70dp"
         ></EditText>
     </LinearLayout>
     <Button

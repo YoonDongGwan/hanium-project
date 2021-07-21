@@ -60,11 +60,13 @@
             android:layout_gravity="center_horizontal"
             >
     <LinearLayout
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:background="@drawable/underline"
         >
         <ImageButton
@@ -76,7 +78,7 @@
             ></ImageButton>
     </LinearLayout>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="center"
@@ -88,15 +90,17 @@
         android:text="심부름 제목"
         android:textColor="@color/black"
         android:layout_marginTop="10dp"
-        android:paddingLeft="10dp"
+        android:layout_marginLeft="50dp"
         ></TextView>
     <EditText
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
         android:layout_height="30dp"
         android:background="@drawable/edittext_border"
         android:textColor="@color/black"
         android:textSize="14sp"
         android:paddingLeft="5dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
         android:hint="40자 이내"
         android:layout_marginTop="10dp"
         ></EditText>
@@ -108,7 +112,7 @@
         android:textSize="14sp"
         android:textStyle="bold"
         android:layout_marginTop="10dp"
-        android:paddingLeft="10dp"
+        android:layout_marginLeft="50dp"
         ></TextView>
         <LinearLayout
             android:layout_width="match_parent"
@@ -119,6 +123,7 @@
             <EditText
                 android:layout_width="50dp"
                 android:layout_height="30dp"
+                android:layout_marginLeft="50dp"
                 android:background="@drawable/edittext_border"
                 ></EditText>
             <TextView
@@ -171,6 +176,7 @@
                 android:layout_width="50dp"
                 android:layout_height="30dp"
                 android:background="@drawable/edittext_border"
+                android:layout_marginLeft="50dp"
                 ></EditText>
             <TextView
                 android:layout_width="wrap_content"
@@ -205,7 +211,7 @@
             android:textSize="14sp"
             android:textStyle="bold"
             android:layout_marginTop="10dp"
-            android:paddingLeft="10dp"
+            android:layout_marginLeft="50dp"
             ></TextView>
         <LinearLayout
             android:layout_width="match_parent"
@@ -217,6 +223,7 @@
                 android:layout_width="50dp"
                 android:layout_height="30dp"
                 android:background="@drawable/edittext_border"
+                android:layout_marginLeft="50dp"
                 ></EditText>
             <TextView
                 android:layout_width="wrap_content"
@@ -249,7 +256,7 @@
         android:text="예상소요시간을 모를 때 00시간 00분으로 입력해주세요."
         android:textSize="12sp"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="50dp"
         ></TextView>
         <TextView
             android:layout_width="wrap_content"
@@ -259,7 +266,7 @@
             android:textSize="14sp"
             android:textStyle="bold"
             android:layout_marginTop="10dp"
-            android:paddingLeft="10dp"
+            android:layout_marginLeft="50dp"
             ></TextView>
             <EditText
                 android:layout_width="match_parent"
@@ -270,6 +277,8 @@
                 android:layout_marginTop="10dp"
                 android:textColorHint="#5e5e5e"
                 android:background="@drawable/edittext_border"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
                 ></EditText>
         <TextView
             android:layout_width="wrap_content"
@@ -279,7 +288,7 @@
             android:textSize="14sp"
             android:textStyle="bold"
             android:layout_marginTop="10dp"
-            android:paddingLeft="10dp"
+            android:layout_marginLeft="50dp"
             ></TextView>
         <EditText
             android:layout_width="match_parent"
@@ -289,6 +298,8 @@
             android:textSize="14sp"
             android:paddingLeft="5dp"
             android:layout_marginTop="10dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
             android:textColorHint="#5e5e5e"
             android:background="@drawable/edittext_border"
             ></EditText>

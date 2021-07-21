@@ -17,7 +17,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     List<post> List = null;
     public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView title,destination,deadline,time,point;
+        TextView title,destination,deadline,time;
         ViewHolder(View itemview){
             super(itemview);
             title = itemview.findViewById(R.id.title);
