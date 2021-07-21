@@ -88,7 +88,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="보유포인트"
+                    android:text="보유포인트"
                     android:textSize="25sp"
                     android:textStyle="bold"/>
                 <TextView
@@ -103,6 +103,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/exchangingbutton"
                 android:layout_gravity="center"
                 android:layout_marginLeft="50dp"
                 android:padding="10dp"

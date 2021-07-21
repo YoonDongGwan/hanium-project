@@ -54,11 +54,29 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:src="@drawable/underline"/>
-    
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
+        android:text="이름"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+    <EditText
+        android:layout_width="330dp"
+        android:layout_height="50dp"
+        android:background="@drawable/edittext_border"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:hint="  김떙땡"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="10dp"
         android:text="닉네임(8자 이내)"
         android:textSize="20sp"
         android:textStyle="bold"/>
@@ -96,7 +114,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
         android:text="현재 비밀번호"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:textSize="20sp"
         android:textStyle="bold"/>
     <EditText
