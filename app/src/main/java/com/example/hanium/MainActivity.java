@@ -56,4 +56,9 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.setCustomAnimations(R.anim.enter_from_right,R.anim.exit_to_left);
         fragmentTransaction.replace(R.id.framelayout,modifyingProfileFragment).commitAllowingStateLoss();
     }
+    public void onClickBackBtn(){
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.enter_from_left,R.anim.exit_to_right);
+        fragmentTransaction.replace(R.id.framelayout,mypageFragment).commitAllowingStateLoss();
     }
+}
