@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     chatFragment chatFragment = new chatFragment();
     logFragment logFragment = new logFragment();
     mypageFragment mypageFragment = new mypageFragment();
+    ModifyingProfileFragment modifyingProfileFragment = new ModifyingProfileFragment();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,5 +50,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+    public void onClickModifyBtn(){
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.enter_from_right,R.anim.exit_to_left);
+        fragmentTransaction.replace(R.id.framelayout,modifyingProfileFragment).commitAllowingStateLoss();
     }
     }

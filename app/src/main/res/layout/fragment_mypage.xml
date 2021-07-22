@@ -256,6 +256,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="70dp"
+        android:id="@+id/modify_profile_btn"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="25dp"
