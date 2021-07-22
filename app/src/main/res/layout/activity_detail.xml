@@ -86,6 +86,7 @@
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
+                        android:id="@+id/client_info_btn"
                         android:text="부리미 정보"
                         android:background="@drawable/login_btn_bg"
                         android:textColor="@color/white"

@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 case R.id.find:
-                    intent = new Intent(getApplicationContext(), findAcitivity.class);
+                    intent = new Intent(getApplicationContext(), findPopup.class);
                     startActivity(intent);
                     break;
             }

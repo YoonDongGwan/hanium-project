@@ -19,7 +19,8 @@
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".SignUpActivity"></activity>
         <activity android:name=".PostDetailActivity"></activity>
-        <activity android:name=".findAcitivity" android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"></activity>
+        <activity android:name=".findPopup" android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"></activity>
+        <activity android:name=".ClientInfoPopUp" android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"></activity>
     </application>
 
 </manifest>
