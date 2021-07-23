@@ -1,13 +1,12 @@
 package com.example.hanium;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +16,7 @@ import java.util.List;
 
 public class homeFragment extends Fragment {
     List<post> post_list = new ArrayList<post>();
+    Button add_btn;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -31,6 +31,14 @@ public class homeFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         RecyclerAdapter adapter = new RecyclerAdapter(post_list);
         recyclerView.setAdapter(adapter);
+        add_btn = v.findViewById(R.id.home_add_post_btn);
+        add_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), AddPostActivity.class);
+                startActivity(intent);
+            }
+        });
         return v;
     }
 }

@@ -13,11 +13,11 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import java.util.ArrayList;
 
-public class ImageViewPagerAdapter extends PagerAdapter {
+public class ClickImageViewPagerAdpater extends PagerAdapter {
     private Context context;
     private ArrayList<Integer> images;
 
-    public ImageViewPagerAdapter(Context context, ArrayList<Integer> images){
+    public ClickImageViewPagerAdpater(Context context, ArrayList<Integer> images){
         this.context = context;
         this.images = images;
     }
@@ -36,16 +36,9 @@ public class ImageViewPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.viewpager_item,container,false);
-        ImageView imageView = view.findViewById(R.id.postdetail_imageview);
+        View view = inflater.inflate(R.layout.onclick_image_item,container,false);
+        ImageView imageView = view.findViewById(R.id.onclick_imageview);
         imageView.setImageResource(images.get(position));
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(container.getContext(), OnClickImageActivity.class);
-                ContextCompat.startActivity(container.getContext(),intent,null);
-            }
-        });
         container.addView(view);
         return view;
     }
