@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     logFragment logFragment = new logFragment();
     mypageFragment mypageFragment = new mypageFragment();
     ModifyingProfileFragment modifyingProfileFragment = new ModifyingProfileFragment();
+    ExchaningPointFragment exchaningPointFragment=new ExchaningPointFragment();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,5 +61,10 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.enter_from_left,R.anim.exit_to_right);
         fragmentTransaction.replace(R.id.framelayout,mypageFragment).commitAllowingStateLoss();
+    }
+    public void onClickExchangeBtn(){
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.enter_from_right,R.anim.exit_to_left);
+        fragmentTransaction.replace(R.id.framelayout,exchaningPointFragment).commitAllowingStateLoss();
     }
 }
