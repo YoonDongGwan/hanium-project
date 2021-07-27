@@ -52,29 +52,41 @@
         android:background="#FFFFFF"
         >
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="center_horizontal"
             >
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:paddingBottom="10dp"
         android:background="@drawable/underline"
         >
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/addpost_recyclerview"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+        ></androidx.recyclerview.widget.RecyclerView>
         <ImageButton
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:id="@+id/add_picture"
+            android:id="@+id/add_image"
+            android:layout_marginTop="3dp"
+            android:layout_marginLeft="3dp"
             android:src="@drawable/ic_baseline_photo_camera_24"
             android:background="#e0e0e0"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
             ></ImageButton>
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -301,13 +313,11 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
+            android:layout_marginBottom="70dp"
             android:textColorHint="#5e5e5e"
             android:background="@drawable/edittext_border"
             ></EditText>
             </LinearLayout>
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="70dp"></View>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
