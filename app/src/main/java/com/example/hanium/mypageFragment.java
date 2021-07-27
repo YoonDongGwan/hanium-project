@@ -1,6 +1,7 @@
 package com.example.hanium;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.fragment.app.Fragment;
 public class mypageFragment extends Fragment {
     Button modify_profile_btn;
     Button exchange_point_btn;
+    Button change_password_btn;
     MainActivity mainActivity;
 
     @Override
@@ -34,6 +36,8 @@ public class mypageFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_mypage, container, false);
         modify_profile_btn = v.findViewById(R.id.modify_profile_btn);
         exchange_point_btn = v.findViewById(R.id.exchange_point_btn);
+        change_password_btn=v.findViewById(R.id.change_password_btn);
+
         modify_profile_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,6 +48,12 @@ public class mypageFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mainActivity.onClickExchangeBtn();
+            }
+        });
+        change_password_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().startActivity(new Intent(getActivity(), ChangePWPopup.class));
             }
         });
         return v;
