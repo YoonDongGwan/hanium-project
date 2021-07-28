@@ -2,10 +2,14 @@ package com.example.hanium;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +21,7 @@ import java.util.List;
 public class homeFragment extends Fragment {
     List<post> post_list = new ArrayList<post>();
     Button add_btn;
+    EditText search;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -32,11 +37,26 @@ public class homeFragment extends Fragment {
         RecyclerAdapter adapter = new RecyclerAdapter(post_list);
         recyclerView.setAdapter(adapter);
         add_btn = v.findViewById(R.id.home_add_post_btn);
+        search = v.findViewById(R.id.home_search_edittext);
         add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), AddPostActivity.class);
                 startActivity(intent);
+            }
+        });
+        search.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((event.getAction() != KeyEvent.ACTION_UP) && keyCode == KeyEvent.KEYCODE_ENTER){
+                    Intent intent = new Intent(getActivity(), SearchActivity.class);
+                    intent.putExtra("key",search.getText().toString());
+                    startActivity(intent);
+                    search.clearFocus();
+                    search.setText(null);
+                    return true;
+                }
+                return false;
             }
         });
         return v;
