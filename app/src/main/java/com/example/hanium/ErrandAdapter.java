@@ -1,5 +1,6 @@
 package com.example.hanium;
 
+
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,36 +14,38 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
-    ArrayList<post> List;
+public class ErrandAdapter extends RecyclerView.Adapter<ErrandAdapter.ViewHolder> {
+    ArrayList<ErrandPost> List;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView title,destination,deadline,time;
+        TextView title,destination,deadline,time,state;
         ViewHolder(View itemview){
             super(itemview);
             title = itemview.findViewById(R.id.title);
             destination = itemview.findViewById(R.id.destination);
             deadline = itemview.findViewById(R.id.deadline);
             time = itemview.findViewById(R.id.time);
+            state=itemview.findViewById(R.id.state);
         }
     }
-    public RecyclerAdapter(ArrayList<post> list){
+    public ErrandAdapter(ArrayList<ErrandPost> list){
         List = list;
     }
     @NonNull
     @Override
-    public RecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item,parent,false);
-        RecyclerAdapter.ViewHolder viewHolder = new RecyclerAdapter.ViewHolder(view);
+    public ErrandAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.errand_item,parent,false);
+        ErrandAdapter.ViewHolder viewHolder = new ErrandAdapter.ViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ErrandAdapter.ViewHolder holder, int position) {
         holder.title.setText(List.get(position).getTitle());
         holder.destination.setText(List.get(position).getDestination());
         holder.deadline.setText(List.get(position).getDeadline());
         holder.time.setText(List.get(position).getTime());
+        holder.state.setText(List.get(position).getState());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,3 +61,5 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
 }
+
+

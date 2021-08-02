@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LogThirdFragment extends Fragment {
-    List<post> post_list = new ArrayList<post>();
+    ArrayList<post> post_list = new ArrayList<post>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
