@@ -11,17 +11,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class homeFragment extends Fragment {
-    List<post> post_list = new ArrayList<post>();
+    ArrayList<post> post_list = new ArrayList<post>();
     Button add_btn;
     EditText search;
+    RecyclerView recyclerView;
+    RecyclerAdapter adapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -32,10 +36,13 @@ public class homeFragment extends Fragment {
         post_list.add(new post("해열제 진통제 사다주실분","위치 - 부천 상동","마감시간 - 21.07.07 20:00","예상소요시간 - 1시간"));
         post_list.add(new post("강아지 산책해주세요","위치 - 부천 상동","마감시간 - 21.07.07 20:00","예상소요시간 - 1시간"));
         post_list.add(new post("강아지 산책해주세요","위치 - 부천 상동","마감시간 - 21.07.07 20:00","예상소요시간 - 1시간"));
-        RecyclerView recyclerView = v.findViewById(R.id.homeRecyclerView);
+
+        recyclerView = v.findViewById(R.id.homeRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        RecyclerAdapter adapter = new RecyclerAdapter(post_list);
+        adapter = new RecyclerAdapter(post_list);
         recyclerView.setAdapter(adapter);
+        recyclerView.addOnScrollListener(onScrollListener);
+
         add_btn = v.findViewById(R.id.home_add_post_btn);
         search = v.findViewById(R.id.home_search_edittext);
         add_btn.setOnClickListener(new View.OnClickListener() {
@@ -61,4 +68,19 @@ public class homeFragment extends Fragment {
         });
         return v;
     }
+    RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            LinearLayoutManager layoutManager = LinearLayoutManager.class.cast(recyclerView.getLayoutManager());
+            int totalItemCount = layoutManager.getItemCount();
+            int lastVisible = layoutManager.findLastCompletelyVisibleItemPosition();
+            if(lastVisible>=totalItemCount-1){
+                post_list.add(new post("test1","test","test","test"));
+                post_list.add(new post("test2","test","test","test"));
+                post_list.add(new post("test3","test","test","test"));
+                adapter.notifyItemRangeInserted(lastVisible+1,3);
+            }
+        }
+    };
 }

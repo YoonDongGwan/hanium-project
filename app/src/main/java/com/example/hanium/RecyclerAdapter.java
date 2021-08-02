@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
+    ArrayList<post> List;
 
-    List<post> List = null;
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView title,destination,deadline,time;
         ViewHolder(View itemview){
@@ -26,7 +26,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             time = itemview.findViewById(R.id.time);
         }
     }
-    public RecyclerAdapter(List<post> list){
+    public RecyclerAdapter(ArrayList<post> list){
         List = list;
     }
     @NonNull
@@ -56,4 +56,5 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public int getItemCount() {
         return List.size();
     }
+
 }
