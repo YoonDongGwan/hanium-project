@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     mypageFragment mypageFragment = new mypageFragment();
     ModifyingProfileFragment modifyingProfileFragment = new ModifyingProfileFragment();
     ExchaningPointFragment exchaningPointFragment=new ExchaningPointFragment();
+    MyErrandFragment myErrandFragment=new MyErrandFragment();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,5 +67,10 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.enter_from_right,R.anim.exit_to_left);
         fragmentTransaction.replace(R.id.framelayout,exchaningPointFragment).commitAllowingStateLoss();
+    }
+    public void onClickErrandBtn(){
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.enter_from_right,R.anim.exit_to_left);
+        fragmentTransaction.replace(R.id.framelayout,myErrandFragment).commitAllowingStateLoss();
     }
 }
