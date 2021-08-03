@@ -7,7 +7,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Hanium">
+        android:theme="@style/Theme.Hanium"
+        android:usesCleartextTraffic="true"
+        >
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,4 +27,5 @@
         <activity android:name=".findPopup" android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"></activity>
         <activity android:name=".ClientInfoPopUp" android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"></activity>
     </application>
+    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>
