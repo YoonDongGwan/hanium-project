@@ -35,7 +35,7 @@
             android:hint="이메일을 입력해주세요"
             android:textSize="14dp"
             android:background="@drawable/edittext_border"
-            android:id="@+id/email"
+            android:id="@+id/find_email"
             android:layout_marginTop="10dp"
             android:paddingLeft="10dp"
             ></EditText>
@@ -54,7 +54,7 @@
             android:hint="-없이 숫자만 입력"
             android:textSize="14dp"
             android:background="@drawable/edittext_border"
-            android:id="@+id/password"
+            android:id="@+id/find_phone_number"
             android:layout_marginTop="10dp"
             android:paddingLeft="10dp"
             ></EditText>
@@ -63,6 +63,7 @@
             android:layout_height="40dp"
             android:background="@drawable/edittext_border"
             android:backgroundTint="#ff6565"
+            android:id="@+id/find_btn"
             android:text="발급하기"
             android:textColor="@color/white"
             android:textStyle="bold"
