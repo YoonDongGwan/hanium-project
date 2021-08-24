@@ -68,80 +68,25 @@
                 android:textColor="@color/black"
                 />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
-                android:orientation="horizontal">
+
 
                 <EditText
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
                     android:layout_weight="4"
+                    android:id="@+id/signup_email"
                     android:background="@drawable/edittext_border"
-                    android:hint="전송을 눌러 인증번호를 받으세요"
+                    android:hint="이메일"
                     android:inputType="text"
                     android:textSize="14sp"
                     android:paddingLeft="5dp"
                     />
 
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="20dp"
-                    android:background="@drawable/login_btn_bg"
-                    android:text="전송"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/white"
-                    app:backgroundTint="#ff6565" />
-            </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="25dp"
-                android:text="인증번호"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="4"
-                    android:textSize="14sp"
-                    android:background="@drawable/edittext_border"
-                    android:hint="전송된 인증번호 입력"
-                    android:inputType="number"
-                    android:paddingLeft="5dp"
-                    />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="20dp"
-                    android:background="@drawable/login_btn_bg"
-                    android:text="확인"
-                    android:textSize="12sp"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    app:backgroundTint="#ff6565" />
-            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -157,6 +102,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
+                android:id="@+id/signup_name"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
@@ -181,6 +127,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
+                android:id="@+id/signup_nickname"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
@@ -206,6 +153,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_marginTop="10dp"
+                android:id="@+id/signup_password"
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
                 android:background="@drawable/edittext_border"
@@ -229,6 +177,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
+                android:id="@+id/signup_confirm_pwd"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
@@ -252,6 +201,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
+                android:id="@+id/signup_phonenumber"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
@@ -265,6 +215,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:id="@+id/signup_btn"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="25dp"
