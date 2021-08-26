@@ -38,25 +38,25 @@ public class mypageFragment extends Fragment {
         exchange_point_btn = v.findViewById(R.id.exchange_point_btn);
         my_errand_btn=v.findViewById(R.id.my_errand_btn);
 
-        modify_profile_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mainActivity.onClickModifyBtn();
-            }
-        });
-        exchange_point_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mainActivity.onClickExchangeBtn();
-            }
-        });
-        my_errand_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mainActivity.onClickErrandBtn();
-            }
-        });
+        modify_profile_btn.setOnClickListener(onClickListener);
+        exchange_point_btn.setOnClickListener(onClickListener);
+        my_errand_btn.setOnClickListener(onClickListener);
         return v;
     }
-
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.modify_profile_btn:
+                    mainActivity.onClickModifyBtn();
+                    break;
+                case R.id.exchange_point_btn:
+                    mainActivity.onClickExchangeBtn();
+                    break;
+                case R.id.my_errand_btn:
+                    mainActivity.onClickErrandBtn();
+                    break;
+            }
+        }
+    };
 }

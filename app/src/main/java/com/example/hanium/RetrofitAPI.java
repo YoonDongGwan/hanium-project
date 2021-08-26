@@ -1,8 +1,12 @@
 package com.example.hanium;
 
+import java.util.ArrayList;
+
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -14,4 +18,7 @@ public interface RetrofitAPI {
     @FormUrlEncoded
     @POST("auth/temp")
     public Call<LoginResult> find(@Field("email") String email, @Field("phoneNumber") String phoneNumber);
+
+    @GET("main")
+    public Call<HomePostsResult> getposts(@Header("Cookie")String cookie);
 }

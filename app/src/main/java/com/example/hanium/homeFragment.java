@@ -20,12 +20,20 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class homeFragment extends Fragment {
     ArrayList<post> post_list = new ArrayList<post>();
     Button add_btn;
     EditText search;
     RecyclerView recyclerView;
     RecyclerAdapter adapter;
+    Retrofit retrofit;
+    RetrofitAPI retrofitAPI;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -36,6 +44,29 @@ public class homeFragment extends Fragment {
         post_list.add(new post("해열제 진통제 사다주실분","위치 - 부천 상동","마감시간 - 21.07.07 20:00","예상소요시간 - 1시간"));
         post_list.add(new post("강아지 산책해주세요","위치 - 부천 상동","마감시간 - 21.07.07 20:00","예상소요시간 - 1시간"));
         post_list.add(new post("강아지 산책해주세요","위치 - 부천 상동","마감시간 - 21.07.07 20:00","예상소요시간 - 1시간"));
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl("http://15.164.145.19:3001/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        retrofitAPI = retrofit.create(RetrofitAPI.class);
+        retrofitAPI.getposts("connect.sid=s%3A7Jxy9YGA9TFHS4SCLp_Cc8JewFc0yEwY.KTj%2FzucOBzr5kxT7D4l4zLPi8i6Y8yDO2eOhfYgvXWY").enqueue(new Callback<HomePostsResult>() {
+            @Override
+            public void onResponse(Call<HomePostsResult> call, Response<HomePostsResult> response) {
+                if (response.isSuccessful()){
+                    Log.d("test1",response.body().getSuccess());
+                    Log.d("test1",response.body().getMessage());
+                    Log.d("test1",response.body().getPosts().get(0).getTitle());
+                }else{
+                    Log.d("test",response.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<HomePostsResult> call, Throwable t) {
+                    Log.d("test","실패");
+            }
+        });
 
         recyclerView = v.findViewById(R.id.homeRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

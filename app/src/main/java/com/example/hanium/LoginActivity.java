@@ -10,6 +10,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.net.HttpCookie;
+
+import okhttp3.Cookie;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,10 +38,15 @@ public class LoginActivity extends AppCompatActivity {
         find.setOnClickListener(onClickListener);
         login_email = findViewById(R.id.login_email);
         login_password = findViewById(R.id.login_password);
+        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        clientBuilder.addInterceptor(loggingInterceptor);
 
         retrofit = new Retrofit.Builder()
                 .baseUrl("http://15.164.145.19:3001/")
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(clientBuilder.build())
                 .build();
         retrofitLoginAPI = retrofit.create(RetrofitAPI.class);
 
@@ -48,23 +58,21 @@ public class LoginActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch(v.getId()){
                 case R.id.login_btn:
-                    retrofitLoginAPI.login(login_email.getText().toString(),login_password.getText().toString()).enqueue(new Callback<LoginResult>() {
+                    retrofitLoginAPI.login(/*login_email.getText().toString(),login_password.getText().toString()*/"cjfwnd123zz@gmail.com","1234asdf@").enqueue(new Callback<LoginResult>() {
                         @Override
                         public void onResponse(Call<LoginResult> call, Response<LoginResult> response) {
                             if (response.isSuccessful()){
-                                LoginResult result = response.body();
                                 Log.d("test","success");
-
                                 intent = new Intent(getApplicationContext(),MainActivity.class);
                                 startActivity(intent);
                             }else{
-                            Log.d("test",response.errorBody().toString());
+                            Log.d("test",response.toString());
                             }
                         }
 
                         @Override
                         public void onFailure(Call<LoginResult> call, Throwable t) {
-                            Log.d("test","failure"+t.getMessage());
+                            Log.d("test","failure");
                         }
                     });
                     break;
