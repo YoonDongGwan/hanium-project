@@ -44,7 +44,7 @@ public class homeFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         retrofitAPI = retrofit.create(RetrofitAPI.class);
-        retrofitAPI.getposts("connect.sid=s%3AWV-zCXyDyB40vvfJGxmrftsNl5XmD02u.qXFMQhowZI86TgrtpLnLAi3fnzgh0GvrYc%2FtKi%2BXDKI").enqueue(new Callback<HomePostsResult>() {
+        retrofitAPI.getPosts("connect.sid=s%3AWV-zCXyDyB40vvfJGxmrftsNl5XmD02u.qXFMQhowZI86TgrtpLnLAi3fnzgh0GvrYc%2FtKi%2BXDKI").enqueue(new Callback<HomePostsResult>() {
             @Override
             public void onResponse(Call<HomePostsResult> call, Response<HomePostsResult> response) {
                 if (response.isSuccessful()){

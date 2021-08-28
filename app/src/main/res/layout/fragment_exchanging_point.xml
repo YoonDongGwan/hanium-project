@@ -20,8 +20,8 @@
 
         <Button
             android:id="@+id/exchanging_point_back"
-            android:layout_width="16dp"
-            android:layout_height="20dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="3dp"
             android:background="@drawable/ic_baseline_arrow_back_24"
@@ -64,7 +64,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="152,000P"
+                android:id="@+id/currentCash"
+                android:text="0P"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 android:textColor="#ff6565"/>

@@ -64,9 +64,7 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<ConfirmResult> call, Response<ConfirmResult> response) {
                         if (response.isSuccessful()){
-                            ConfirmResult result = response.body();
                             Log.d("test","success");
-
                         }else{
 
                             Log.d("test1",response.message());
