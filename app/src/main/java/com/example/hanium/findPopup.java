@@ -13,6 +13,8 @@ import android.widget.EditText;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.HashMap;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,30 +42,29 @@ public class findPopup extends Activity {
         find_email = findViewById(R.id.find_email);
         find_phone_number = findViewById(R.id.find_phone_number);
         find_btn = findViewById(R.id.find_btn);
-        find_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                retrofitFindAPI.find(find_email.getText().toString(),find_phone_number.getText().toString()).enqueue(new Callback<LoginResult>() {
-                    @Override
-                    public void onResponse(Call<LoginResult> call, Response<LoginResult> response) {
-                        if (response.isSuccessful()){
-                            LoginResult result = response.body();
-                            Log.d("test","success");
-
-                            finish();
-                        }else{
-
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<LoginResult> call, Throwable t) {
-                        Log.d("test","failure"+t.getMessage());
-                    }
-                });
-            }
-        });
-
+        find_btn.setOnClickListener(onClickListener);
     }
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            retrofitFindAPI.find(find_email.getText().toString(),find_phone_number.getText().toString()).enqueue(new Callback<HashMap<String, String>>() {
+                @Override
+                public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
+                    if (response.isSuccessful()){
+                        Log.d("test","success");
+
+                        finish();
+                    }else{
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<HashMap<String, String>> call, Throwable t) {
+                    Log.d("test","failure"+t.getMessage());
+                }
+            });
+        }
+    };
 }
 

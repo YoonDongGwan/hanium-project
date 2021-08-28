@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.net.HttpCookie;
+import java.util.HashMap;
 
 import okhttp3.Cookie;
 import okhttp3.OkHttpClient;
@@ -58,9 +59,9 @@ public class LoginActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch(v.getId()){
                 case R.id.login_btn:
-                    retrofitLoginAPI.login(/*login_email.getText().toString(),login_password.getText().toString()*/"cjfwnd123zz@gmail.com","1234asdf@").enqueue(new Callback<LoginResult>() {
+                    retrofitLoginAPI.login(/*login_email.getText().toString(),login_password.getText().toString()*/"cjfwnd123zz@gmail.com","1234asdf@").enqueue(new Callback<HashMap<String, String>>() {
                         @Override
-                        public void onResponse(Call<LoginResult> call, Response<LoginResult> response) {
+                        public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
                             if (response.isSuccessful()){
                                 Log.d("test","success");
                                 intent = new Intent(getApplicationContext(),MainActivity.class);
@@ -71,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onFailure(Call<LoginResult> call, Throwable t) {
+                        public void onFailure(Call<HashMap<String, String>> call, Throwable t) {
                             Log.d("test","failure");
                         }
                     });
