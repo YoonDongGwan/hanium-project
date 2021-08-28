@@ -73,15 +73,15 @@ public class mypageFragment extends Fragment {
         my_errand_btn.setOnClickListener(onClickListener);
         return v;
     }
-    Callback<MypageUserResult> callback = new Callback<MypageUserResult>() {
+    Callback<ServerResult> callback = new Callback<ServerResult>() {
         @Override
-        public void onResponse(Call<MypageUserResult> call, Response<MypageUserResult> response) {
+        public void onResponse(Call<ServerResult> call, Response<ServerResult> response) {
             if(response.isSuccessful()){
                 Thread thread = new Thread(){
                     @Override
                     public void run() {
                         try {
-                            URL url = new URL(response.body().getMypage().get("profileImageURI"));
+                            URL url = new URL(response.body().getData().get("profileImageURI"));
                             HttpsURLConnection connection = (HttpsURLConnection)url.openConnection();
                             connection.setDoInput(true);
                             connection.connect();
@@ -101,17 +101,17 @@ public class mypageFragment extends Fragment {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                nickname.setText(response.body().getMypage().get("nickname"));
-                simpleAddress.setText(response.body().getMypage().get("simpleAddress"));
-                mannerPoint.setText(response.body().getMypage().get("mannerPoint"));
-                cash.setText(response.body().getMypage().get("cash"));
+                nickname.setText(response.body().getData().get("nickname"));
+                simpleAddress.setText(response.body().getData().get("simpleAddress"));
+                mannerPoint.setText(response.body().getData().get("mannerPoint"));
+                cash.setText(response.body().getData().get("cash"));
             }else{
                 Log.d("test",response.toString());
             }
         }
 
         @Override
-        public void onFailure(Call<MypageUserResult> call, Throwable t) {
+        public void onFailure(Call<ServerResult> call, Throwable t) {
             Log.d("test","통신 실패");
         }
     };

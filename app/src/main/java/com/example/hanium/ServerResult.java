@@ -4,13 +4,13 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.HashMap;
 
-public class MypageUserResult {
+public class ServerResult {
     @SerializedName("success")
     public String success;
     @SerializedName("message")
     public String message;
-    @SerializedName("mypage")
-    public HashMap<String, String> mypage;
+    @SerializedName("data")
+    public HashMap<String, String> data;
 
     public String getSuccess() {
         return success;
@@ -28,16 +28,16 @@ public class MypageUserResult {
         this.message = message;
     }
 
-    public HashMap<String, String> getMypage() {
-        return mypage;
+    public HashMap<String, String> getData() {
+        return data;
     }
 
-    public void setMypage(HashMap<String, String> mypage) {
-        this.mypage = mypage;
+    public void setData(HashMap<String, String> data) {
+        this.data = data;
     }
-    public MypageUserResult(String success, String message, HashMap<String, String> mypage){
+    public ServerResult(String success, String message, HashMap<String, String> data){
         this.success = success;
         this.message = message;
-        this.mypage = mypage;
+        this.data = data;
     }
 }

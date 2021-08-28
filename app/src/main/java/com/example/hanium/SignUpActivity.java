@@ -11,6 +11,8 @@ import android.widget.EditText;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.HashMap;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -60,9 +62,9 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 retrofitFindAPI.signup(signup_email.getText().toString(),signup_nickname.getText().toString(),
                         signup_name.getText().toString(),signup_password.getText().toString(),
-                        signup_confirm_pwd.getText().toString(),signup_phonenumber.getText().toString()).enqueue(new Callback<ConfirmResult>() {
+                        signup_confirm_pwd.getText().toString(),signup_phonenumber.getText().toString()).enqueue(new Callback<HashMap<String, String>>() {
                     @Override
-                    public void onResponse(Call<ConfirmResult> call, Response<ConfirmResult> response) {
+                    public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
                         if (response.isSuccessful()){
                             Log.d("test","success");
                         }else{
@@ -72,7 +74,7 @@ public class SignUpActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<ConfirmResult> call, Throwable t) {
+                    public void onFailure(Call<HashMap<String, String>> call, Throwable t) {
                         Log.d("test","failure"+t.getMessage());
                     }
                 });

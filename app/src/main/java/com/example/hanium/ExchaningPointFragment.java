@@ -60,7 +60,7 @@ public class ExchaningPointFragment extends Fragment {
         @Override
         public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
             if (response.isSuccessful()){
-                currentCash.setText(response.body().get("cash"));
+                currentCash.setText(response.body().get("data"));
             }else{
             }
         }

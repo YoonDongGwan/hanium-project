@@ -9,8 +9,8 @@ public class HomePostsResult {
     public String success;
     @SerializedName("message")
     public String message;
-    @SerializedName("posts")
-    public ArrayList<posts> posts;
+    @SerializedName("data")
+    public ArrayList<posts> data;
 
     public String getSuccess() {
         return success;
@@ -28,16 +28,16 @@ public class HomePostsResult {
         this.message = message;
     }
 
-    public ArrayList<posts> getPosts() {
-        return posts;
+    public ArrayList<posts> getData() {
+        return data;
     }
 
-    public void setPosts(ArrayList<posts> posts) {
-        this.posts = posts;
+    public void setData(ArrayList<posts> data) {
+        this.data = data;
     }
-    public HomePostsResult(String success, String message, ArrayList<posts> posts){
+    public HomePostsResult(String success, String message, ArrayList<posts> data){
         this.success = success;
         this.message = message;
-        this.posts = posts;
+        this.data = data;
     }
 }

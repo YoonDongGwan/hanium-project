@@ -55,9 +55,9 @@ public class ModifyingProfileFragment extends Fragment {
             mainActivity.onClickBackBtn();
         }
     };
-    Callback<MypageUserResult> callback = new Callback<MypageUserResult>() {
+    Callback<ServerResult> callback = new Callback<ServerResult>() {
         @Override
-        public void onResponse(Call<MypageUserResult> call, Response<MypageUserResult> response) {
+        public void onResponse(Call<ServerResult> call, Response<ServerResult> response) {
             if (response.isSuccessful()){
                 Log.d("test2",response.body().getSuccess());
             }else{
@@ -66,7 +66,7 @@ public class ModifyingProfileFragment extends Fragment {
         }
 
         @Override
-        public void onFailure(Call<MypageUserResult> call, Throwable t) {
+        public void onFailure(Call<ServerResult> call, Throwable t) {
 
         }
     };

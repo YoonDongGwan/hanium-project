@@ -48,8 +48,8 @@ public class homeFragment extends Fragment {
             @Override
             public void onResponse(Call<HomePostsResult> call, Response<HomePostsResult> response) {
                 if (response.isSuccessful()){
-                    for (int i=0; i<response.body().getPosts().size(); i++) {
-                        post_list.add(response.body().getPosts().get(i));
+                    for (int i=0; i<response.body().getData().size(); i++) {
+                        post_list.add(response.body().getData().get(i));
                     }
                     recyclerView = v.findViewById(R.id.homeRecyclerView);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
