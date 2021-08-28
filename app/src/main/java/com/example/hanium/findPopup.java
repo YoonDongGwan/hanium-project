@@ -52,7 +52,7 @@ public class findPopup extends Activity {
 
                             finish();
                         }else{
-                            Log.d("test",response.errorBody().toString());
+
                         }
                     }
 

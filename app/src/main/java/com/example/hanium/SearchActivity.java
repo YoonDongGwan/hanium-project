@@ -112,8 +112,8 @@ public class SearchActivity extends AppCompatActivity {
                 }
             }
         }
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        RecyclerAdapter adapter = new RecyclerAdapter(result_list);
-        recyclerView.setAdapter(adapter);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+//        RecyclerAdapter adapter = new RecyclerAdapter(result_list);
+//        recyclerView.setAdapter(adapter);
     }
 }
