@@ -10,11 +10,12 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
-    ArrayList<post> List;
+    ArrayList<posts> List;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView title,destination,deadline,time;
@@ -26,7 +27,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             time = itemview.findViewById(R.id.time);
         }
     }
-    public RecyclerAdapter(ArrayList<post> list){
+    public RecyclerAdapter(ArrayList<posts> list){
         List = list;
     }
     @NonNull
@@ -40,9 +41,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull RecyclerAdapter.ViewHolder holder, int position) {
         holder.title.setText(List.get(position).getTitle());
-        holder.destination.setText(List.get(position).getDestination());
-        holder.deadline.setText(List.get(position).getDeadline());
-        holder.time.setText(List.get(position).getTime());
+//        holder.destination.setText(List.get(position).getDestination());
+        holder.deadline.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(List.get(position).getDeadline()));
+        holder.time.setText(List.get(position).getRequiredTime());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

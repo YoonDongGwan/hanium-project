@@ -27,10 +27,10 @@ public class LogFirstFragment extends Fragment {
         post_list.add(new post("강아지 산책해주세요","위치 - 부천 상동","마감시간 - 21.07.07 20:00","예상소요시간 - 1시간"));
         post_list.add(new post("강아지 산책해주세요","위치 - 부천 상동","마감시간 - 21.07.07 20:00","예상소요시간 - 1시간"));
         post_list.add(new post("강아지 산책해주세요","위치 - 부천 상동","마감시간 - 21.07.07 20:00","예상소요시간 - 1시간"));
-        RecyclerView recyclerView = v.findViewById(R.id.logfirstRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        RecyclerAdapter adapter = new RecyclerAdapter(post_list);
-        recyclerView.setAdapter(adapter);
+//        RecyclerView recyclerView = v.findViewById(R.id.logfirstRecyclerView);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+//        RecyclerAdapter adapter = new RecyclerAdapter(post_list);
+//        recyclerView.setAdapter(adapter);
         return v;
     }
 }

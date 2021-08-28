@@ -99,45 +99,45 @@ public class AddPostActivity extends AppCompatActivity {
         map.put("price", body_price);
         map.put("deadline", body_deadline);
         map.put("requiredTime", body_requiredTime);
-
-        File file = new File(filepath);
-        InputStream inputStream = null;
-        try {
-            inputStream = getContext().getContentResolver().openInputStream(photoUri);
-        }catch(IOException e) {
-            e.printStackTrace();
-        }
-        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream);
-        RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray());
-        MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("postImg", file.getName() ,requestBody);
-
+        
+//        File file = new File(filepath);
+//        InputStream inputStream = null;
+//        try {
+//            inputStream = getContext().getContentResolver().openInputStream(photoUri);
+//        }catch(IOException e) {
+//            e.printStackTrace();
+//        }
+//        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//        bitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream);
+//        RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray());
+//        MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("postImg", file.getName() ,requestBody);
+//
         post_btn=findViewById(R.id.post_btn);
-        post_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                retrofitFindAPI.post("connect.sid=s%3Afp_-yzxmNdx9ZpFQqwr-7nPNPv-7zINy.7HNCmO4w9SAoCI142L%2FT3Rt3qDT9lQD9%2FyVltsFxQlg",title.getText().toString(),description.getText().toString(),
-                        Integer.parseInt(price.getText().toString()),deadline,requiredTime).enqueue(new Callback<ConfirmResult>() {
-                    @Override
-                    public void onResponse(Call<ConfirmResult> call, Response<ConfirmResult> response) {
-                        if (response.isSuccessful()){
-                            ConfirmResult result = response.body();
-                            Log.d("test","success");
-
-                        }else{
-
-                            Log.d("test1",response.message());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ConfirmResult> call, Throwable t) {
-                        Log.d("test","failure"+t.getMessage());
-                    }
-                });
-            }
-        });
+//        post_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                retrofitFindAPI.post("connect.sid=s%3Afp_-yzxmNdx9ZpFQqwr-7nPNPv-7zINy.7HNCmO4w9SAoCI142L%2FT3Rt3qDT9lQD9%2FyVltsFxQlg",title.getText().toString(),description.getText().toString(),
+//                        Integer.parseInt(price.getText().toString()),deadline,requiredTime).enqueue(new Callback<ConfirmResult>() {
+//                    @Override
+//                    public void onResponse(Call<ConfirmResult> call, Response<ConfirmResult> response) {
+//                        if (response.isSuccessful()){
+//                            ConfirmResult result = response.body();
+//                            Log.d("test","success");
+//
+//                        }else{
+//
+//                            Log.d("test1",response.message());
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<ConfirmResult> call, Throwable t) {
+//                        Log.d("test","failure"+t.getMessage());
+//                    }
+//                });
+//            }
+//        });
     }
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
