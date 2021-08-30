@@ -21,35 +21,37 @@ import retrofit2.http.PartMap;
 public interface RetrofitAPI {
     @FormUrlEncoded
     @POST("auth/signin")
-    public Call<HashMap<String, String>> login(@Field("email") String email, @Field("password") String password);
+    Call<HashMap<String, String>> login(@Field("email") String email, @Field("password") String password);
 
     @FormUrlEncoded
     @POST("auth/temp")
-    public Call<HashMap<String, String>> find(@Field("email") String email, @Field("phoneNumber") String phoneNumber);
-
-    @GET("main")
-    public Call<HomePostsResult> getPosts(@Header("Cookie")String cookie);
-
-    @GET("user")
-    public Call<ServerResult> getUser(@Header("Cookie")String cookie);
-
-    @GET("user/edit")
-    public Call<ServerResult> getModify(@Header("Cookie")String cookie);
-
-    @GET("user/point")
-    public Call<HashMap<String, String>> getPoint(@Header("Cookie") String cookie);
-
-    @GET("user/logout")
-    Call<HashMap<String, String>> logout(@Header("Cookie") String cookie);
+    Call<HashMap<String, String>> find(@Field("email") String email, @Field("phoneNumber") String phoneNumber);
 
     @FormUrlEncoded
     @POST("auth/signup")
-    public Call<HashMap<String, String>> signup(@Field("email") String email, @Field("nickname") String nickname,
+    Call<HashMap<String, String>> signup(@Field("email") String email, @Field("nickname") String nickname,
                                        @Field("name") String name, @Field("password") String password,
                                        @Field("confirm_pwd") String confirm_pwd, @Field("phoneNumber") String phoneNumber);
-    
+
     @Multipart
     @POST("post")
     Call<HashMap<String, String>> post(@Header("cookie") String cookie,@Part MultipartBody.Part Image, @PartMap HashMap<String, RequestBody> data);
 
+    @GET("main")
+    Call<HomePostsResult> getPosts(@Header("Cookie")String cookie);
+
+    @GET("user")
+    Call<ServerResult> getUser(@Header("Cookie")String cookie);
+
+    @GET("user/edit")
+    Call<ServerResult> getModify(@Header("Cookie")String cookie);
+
+    @GET("user/point")
+    Call<HashMap<String, String>> getPoint(@Header("Cookie") String cookie);
+
+    @GET("user/logout")
+    Call<HashMap<String, String>> logout(@Header("Cookie") String cookie);
+
+    @GET("address")
+    Call<ServerResult> getAddress(@Header("Cookie") String cookie);
 }

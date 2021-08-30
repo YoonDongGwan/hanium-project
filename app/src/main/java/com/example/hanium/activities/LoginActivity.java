@@ -2,7 +2,9 @@ package com.example.hanium.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,10 +15,12 @@ import android.widget.TextView;
 import com.example.hanium.R;
 import com.example.hanium.server.RetrofitAPI;
 
+import java.io.IOException;
 import java.util.HashMap;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
+import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,15 +44,22 @@ public class LoginActivity extends AppCompatActivity {
         find.setOnClickListener(onClickListener);
         login_email = findViewById(R.id.login_email);
         login_password = findViewById(R.id.login_password);
-        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        clientBuilder.addInterceptor(loggingInterceptor);
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request request = chain.request().newBuilder().addHeader("parameter", "value").build();
+                return chain.proceed(request);
+            }
+        });
+
 
         retrofit = new Retrofit.Builder()
                 .baseUrl("http://15.164.145.19:3001/")
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(clientBuilder.build())
+                .client(httpClient.build())
                 .build();
         retrofitLoginAPI = retrofit.create(RetrofitAPI.class);
 
@@ -65,6 +76,11 @@ public class LoginActivity extends AppCompatActivity {
                         public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
                             if (response.isSuccessful()){
                                 Log.d("test","success");
+                                Log.d("test",response.headers().get("Set-Cookie"));
+                                SharedPreferences sharedPreferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("Cookie",response.headers().get("Set-Cookie"));
+                                editor.commit();
                                 intent = new Intent(getApplicationContext(),MainActivity.class);
                                 startActivity(intent);
                             }else{

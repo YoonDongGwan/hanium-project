@@ -1,6 +1,7 @@
 package com.example.hanium.fragments.mypage;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,12 +51,14 @@ public class ExchaningPointFragment extends Fragment {
         View v=inflater.inflate(R.layout.fragment_exchanging_point,container,false);
         back_btn=v.findViewById(R.id.exchanging_point_back);
         currentCash = v.findViewById(R.id.currentCash);
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        String cookie = sharedPreferences.getString("Cookie","");
         retrofit = new Retrofit.Builder()
                 .baseUrl("http://15.164.145.19:3001/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         retrofitAPI = retrofit.create(RetrofitAPI.class);
-        retrofitAPI.getPoint("connect.sid=s%3AWV-zCXyDyB40vvfJGxmrftsNl5XmD02u.qXFMQhowZI86TgrtpLnLAi3fnzgh0GvrYc%2FtKi%2BXDKI").enqueue(callback);
+        retrofitAPI.getPoint(cookie).enqueue(callback);
 
         back_btn.setOnClickListener(onClickListener);
         return v;
