@@ -10,22 +10,22 @@
         android:theme="@style/Theme.Hanium"
         android:usesCleartextTraffic="true"
         >
-        <activity android:name=".LoginActivity">
+        <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".SignUpActivity"></activity>
-        <activity android:name=".AddPostActivity"></activity>
-        <activity android:name=".PostDetailActivity"></activity>
-        <activity android:name=".OnClickImageActivity"></activity>
-        <activity android:name=".SearchActivity"></activity>
-        <activity android:name=".ChangePWPopup" android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"></activity>
-        <activity android:name=".findPopup" android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"></activity>
-        <activity android:name=".ClientInfoPopUp" android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"></activity>
+        <activity android:name=".activities.MainActivity"></activity>
+        <activity android:name=".activities.SignUpActivity"></activity>
+        <activity android:name=".activities.AddPostActivity"></activity>
+        <activity android:name=".activities.PostDetailActivity"></activity>
+        <activity android:name=".activities.OnClickImageActivity"></activity>
+        <activity android:name=".activities.SearchActivity"></activity>
+        <activity android:name=".activities.ChangePWPopup" android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"></activity>
+        <activity android:name=".activities.findPopup" android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"></activity>
+        <activity android:name=".activities.ClientInfoPopUp" android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"></activity>
     </application>
     <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>
