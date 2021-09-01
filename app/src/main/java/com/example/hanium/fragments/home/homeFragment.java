@@ -37,7 +37,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class homeFragment extends Fragment {
-    ArrayList<posts> post_list = new ArrayList<posts>();
+    ArrayList<posts> post_list = new ArrayList<>();
+    ArrayList<Integer> idList = new ArrayList<>();
     Button add_btn;
     EditText search;
     RecyclerView recyclerView;
@@ -64,10 +65,11 @@ public class homeFragment extends Fragment {
                 if (response.isSuccessful()){
                     for (int i=0; i<response.body().getData().size(); i++) {
                         post_list.add(response.body().getData().get(i));
+                        idList.add(response.body().getData().get(i).getId());
                     }
                     recyclerView = v.findViewById(R.id.homeRecyclerView);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                    adapter = new RecyclerAdapter(post_list);
+                    adapter = new RecyclerAdapter(post_list, idList);
                     recyclerView.setAdapter(adapter);
                 }else{
                     Log.d("test",response.toString());

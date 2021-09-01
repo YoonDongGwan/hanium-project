@@ -2,6 +2,7 @@ package com.example.hanium.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,16 +19,16 @@ import java.util.ArrayList;
 
 public class ImageViewPagerAdapter extends PagerAdapter {
     private Context context;
-    private ArrayList<Integer> images;
+    private ArrayList<Bitmap> bitmaps;
 
-    public ImageViewPagerAdapter(Context context, ArrayList<Integer> images){
+    public ImageViewPagerAdapter(Context context, ArrayList<Bitmap> bitmaps){
         this.context = context;
-        this.images = images;
+        this.bitmaps = bitmaps;
     }
 
     @Override
     public int getCount() {
-        return images.size();
+        return bitmaps.size();
     }
 
     @Override
@@ -41,7 +42,7 @@ public class ImageViewPagerAdapter extends PagerAdapter {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.viewpager_item,container,false);
         ImageView imageView = view.findViewById(R.id.postdetail_imageview);
-        imageView.setImageResource(images.get(position));
+        imageView.setImageBitmap(bitmaps.get(position));
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

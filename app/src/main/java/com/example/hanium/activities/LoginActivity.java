@@ -45,21 +45,9 @@ public class LoginActivity extends AppCompatActivity {
         login_email = findViewById(R.id.login_email);
         login_password = findViewById(R.id.login_password);
 
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-
-        httpClient.addInterceptor(new Interceptor() {
-            @Override
-            public okhttp3.Response intercept(Chain chain) throws IOException {
-                Request request = chain.request().newBuilder().addHeader("parameter", "value").build();
-                return chain.proceed(request);
-            }
-        });
-
-
         retrofit = new Retrofit.Builder()
                 .baseUrl("http://15.164.145.19:3001/")
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(httpClient.build())
                 .build();
         retrofitLoginAPI = retrofit.create(RetrofitAPI.class);
 
@@ -83,6 +71,7 @@ public class LoginActivity extends AppCompatActivity {
                                 editor.commit();
                                 intent = new Intent(getApplicationContext(),MainActivity.class);
                                 startActivity(intent);
+                                finish();
                             }else{
                             Log.d("test",response.toString());
                             }

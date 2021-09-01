@@ -76,7 +76,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="너굴맨 님의 부림입니다."
+                        android:id="@+id/detail_nickname"
                         android:textSize="15sp"
                         android:textStyle="bold"
                         android:textColor="@color/black"
@@ -84,6 +84,17 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         ></TextView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" 님의 부림입니다."
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/detail_nickname"
+                    ></TextView>
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
@@ -101,6 +112,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/detail_title"
                 android:textSize="17sp"
                 android:textStyle="bold"
                 android:text="강아지 산책해주세요"
@@ -116,6 +128,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/detail_createAt"
                 android:text="작성시간-21.07.04 04:52"
                 android:textColor="@color/black"
                 android:textSize="12sp"
@@ -126,6 +139,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/detail_price"
                 android:textSize="16sp"
                 android:textColor="#ff6565"
                 android:text="15,000P"
@@ -185,6 +199,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:id="@+id/detail_sellingDistrict"
                         android:text="위치"
                         android:textSize="12sp"
                         android:textColor="@color/black"
@@ -194,6 +209,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:id="@+id/detail_deadline"
                         android:text="마감 시간"
                         android:textSize="12sp"
                         android:textColor="@color/black"
@@ -203,6 +219,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:id="@+id/detail_requiredTime"
                         android:text="예상소요시간"
                         android:textSize="12sp"
                         android:textColor="@color/black"
@@ -224,12 +241,16 @@
                 android:textStyle="bold"
                 android:layout_marginTop="10dp"
                 ></TextView>
-                <EditText
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
+                    android:paddingTop="5dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:id="@+id/detail_description"
                     android:layout_marginTop="10dp"
                     android:background="#f4f4f4"
-                    ></EditText>
+                    ></TextView>
 
             </LinearLayout>
             <TextView
@@ -272,6 +293,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/detail_price2"
             android:text="15,000P"
             android:textSize="20sp"
             android:textStyle="bold"

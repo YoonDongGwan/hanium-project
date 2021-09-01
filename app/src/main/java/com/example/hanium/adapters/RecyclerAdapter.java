@@ -1,6 +1,7 @@
 package com.example.hanium.adapters;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +19,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
-    ArrayList<posts> List;
-
+    ArrayList<posts> itemList;
+    ArrayList<Integer> idList;
     public class ViewHolder extends RecyclerView.ViewHolder{
+        int id;
         TextView title,destination,deadline,time;
         ViewHolder(View itemview){
             super(itemview);
@@ -30,8 +32,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             time = itemview.findViewById(R.id.time);
         }
     }
-    public RecyclerAdapter(ArrayList<posts> list){
-        List = list;
+    public RecyclerAdapter(ArrayList<posts> itemList, ArrayList<Integer> idList){
+        this.itemList = itemList;
+        this.idList = idList;
     }
     @NonNull
     @Override
@@ -43,22 +46,25 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerAdapter.ViewHolder holder, int position) {
-        holder.title.setText(List.get(position).getTitle());
+        holder.id = idList.get(position);
+        holder.title.setText(itemList.get(position).getTitle());
 //        holder.destination.setText(List.get(position).getDestination());
-        holder.deadline.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(List.get(position).getDeadline()));
-        holder.time.setText(List.get(position).getRequiredTime());
+        holder.deadline.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(itemList.get(position).getDeadline()));
+        holder.time.setText(itemList.get(position).getRequiredTime());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(holder.itemView.getContext(), PostDetailActivity.class);
+                intent.putExtra("id",String.valueOf(holder.id));
                 ContextCompat.startActivity(holder.itemView.getContext(),intent,null);
+                Log.d("test",holder.id+"");
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return List.size();
+        return itemList.size();
     }
 
 }

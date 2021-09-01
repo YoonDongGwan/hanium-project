@@ -1,6 +1,8 @@
 package com.example.hanium.server;
 
 
+import com.google.gson.JsonObject;
+
 import java.util.HashMap;
 
 import okhttp3.MultipartBody;
@@ -17,6 +19,8 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface RetrofitAPI {
     @FormUrlEncoded
@@ -54,4 +58,7 @@ public interface RetrofitAPI {
 
     @GET("address")
     Call<ServerResult> getAddress(@Header("Cookie") String cookie);
+
+    @GET("post/detail/{id}")
+    Call<PostDetailResult> getDetail(@Path("id") String id, @Header("Cookie") String cookie);
 }
