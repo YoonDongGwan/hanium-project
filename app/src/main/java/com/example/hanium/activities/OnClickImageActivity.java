@@ -1,5 +1,8 @@
 package com.example.hanium.activities;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -12,16 +15,20 @@ import com.example.hanium.adapters.ClickImageViewPagerAdpater;
 import java.util.ArrayList;
 
 public class OnClickImageActivity extends AppCompatActivity {
-    ArrayList<Integer> images = new ArrayList<>();
+    ArrayList<Bitmap> bitmaps = new ArrayList<>();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onclickimage);
-        images.add(R.drawable.image1);
-        images.add(R.drawable.image2);
-        images.add(R.drawable.image3);
+        Intent intent = getIntent();
+        int size = intent.getIntExtra("size",0);
+        for (int i = 0; i<size; i++){
+            byte[] byteArray = getIntent().getByteArrayExtra("bitmap"+i);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+            bitmaps.add(bitmap);
+        }
         ViewPager viewPager = findViewById(R.id.imagebook_viewpager);
-        ClickImageViewPagerAdpater adpater = new ClickImageViewPagerAdpater(getApplicationContext(),images);
+        ClickImageViewPagerAdpater adpater = new ClickImageViewPagerAdpater(getApplicationContext(),bitmaps);
         viewPager.setAdapter(adpater);
     }
 }

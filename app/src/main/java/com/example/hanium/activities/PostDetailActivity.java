@@ -89,8 +89,8 @@ public class PostDetailActivity extends AppCompatActivity {
                 title.setText(postinfo.getTitle());
                 Log.d("test",postinfo.getCreatedAt().toString());
                 createAt.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(postinfo.getCreatedAt()));
-                price.setText(String.valueOf(postinfo.getPrice()));
-                price2.setText(String.valueOf(postinfo.getPrice()));
+                price.setText(postinfo.getPrice()+"P");
+                price2.setText(postinfo.getPrice()+"P");
                 sellingDistrict.setText(postinfo.getSellingDistrict());
                 deadline.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(postinfo.getDeadline()));
                 requiredTime.setText(postinfo.getRequiredTime());

@@ -15,6 +15,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import com.example.hanium.activities.OnClickImageActivity;
 import com.example.hanium.R;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 public class ImageViewPagerAdapter extends PagerAdapter {
@@ -47,6 +48,14 @@ public class ImageViewPagerAdapter extends PagerAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(container.getContext(), OnClickImageActivity.class);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                for (int i = 0; i < bitmaps.size(); i++){
+                    Bitmap bitmap = bitmaps.get(i);
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    byte[] byteArray = stream.toByteArray();
+                    intent.putExtra("bitmap"+i,byteArray);
+                }
+                intent.putExtra("size",bitmaps.size());
                 ContextCompat.startActivity(container.getContext(),intent,null);
             }
         });
