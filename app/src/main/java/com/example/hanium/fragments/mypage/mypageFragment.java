@@ -74,13 +74,7 @@ public class mypageFragment extends Fragment {
         mannerPoint = v.findViewById(R.id.mannerPoint);
         cash = v.findViewById(R.id.cash);
 
-        location_change_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), SetLocationActivity.class);
-                startActivity(intent);
-            }
-        });
+
 
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
         String cookie = sharedPreferences.getString("Cookie","");
@@ -94,6 +88,7 @@ public class mypageFragment extends Fragment {
         modify_profile_btn.setOnClickListener(onClickListener);
         exchange_point_btn.setOnClickListener(onClickListener);
         my_errand_btn.setOnClickListener(onClickListener);
+        location_change_btn.setOnClickListener(onClickListener);
         return v;
     }
     Callback<ServerResult> callback = new Callback<ServerResult>() {
@@ -151,6 +146,10 @@ public class mypageFragment extends Fragment {
                     break;
                 case R.id.my_errand_btn:
                     mainActivity.onClickErrandBtn();
+                    break;
+                case R.id.location_change_btn:
+                    Intent intent = new Intent(getContext(), SetLocationActivity.class);
+                    startActivity(intent);
                     break;
             }
         }

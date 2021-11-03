@@ -154,20 +154,43 @@
                     android:textStyle="bold"/>
 
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+                <EditText
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/charge_bank"
+                    android:background="@drawable/edittext_border"
+                    android:hint="  은행"
+                    android:textStyle="bold"/>
+                <EditText
+                    android:layout_width="240dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/charge_account"
+                    android:background="@drawable/edittext_border"
+                    android:hint="  계좌번호"
+                    android:textStyle="bold"/>
+            </LinearLayout>
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp">
                     <EditText
                         android:layout_width="270dp"
                         android:layout_height="50dp"
+                        android:id="@+id/charge_amount"
                         android:background="@drawable/edittext_border"
                         android:hint=" 충전하실 금액을 입력해주세요."
                         android:textStyle="bold"/>
                     <Button
                         android:layout_width="65dp"
                         android:layout_height="wrap_content"
+                        android:id="@+id/charge_btn"
                         android:layout_marginLeft="10dp"
                         android:background="@drawable/border_button"
                         android:backgroundTint="#55808080"
@@ -251,12 +274,14 @@
                 <EditText
                     android:layout_width="100dp"
                     android:layout_height="50dp"
+                    android:id="@+id/refund_bank"
                     android:background="@drawable/edittext_border"
                     android:hint="  은행"
                     android:textStyle="bold"/>
                 <EditText
                     android:layout_width="240dp"
                     android:layout_height="50dp"
+                    android:id="@+id/refund_account"
                     android:background="@drawable/edittext_border"
                     android:hint="  계좌번호"
                     android:textStyle="bold"/>
@@ -265,16 +290,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
                 <EditText
                     android:layout_width="270dp"
                     android:layout_height="50dp"
+                    android:id="@+id/refund_amount"
                     android:background="@drawable/edittext_border"
-                    android:hint=" 충전하실 금액을 입력해주세요."
+                    android:hint=" 환급하실 금액을 입력해주세요."
                     android:textStyle="bold"/>
                 <Button
                     android:layout_width="65dp"
                     android:layout_height="wrap_content"
+                    android:id="@+id/refund_btn"
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/border_button"
                     android:backgroundTint="#55808080"

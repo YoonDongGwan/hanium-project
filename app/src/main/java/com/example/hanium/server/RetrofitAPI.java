@@ -32,6 +32,16 @@ public interface RetrofitAPI {
     Call<HashMap<String, String>> find(@Field("email") String email, @Field("phoneNumber") String phoneNumber);
 
     @FormUrlEncoded
+    @POST("user/point/:type")
+    Call<HashMap<String, String>> refund(@Header("cookie") String cookie, @Field("refundAmount") int refundAmount, @Field("bankName") String bankName,
+                                         @Field("account") String account);
+
+    @FormUrlEncoded
+    @POST("user/point/:type")
+    Call<HashMap<String, String>> charge(@Header("cookie") String cookie,@Field("chargeAmount") int chargeAmount, @Field("bankName") String bankName,
+                                         @Field("account") String account);
+
+    @FormUrlEncoded
     @POST("auth/signup")
     Call<HashMap<String, String>> signup(@Field("email") String email, @Field("nickname") String nickname,
                                        @Field("name") String name, @Field("password") String password,
