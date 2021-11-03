@@ -1,6 +1,9 @@
 package com.example.hanium.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -10,23 +13,39 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hanium.R;
-import com.example.hanium.classes.sellerInfo;
+import com.example.hanium.adapters.RecyclerAdapter;
+import com.example.hanium.server.HomePostsResult;
+import com.example.hanium.server.RetrofitAPI;
+import com.example.hanium.classes.posts;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class SearchActivity extends AppCompatActivity {
     EditText search;
     TextView latest_order, price_order, closing_order;
-    Button back, cancel;
+    Button back, cancel, filter;
     RecyclerView recyclerView;
-    ArrayList<sellerInfo> list = new ArrayList<>();
-    String key;
-    CardView filter;
+    String key, cookie;
+    String order_on = "updatedAt";
+    String filter_on = "0";
+    CardView order;
     BottomSheetDialog dialog;
+    Retrofit retrofit;
+    RetrofitAPI retrofitAPI;
+    ArrayList<posts> post_list = new ArrayList<>();
+    ArrayList<Integer> idList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,11 +53,12 @@ public class SearchActivity extends AppCompatActivity {
         search = findViewById(R.id.search_activity_edittext);
         recyclerView = findViewById(R.id.search_activity_recyclerview);
         back = findViewById(R.id.search_activity_back);
-        filter = findViewById(R.id.filter);
+        order = findViewById(R.id.search_order);
         latest_order = findViewById(R.id.latest_order);
         price_order = findViewById(R.id.price_order);
         closing_order = findViewById(R.id.closing_order);
         cancel = findViewById(R.id.dialog_cancel);
+        filter = findViewById(R.id.search_filter);
 
         Intent intent = getIntent();
         key = intent.getStringExtra("key");
@@ -46,9 +66,31 @@ public class SearchActivity extends AppCompatActivity {
         search.setText(key);
 
         back.setOnClickListener(onClickListener);
+        order.setOnClickListener(onClickListener);
         filter.setOnClickListener(onClickListener);
-
-
+        search.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((event.getAction() != KeyEvent.ACTION_UP) && keyCode == KeyEvent.KEYCODE_ENTER){
+                    Intent intent = new Intent(SearchActivity.this, SearchActivity.class);
+                    intent.putExtra("key",search.getText().toString());
+                    startActivity(intent);
+                    search.clearFocus();
+                    search.setText(null);
+                    finish();
+                    return true;
+                }
+                return false;
+            }
+        });
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        cookie = sharedPreferences.getString("Cookie","");
+        retrofit = new Retrofit.Builder()
+                .baseUrl("http://15.164.145.19:3001/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        retrofitAPI = retrofit.create(RetrofitAPI.class);
+        GetSearchList(order_on,filter_on);
 
     }
     View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -58,7 +100,7 @@ public class SearchActivity extends AppCompatActivity {
                 case R.id.search_activity_back:
                     finish();
                     break;
-                case R.id.filter:
+                case R.id.search_order:
                     dialog = new BottomSheetDialog(SearchActivity.this);
                     dialog.setContentView(R.layout.bottomsheetdialog);
                     dialog.setCanceledOnTouchOutside(true);
@@ -71,7 +113,21 @@ public class SearchActivity extends AppCompatActivity {
                     closing_order.setOnClickListener(onClickListenerInDialog);
                     dialog_cancel.setOnClickListener(onClickListenerInDialog);
                     dialog.show();
-
+                    break;
+                case R.id.search_filter:
+                    if(filter_on.equals("0")){
+                        filter_on = "1";
+                        filter.setText("모든 심부름 보기");
+                        filter.setBackground(ContextCompat.getDrawable(SearchActivity.this, R.drawable.login_btn_bg));
+                        filter.setTextColor(Color.rgb(255,255,255));
+                        GetSearchList(order_on, filter_on);
+                    }else{
+                        filter_on = "0";
+                        filter.setText("심부름 불가능 안보기");
+                        filter.setBackground(ContextCompat.getDrawable(SearchActivity.this, R.drawable.login_btn_bg_grey));
+                        filter.setTextColor(Color.rgb(0,0,0));
+                        GetSearchList(order_on, filter_on);
+                    }
                     break;
             }
         }
@@ -79,34 +135,51 @@ public class SearchActivity extends AppCompatActivity {
     View.OnClickListener onClickListenerInDialog = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            dialog.dismiss();
+            switch(v.getId()){
+                case R.id.latest_order:
+                    order_on = "updatedAt";
+                    GetSearchList(order_on, filter_on);
+                    dialog.dismiss();
+                    break;
+                case R.id.price_order:
+                    order_on = "price";
+                    GetSearchList(order_on, filter_on);
+                    dialog.dismiss();
+                    break;
+                case R.id.closing_order:
+                    order_on = "deadline";
+                    GetSearchList(order_on, filter_on);
+                    dialog.dismiss();
+                    break;
+                case R.id.dialog_cancel:
+                    dialog.dismiss();
+                    break;
+            }
         }
     };
-//    View.OnKeyListener onKeyListener = new View.OnKeyListener() {
-//        @Override
-//        public boolean onKey(View v, int keyCode, KeyEvent event) {
-//            if ((event.getAction() != KeyEvent.ACTION_UP) && keyCode == KeyEvent.KEYCODE_ENTER){
-//                search.clearFocus();
-//                EditText search_edittext = findViewById(v.getId());
-//                String key = search_edittext.getText().toString();
-//                SearchOnList(list,key);
-//                return true;
-//            }
-//            return false;
-//        }
-//    };
-//    private void SearchOnList(ArrayList<sellerInfo> list, String key){
-//        ArrayList<sellerInfo> result_list = new ArrayList<>();
-//        if(key!=null){
-//            for(int i=0; i< list.size(); i++){
-//                String title = list.get(i).getTitle();
-//                if(title.contains(key)){
-//                    result_list.add(list.get(i));
-//                }
-//            }
-//        }
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-//        RecyclerAdapter adapter = new RecyclerAdapter(result_list);
-//        recyclerView.setAdapter(adapter);
+    private void GetSearchList(String order, String filter){
+        retrofitAPI.getSearchResult(key,order,filter,"1",cookie).enqueue(new Callback<HomePostsResult>() {
+            @Override
+            public void onResponse(Call<HomePostsResult> call, Response<HomePostsResult> response) {
+                if (response.isSuccessful()){
+                    post_list.clear();
+                    idList.clear();
+                    for (int i = 0; i < response.body().getData().size(); i++) {
+                        post_list.add(response.body().getData().get(i));
+                        idList.add(response.body().getData().get(i).getId());
+                    }
+                    recyclerView.setLayoutManager(new LinearLayoutManager(SearchActivity.this));
+                    RecyclerAdapter adapter = new RecyclerAdapter(post_list, idList);
+                    recyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<HomePostsResult> call, Throwable t) {
+
+            }
+        });
+    }
     }
 
