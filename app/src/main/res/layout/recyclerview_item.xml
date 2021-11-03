@@ -16,6 +16,7 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:id="@+id/thumbnail"
             android:src="@drawable/circle"
             android:layout_gravity="center_vertical"
             ></ImageView>

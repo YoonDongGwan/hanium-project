@@ -61,4 +61,7 @@ public interface RetrofitAPI {
 
     @GET("post/detail/{id}")
     Call<PostDetailResult> getDetail(@Path("id") String id, @Header("Cookie") String cookie);
+
+    @GET("post/search")
+    Call<HomePostsResult> getSearchResult(@Query("name") String name, @Query("order") String order, @Query("filter") String filter, @Query("page") String page, @Header("Cookie") String cookie);
 }
