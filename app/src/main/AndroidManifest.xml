@@ -23,6 +23,7 @@
         <activity android:name=".activities.PostDetailActivity"></activity>
         <activity android:name=".activities.OnClickImageActivity"></activity>
         <activity android:name=".activities.SearchActivity"></activity>
+        <activity android:name=".activities.SetLocationActivity"></activity>
         <activity android:name=".activities.ChangePWPopup" android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"></activity>
         <activity android:name=".activities.findPopup" android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"></activity>
         <activity android:name=".activities.ClientInfoPopUp" android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"></activity>

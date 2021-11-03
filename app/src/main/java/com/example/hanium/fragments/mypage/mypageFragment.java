@@ -1,6 +1,7 @@
 package com.example.hanium.fragments.mypage;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,8 +19,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.hanium.activities.AddPostActivity;
 import com.example.hanium.activities.MainActivity;
 import com.example.hanium.R;
+import com.example.hanium.activities.SetLocationActivity;
 import com.example.hanium.server.RetrofitAPI;
 import com.example.hanium.server.ServerResult;
 
@@ -37,6 +41,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class mypageFragment extends Fragment {
     Button modify_profile_btn, exchange_point_btn, my_errand_btn;
+    ImageButton location_change_btn;
     TextView nickname, simpleAddress, mannerPoint, cash;
     ImageView profile;
     MainActivity mainActivity;
@@ -62,11 +67,20 @@ public class mypageFragment extends Fragment {
         modify_profile_btn = v.findViewById(R.id.modify_profile_btn);
         exchange_point_btn = v.findViewById(R.id.exchange_point_btn);
         my_errand_btn = v.findViewById(R.id.my_errand_btn);
+        location_change_btn=v.findViewById(R.id.location_change_btn);
         profile = v.findViewById(R.id.mypage_profile);
         nickname = v.findViewById(R.id.nickname);
         simpleAddress = v.findViewById(R.id.simpleAddress);
         mannerPoint = v.findViewById(R.id.mannerPoint);
         cash = v.findViewById(R.id.cash);
+
+        location_change_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), SetLocationActivity.class);
+                startActivity(intent);
+            }
+        });
 
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
         String cookie = sharedPreferences.getString("Cookie","");
