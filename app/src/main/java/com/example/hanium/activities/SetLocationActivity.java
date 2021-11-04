@@ -13,13 +13,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hanium.R;
+import com.example.hanium.fragments.mypage.mypageFragment;
 
 public class SetLocationActivity extends AppCompatActivity {
     ImageButton add_btn,sub_btn;
-    TextView distance_count;
-    Button back_btn;
+    TextView distance_count,baselocation;
+    Button back_btn,changelocation_btn;
     MainActivity mainActivity;
     int count=1;
+    Intent intent;
 
 
     @Override
@@ -28,9 +30,22 @@ public class SetLocationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setlocation);
         back_btn=findViewById(R.id.set_location_back);
         distance_count=findViewById(R.id.distance_count);
+        baselocation=findViewById(R.id.baseloaction);
+        changelocation_btn=findViewById(R.id.changlocation_btn);
         distance_count.setText(count+"");
         add_btn=findViewById(R.id.add_btn);
         sub_btn=findViewById(R.id.sub_btn);
+
+
+        changelocation_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent=new Intent(getApplicationContext(),ChangeLocationActivity.class);
+                intent.putExtra("key",baselocation.getText().toString());
+                startActivity(intent);
+                finish();
+            }
+        });
 
         add_btn.setOnClickListener(new View.OnClickListener() {
             @Override

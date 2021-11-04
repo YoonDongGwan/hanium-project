@@ -74,4 +74,9 @@ public interface RetrofitAPI {
 
     @GET("post/search")
     Call<HomePostsResult> getSearchResult(@Query("name") String name, @Query("order") String order, @Query("filter") String filter, @Query("page") String page, @Header("Cookie") String cookie);
+
+    @GET("address/search")
+    Call<LocationinfoResult> getAddrSearchResult(@Query("name") String name, @Header("Cookie") String cookie);
+
+
 }
