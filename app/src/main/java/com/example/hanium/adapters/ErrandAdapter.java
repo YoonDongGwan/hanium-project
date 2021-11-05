@@ -2,6 +2,7 @@ package com.example.hanium.adapters;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 
 public class ErrandAdapter extends RecyclerView.Adapter<ErrandAdapter.ViewHolder> {
     ArrayList<ErrandPost> List;
-
+    ArrayList<Bitmap> bitmaps;
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView title,destination,deadline,time,state;
         ViewHolder(View itemview){

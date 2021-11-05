@@ -118,7 +118,26 @@ public class ExchaningPointFragment extends Fragment {
                     mainActivity.onClickBackBtn();
                     break;
                 case R.id.charge_btn:
-                    retrofitAPI.charge(cookie,charge_amount.getText().toString(),charge_bank.getText().toString(),charge_account.getText().toString()).enqueue(new Callback<HashMap<String, String>>() {
+                    retrofitAPI.charge(cookie,Integer.parseInt(charge_amount.getText().toString()),charge_bank.getText().toString(),
+                            charge_account.getText().toString()).enqueue(new Callback<HashMap<String, String>>() {
+                        @Override
+                        public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
+                            if (response.isSuccessful()){
+                                Log.d("test","success");
+                            }else{
+                                Log.d("test1",response.message());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<HashMap<String, String>> call, Throwable t) {
+                            Log.d("test","failure"+t.getMessage());
+                        }
+                    });
+                    break;
+                case R.id.refund_btn:
+                    retrofitAPI.refund(cookie,Integer.parseInt(refund_amount.getText().toString()),refund_bank.getText().toString(),
+                            refund_account.getText().toString()).enqueue(new Callback<HashMap<String, String>>() {
                         @Override
                         public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
                             if (response.isSuccessful()) {

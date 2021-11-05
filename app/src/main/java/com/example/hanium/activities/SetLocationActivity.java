@@ -3,14 +3,18 @@ package com.example.hanium.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.hanium.R;
 import com.example.hanium.fragments.mypage.mypageFragment;
@@ -19,7 +23,7 @@ public class SetLocationActivity extends AppCompatActivity {
     ImageButton add_btn,sub_btn;
     TextView distance_count,baselocation;
     Button back_btn,changelocation_btn;
-    MainActivity mainActivity;
+    String location;
     int count=1;
     Intent intent;
 
@@ -35,6 +39,12 @@ public class SetLocationActivity extends AppCompatActivity {
         distance_count.setText(count+"");
         add_btn=findViewById(R.id.add_btn);
         sub_btn=findViewById(R.id.sub_btn);
+
+        intent = getIntent();
+        location = intent.getStringExtra("location");
+
+        baselocation.setText(location);
+        baselocation.setTextSize(15);
 
 
         changelocation_btn.setOnClickListener(new View.OnClickListener() {
@@ -62,6 +72,13 @@ public class SetLocationActivity extends AppCompatActivity {
                     count--;
                     distance_count.setText(count + "");
                 }
+            }
+        });
+
+        back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
