@@ -88,7 +88,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:text="부천 상동"
                     android:textColor="#ff6565"
                     android:textSize="25sp"
                     android:textStyle="bold"

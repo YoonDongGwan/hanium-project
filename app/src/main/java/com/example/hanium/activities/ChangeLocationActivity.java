@@ -89,6 +89,7 @@ public class ChangeLocationActivity extends AppCompatActivity {
                      recyclerView.setLayoutManager(new LinearLayoutManager(ChangeLocationActivity.this));
                      TextRecyclerAdapter adapter = new TextRecyclerAdapter(list);
                      recyclerView.setAdapter(adapter);
+
                 }else{
 
                 }

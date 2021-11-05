@@ -11,6 +11,7 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 
 import retrofit2.http.GET;
@@ -32,12 +33,12 @@ public interface RetrofitAPI {
     Call<HashMap<String, String>> find(@Field("email") String email, @Field("phoneNumber") String phoneNumber);
 
     @FormUrlEncoded
-    @POST("user/point/:type")
+    @POST("user/point/refund")
     Call<HashMap<String, String>> refund(@Header("cookie") String cookie, @Field("refundAmount") int refundAmount, @Field("bankName") String bankName,
                                          @Field("account") String account);
 
     @FormUrlEncoded
-    @POST("user/point/:type")
+    @POST("user/point/charge")
     Call<HashMap<String, String>> charge(@Header("cookie") String cookie,@Field("chargeAmount") int chargeAmount, @Field("bankName") String bankName,
                                          @Field("account") String account);
 
