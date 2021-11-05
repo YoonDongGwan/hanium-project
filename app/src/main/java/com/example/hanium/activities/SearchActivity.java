@@ -3,6 +3,8 @@ package com.example.hanium.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -24,7 +26,13 @@ import com.example.hanium.server.RetrofitAPI;
 import com.example.hanium.classes.posts;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,7 +53,8 @@ public class SearchActivity extends AppCompatActivity {
     Retrofit retrofit;
     RetrofitAPI retrofitAPI;
     ArrayList<posts> post_list = new ArrayList<>();
-    ArrayList<Integer> idList = new ArrayList<>();
+    ArrayList<String> url_list = new ArrayList<>();
+    ArrayList<Bitmap> bitmaps = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -163,15 +172,38 @@ public class SearchActivity extends AppCompatActivity {
             public void onResponse(Call<HomePostsResult> call, Response<HomePostsResult> response) {
                 if (response.isSuccessful()){
                     post_list.clear();
-                    idList.clear();
                     for (int i = 0; i < response.body().getData().size(); i++) {
                         post_list.add(response.body().getData().get(i));
-                        idList.add(response.body().getData().get(i).getId());
+                        url_list.add(response.body().getData().get(i).getThumbnail());
                     }
-                    recyclerView.setLayoutManager(new LinearLayoutManager(SearchActivity.this));
-                    RecyclerAdapter adapter = new RecyclerAdapter(post_list, idList);
-                    recyclerView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
+                    Thread thread = new Thread(){
+                        @Override
+                        public void run() {
+                            try {
+                                for(int i = 0; i < url_list.size(); i++){
+                                    URL url = new URL(url_list.get(i));
+                                    HttpsURLConnection connection = (HttpsURLConnection)url.openConnection();
+                                    connection.setDoInput(true);
+                                    connection.connect();
+                                    InputStream inputStream = connection.getInputStream();
+                                    bitmaps.add(BitmapFactory.decodeStream(inputStream));
+                                }
+                            } catch (MalformedURLException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    };
+                    thread.start();
+                    try {
+                        thread.join();
+                        recyclerView.setLayoutManager(new LinearLayoutManager(SearchActivity.this));
+                        RecyclerAdapter adapter = new RecyclerAdapter(post_list, bitmaps);
+                        recyclerView.setAdapter(adapter);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 

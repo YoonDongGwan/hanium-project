@@ -1,6 +1,7 @@
 package com.example.hanium.adapters;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,7 +29,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     ArrayList<posts> itemList;
-    ArrayList<Integer> idList;
+    ArrayList<Bitmap> bitmaps;
     public class ViewHolder extends RecyclerView.ViewHolder{
         int id;
         TextView title,destination,deadline,time;
@@ -42,9 +43,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             thumbnail = itemview.findViewById(R.id.thumbnail);
         }
     }
-    public RecyclerAdapter(ArrayList<posts> itemList, ArrayList<Integer> idList){
+    public RecyclerAdapter(ArrayList<posts> itemList, ArrayList<Bitmap> bitmaps){
         this.itemList = itemList;
-        this.idList = idList;
+        this.bitmaps = bitmaps;
     }
     @NonNull
     @Override
@@ -57,11 +58,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerAdapter.ViewHolder holder, int position) {
-        holder.id = idList.get(position);
+        holder.id = itemList.get(position).getId();
         holder.title.setText(itemList.get(position).getTitle());
         holder.destination.setText(itemList.get(position).getSimpleAddress());
         holder.deadline.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(itemList.get(position).getDeadline()));
         holder.time.setText(itemList.get(position).getRequiredTime());
+        holder.thumbnail.setImageBitmap(bitmaps.get(position));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,6 +73,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 Log.d("test",holder.id+"");
             }
         });
+
     }
 
     @Override

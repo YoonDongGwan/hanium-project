@@ -33,12 +33,12 @@ public interface RetrofitAPI {
 
     @FormUrlEncoded
     @POST("user/point/:type")
-    Call<HashMap<String, String>> refund(@Header("cookie") String cookie, @Field("refundAmount") int refundAmount, @Field("bankName") String bankName,
+    Call<HashMap<String, String>> refund(@Header("cookie") String cookie, @Field("refundAmount") String refundAmount, @Field("bankName") String bankName,
                                          @Field("account") String account);
 
     @FormUrlEncoded
     @POST("user/point/:type")
-    Call<HashMap<String, String>> charge(@Header("cookie") String cookie,@Field("chargeAmount") int chargeAmount, @Field("bankName") String bankName,
+    Call<HashMap<String, String>> charge(@Header("cookie") String cookie,@Field("chargeAmount") String chargeAmount, @Field("bankName") String bankName,
                                          @Field("account") String account);
 
     @FormUrlEncoded

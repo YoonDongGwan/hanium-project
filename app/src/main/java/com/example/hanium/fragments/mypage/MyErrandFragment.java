@@ -43,11 +43,6 @@ public class MyErrandFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_my_errand, container, false);
-        post_list.add(new ErrandPost("강아지 산책해주세요","위치 - 부천 상동","마감시간 - 21.07.07 20:00","예상소요시간 - 1시간","부림중"));
-        post_list.add(new ErrandPost("강아지 산책해주세요","위치 - 부천 상동","마감시간 - 21.07.07 20:00","예상소요시간 - 1시간","부림완료"));
-        post_list.add(new ErrandPost("강아지 산책해주세요","위치 - 부천 상동","마감시간 - 21.07.07 20:00","예상소요시간 - 1시간","부림중"));
-        post_list.add(new ErrandPost("강아지 산책해주세요","위치 - 부천 상동","마감시간 - 21.07.07 20:00","예상소요시간 - 1시간","부림중"));
-        post_list.add(new ErrandPost("강아지 산책해주세요","위치 - 부천 상동","마감시간 - 21.07.07 20:00","예상소요시간 - 1시간","부림완료"));
         RecyclerView recyclerView = v.findViewById(R.id.errandRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         ErrandAdapter adapter = new ErrandAdapter(post_list);

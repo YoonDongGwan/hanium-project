@@ -43,9 +43,6 @@ public class ExchaningPointFragment extends Fragment {
     SharedPreferences sharedPreferences;
     String cookie;
 
-
-
-
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -121,44 +118,21 @@ public class ExchaningPointFragment extends Fragment {
                     mainActivity.onClickBackBtn();
                     break;
                 case R.id.charge_btn:
-                    retrofitAPI.charge("s%3AEl8vDfwSz8S8mm63oYagvHVe10K_8Ll8.MJl1IxUgN%2FCbL1z%2BS0oruLBgqzbKCkyrkfALkkKTPUk",/*3000,"ss","111-11"*/Integer.parseInt(charge_amount.getText().toString()),charge_bank.getText().toString(),
-                            charge_account.getText().toString()).enqueue(new Callback<HashMap<String, String>>() {
+                    retrofitAPI.charge(cookie,charge_amount.getText().toString(),charge_bank.getText().toString(),charge_account.getText().toString()).enqueue(new Callback<HashMap<String, String>>() {
                         @Override
                         public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
-                            if (response.isSuccessful()){
-                                Log.d("test","success");
+                            if (response.isSuccessful()) {
+                                Log.d("test", "success");
                             }else{
-
-                                Log.d("test1",response.message());
-
+                                Log.d("test",response.message());
                             }
                         }
 
                         @Override
                         public void onFailure(Call<HashMap<String, String>> call, Throwable t) {
-                            Log.d("test","failure"+t.getMessage());
+                                Log.d("test",t.getMessage().toString());
                         }
                     });
-                    break;
-                case R.id.refund_btn:
-                    retrofitAPI.refund(cookie,Integer.parseInt(refund_amount.getText().toString()),refund_bank.getText().toString(),
-                            refund_account.getText().toString()).enqueue(new Callback<HashMap<String, String>>() {
-                        @Override
-                        public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
-                            if (response.isSuccessful()){
-                                Log.d("test","success");
-                            }else{
-
-                                Log.d("test1",response.message());
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<HashMap<String, String>> call, Throwable t) {
-                            Log.d("test","failure"+t.getMessage());
-                        }
-                    });
-                    break;
 
             }
 

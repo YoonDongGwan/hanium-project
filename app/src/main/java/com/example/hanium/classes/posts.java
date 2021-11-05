@@ -17,6 +17,7 @@ public class posts {
     private int sellerId;
     private int sellingDistrict;
     private String simpleAddress;
+    private String thumbnail;
     public posts(int id,
             int buyerId,
             String title,
@@ -30,7 +31,8 @@ public class posts {
             Date deletedAt,
             int sellerId,
             int sellingDistrict,
-            String simpleAddress
+            String simpleAddress,
+            String thumbnail
     ){
         this.id = id;
         this.buyerId = buyerId;
@@ -46,6 +48,7 @@ public class posts {
         this.sellerId = sellerId;
         this.sellingDistrict = sellingDistrict;
         this.simpleAddress = simpleAddress;
+        this.thumbnail = thumbnail;
     }
 
     public int getId() {
@@ -158,5 +161,13 @@ public class posts {
 
     public void setSimpleAddress(String simpleAddress) {
         this.simpleAddress = simpleAddress;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 }
