@@ -79,6 +79,9 @@ public interface RetrofitAPI {
     @GET("post/history/me")
     Call<HomePostsResult> getMyPosts(@Header("Cookie")String cookie);
 
+    @GET("post/history/all")
+    Call<AllHistoryResponse> getAllHistory(@Header("Cookie")String cookie);
+
     @GET("address/search")
     Call<LocationinfoResult> getAddrSearchResult(@Query("name") String name, @Header("Cookie") String cookie);
 

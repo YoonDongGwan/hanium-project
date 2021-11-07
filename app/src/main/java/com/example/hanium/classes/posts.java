@@ -1,8 +1,11 @@
 package com.example.hanium.classes;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
-public class posts {
+public class posts implements Parcelable {
     private int id;
     private int buyerId;
     private String title;
@@ -18,6 +21,7 @@ public class posts {
     private int sellingDistrict;
     private String simpleAddress;
     private String thumbnail;
+    private String review;
     public posts(int id,
             int buyerId,
             String title,
@@ -32,7 +36,8 @@ public class posts {
             int sellerId,
             int sellingDistrict,
             String simpleAddress,
-            String thumbnail
+            String thumbnail,
+            String review
     ){
         this.id = id;
         this.buyerId = buyerId;
@@ -49,6 +54,7 @@ public class posts {
         this.sellingDistrict = sellingDistrict;
         this.simpleAddress = simpleAddress;
         this.thumbnail = thumbnail;
+        this.review = review;
     }
 
     public int getId() {
@@ -169,5 +175,42 @@ public class posts {
 
     public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
+    }
+
+    public String getReview() {
+        return review;
+    }
+
+    public void setReview(String review) {
+        this.review = review;
+    }
+
+    public posts(Parcel in){
+        id = in.readInt();
+        buyerId = in.readInt();
+        title = in.readString();
+    }
+
+    public static final Creator<posts> CREATOR = new Creator<posts>() {
+        @Override
+        public posts createFromParcel(Parcel parcel) {
+            return new posts(parcel);
+        }
+
+        @Override
+        public posts[] newArray(int i) {
+            return new posts[i];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeInt(buyerId);
+        parcel.writeString(title);
     }
 }

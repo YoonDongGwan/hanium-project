@@ -79,8 +79,8 @@ public class MyErrandFragment extends Fragment {
             @Override
             public void onResponse(Call<HomePostsResult> call, Response<HomePostsResult> response) {
                 if (response.isSuccessful()){
-                    for (int i=0; i<response.body().getData().size(); i++) {
-                        post_list.add(response.body().getData().get(i));
+                    post_list = response.body().getData();
+                    for (int i=0; i < post_list.size(); i++) {
                         url_list.add(response.body().getData().get(i).getThumbnail());
                     }
                     Thread thread = new Thread(){
