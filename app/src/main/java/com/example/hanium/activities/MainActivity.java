@@ -26,8 +26,10 @@ public class MainActivity extends AppCompatActivity {
     logFragment logFragment = new logFragment();
     mypageFragment mypageFragment = new mypageFragment();
     ModifyingProfileFragment modifyingProfileFragment = new ModifyingProfileFragment();
-    ExchaningPointFragment exchaningPointFragment=new ExchaningPointFragment();
-    MyErrandFragment myErrandFragment=new MyErrandFragment();
+    ExchaningPointFragment exchaningPointFragment = new ExchaningPointFragment();
+    MyErrandFragment myErrandFragment = new MyErrandFragment();
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,12 +37,14 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.framelayout, homeFragment).commitAllowingStateLoss();
 
+
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomnavi);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
-                switch(item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.home:
                         transaction.replace(R.id.framelayout, homeFragment).commitAllowingStateLoss();
                         break;
@@ -49,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                         transaction.replace(R.id.framelayout, chatFragment).commitAllowingStateLoss();
                         break;
                     case R.id.log:
-                            transaction.replace(R.id.framelayout, logFragment).commitAllowingStateLoss();
+                        transaction.replace(R.id.framelayout, logFragment).commitAllowingStateLoss();
                         break;
                     case R.id.mypage:
                         transaction.replace(R.id.framelayout, mypageFragment).commitAllowingStateLoss();
@@ -60,25 +64,32 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
     }
-    public void onClickModifyBtn(){
+
+    public void onClickModifyBtn() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.setCustomAnimations(R.anim.enter_from_right,R.anim.exit_to_left);
-        fragmentTransaction.replace(R.id.framelayout,modifyingProfileFragment).commitAllowingStateLoss();
+        fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
+        fragmentTransaction.replace(R.id.framelayout, modifyingProfileFragment).commitAllowingStateLoss();
     }
-    public void onClickBackBtn(){
+
+    public void onClickBackBtn() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.setCustomAnimations(R.anim.enter_from_left,R.anim.exit_to_right);
-        fragmentTransaction.replace(R.id.framelayout,mypageFragment).commitAllowingStateLoss();
+        fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right);
+        fragmentTransaction.replace(R.id.framelayout, mypageFragment).commitAllowingStateLoss();
     }
-    public void onClickExchangeBtn(){
+
+    public void onClickExchangeBtn() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.setCustomAnimations(R.anim.enter_from_right,R.anim.exit_to_left);
-        fragmentTransaction.replace(R.id.framelayout,exchaningPointFragment).commitAllowingStateLoss();
+        fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
+        fragmentTransaction.replace(R.id.framelayout, exchaningPointFragment).commitAllowingStateLoss();
     }
-    public void onClickErrandBtn(){
+
+    public void onClickErrandBtn() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.setCustomAnimations(R.anim.enter_from_right,R.anim.exit_to_left);
-        fragmentTransaction.replace(R.id.framelayout,myErrandFragment).commitAllowingStateLoss();
+        fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
+        fragmentTransaction.replace(R.id.framelayout, myErrandFragment).commitAllowingStateLoss();
     }
+
+
 }
