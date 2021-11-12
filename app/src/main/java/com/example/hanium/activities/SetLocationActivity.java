@@ -1,23 +1,30 @@
 package com.example.hanium.activities;
 
-import android.app.Activity;
+
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.hanium.R;
-import com.example.hanium.fragments.mypage.mypageFragment;
+import com.example.hanium.server.RetrofitAPI;
+import com.example.hanium.server.ServerScope;
+
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SetLocationActivity extends AppCompatActivity {
     ImageButton add_btn,sub_btn;
@@ -26,6 +33,10 @@ public class SetLocationActivity extends AppCompatActivity {
     String location;
     int count=1;
     Intent intent;
+    Retrofit retrofit;
+    RetrofitAPI retrofitAPI;
+    SharedPreferences sharedPreferences;
+    String cookie;
 
 
     @Override
@@ -45,6 +56,22 @@ public class SetLocationActivity extends AppCompatActivity {
 
         baselocation.setText(location);
         baselocation.setTextSize(15);
+
+        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        clientBuilder.addInterceptor(loggingInterceptor);
+
+        sharedPreferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        cookie = sharedPreferences.getString("Cookie","");
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl("http://15.164.145.19:3001/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(clientBuilder.build())
+                .build();
+        retrofitAPI = retrofit.create(RetrofitAPI.class);
+
 
 
         changelocation_btn.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +105,24 @@ public class SetLocationActivity extends AppCompatActivity {
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                retrofitAPI.setScope(cookie,Integer.parseInt(distance_count.getText().toString())).enqueue(new Callback<ServerScope>() {
+                    @Override
+                    public void onResponse(Call<ServerScope> call, Response<ServerScope> response) {
+                        if(response.isSuccessful()) {
+                            Log.d("test ", "success");
+                        }else{
+                            Log.d("test ",response.toString());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ServerScope> call, Throwable t) {
+                        Log.d("test ","failure"+t.getMessage());
+                    }
+                });
+                Intent intent2 = new Intent();
+                intent2.putExtra("location",location);
+                setResult(0,intent2);
                 finish();
             }
         });

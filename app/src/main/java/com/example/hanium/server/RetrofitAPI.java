@@ -1,8 +1,6 @@
 package com.example.hanium.server;
 
 
-import com.google.gson.JsonObject;
-
 import java.util.HashMap;
 
 import okhttp3.MultipartBody;
@@ -11,13 +9,9 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.Header;
-import retrofit2.http.Headers;
-import retrofit2.http.Multipart;
-
 import retrofit2.http.GET;
-
-
+import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
@@ -40,18 +34,22 @@ public interface RetrofitAPI {
 
     @FormUrlEncoded
     @POST("user/point/charge")
-    Call<HashMap<String, String>> charge(@Header("cookie") String cookie,@Field("chargeAmount") int chargeAmount, @Field("bankName") String bankName,
+    Call<HashMap<String, String>> charge(@Header("cookie") String cookie, @Field("chargeAmount") int chargeAmount, @Field("bankName") String bankName,
                                          @Field("account") String account);
 
     @FormUrlEncoded
     @POST("auth/signup")
     Call<HashMap<String, String>> signup(@Field("email") String email, @Field("nickname") String nickname,
-                                       @Field("name") String name, @Field("password") String password,
-                                       @Field("confirm_pwd") String confirm_pwd, @Field("phoneNumber") String phoneNumber);
+                                         @Field("name") String name, @Field("password") String password,
+                                         @Field("confirm_pwd") String confirm_pwd, @Field("phoneNumber") String phoneNumber);
+
+    @FormUrlEncoded
+    @POST("address/check")
+    Call<ServerScope> setScope(@Header("cookie") String cookie, @Field("addressScope") int addressScope);
 
     @Multipart
     @POST("post")
-    Call<HashMap<String, String>> post(@Header("cookie") String cookie,@Part MultipartBody.Part Image, @PartMap HashMap<String, RequestBody> data);
+    Call<HashMap<String, String>> post(@Header("cookie") String cookie, @Part MultipartBody.Part Image, @PartMap HashMap<String, RequestBody> data);
 
     @FormUrlEncoded
     @POST("post/review/{id}")
@@ -59,16 +57,16 @@ public interface RetrofitAPI {
 
     @FormUrlEncoded
     @POST("address")
-    Call<ServerResult> setAddress(@Header("Cookie")String cookie, @Field("addressScope")int addressScope);
+    Call<ServerResult> setAddressScope(@Header("Cookie")String cookie, @Field("addressScope")int addressScope);
 
     @GET("main")
-    Call<HomePostsResult> getPosts(@Header("Cookie")String cookie);
+    Call<HomePostsResult> getPosts(@Header("Cookie") String cookie);
 
     @GET("user")
-    Call<ServerResult> getUser(@Header("Cookie")String cookie);
+    Call<ServerResult> getUser(@Header("Cookie") String cookie);
 
     @GET("user/edit")
-    Call<ServerResult> getModify(@Header("Cookie")String cookie);
+    Call<ServerResult> getModify(@Header("Cookie") String cookie);
 
     @GET("user/point")
     Call<HashMap<String, String>> getPoint(@Header("Cookie") String cookie);
@@ -86,10 +84,10 @@ public interface RetrofitAPI {
     Call<HomePostsResult> getSearchResult(@Query("name") String name, @Query("order") String order, @Query("filter") String filter, @Query("page") String page, @Header("Cookie") String cookie);
 
     @GET("post/history/me")
-    Call<HomePostsResult> getMyPosts(@Header("Cookie")String cookie);
+    Call<HomePostsResult> getMyPosts(@Header("Cookie") String cookie);
 
     @GET("post/history/all")
-    Call<AllHistoryResponse> getAllHistory(@Header("Cookie")String cookie);
+    Call<AllHistoryResponse> getAllHistory(@Header("Cookie") String cookie);
 
     @GET("address/search")
     Call<LocationinfoResult> getAddrSearchResult(@Query("name") String name, @Header("Cookie") String cookie);

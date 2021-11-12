@@ -1,5 +1,8 @@
 package com.example.hanium.fragments.mypage;
 
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,14 +17,14 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.hanium.activities.AddPostActivity;
-import com.example.hanium.activities.MainActivity;
 import com.example.hanium.R;
+import com.example.hanium.activities.MainActivity;
 import com.example.hanium.activities.SetLocationActivity;
 import com.example.hanium.server.RetrofitAPI;
 import com.example.hanium.server.ServerResult;
@@ -48,6 +51,7 @@ public class mypageFragment extends Fragment {
     Retrofit retrofit;
     RetrofitAPI retrofitAPI;
     Bitmap bitmap;
+    String location="";
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -59,6 +63,7 @@ public class mypageFragment extends Fragment {
         super.onDetach();
         mainActivity = null;
     }
+
 
     @Nullable
     @Override
@@ -74,8 +79,6 @@ public class mypageFragment extends Fragment {
         mannerPoint = v.findViewById(R.id.mannerPoint);
         cash = v.findViewById(R.id.cash);
 
-
-
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
         String cookie = sharedPreferences.getString("Cookie","");
 
@@ -89,6 +92,16 @@ public class mypageFragment extends Fragment {
         exchange_point_btn.setOnClickListener(onClickListener);
         my_errand_btn.setOnClickListener(onClickListener);
         location_change_btn.setOnClickListener(onClickListener);
+
+
+        /*if(!location.equals("")) {
+            Bundle bundle = getArguments();
+            location = bundle.getString("location");
+        }*/
+
+
+
+
         return v;
     }
     Callback<ServerResult> callback = new Callback<ServerResult>() {
@@ -148,10 +161,36 @@ public class mypageFragment extends Fragment {
                     mainActivity.onClickErrandBtn();
                     break;
                 case R.id.location_change_btn:
-                    Intent intent = new Intent(getContext(), SetLocationActivity.class);
-                    startActivity(intent);
+                    getActivity().startActivityForResult(new Intent(getContext(), SetLocationActivity.class),0);
                     break;
             }
         }
     };
+
+
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        int request=requestCode&0xffff;
+        if(data!=null) {
+            if (requestCode == 0) {
+                if (resultCode == RESULT_OK) {
+                    Toast.makeText(getContext(), data.getStringExtra("location"), Toast.LENGTH_LONG).show();
+                } else if (resultCode == RESULT_CANCELED) {
+                    String location = data.getStringExtra("location");
+                    Toast.makeText(getContext(), "RESULT_CANCELED : " + location, Toast.LENGTH_SHORT).show();
+                } else {
+
+                }
+
+
+            }
+
+        }else{
+            Log.d("eee","null");
+        }
+
+    }
 }

@@ -32,7 +32,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     ArrayList<Bitmap> bitmaps;
     public class ViewHolder extends RecyclerView.ViewHolder{
         int id;
-        TextView title,destination,deadline,time;
+        TextView title,destination,deadline,time,price;
         ImageView thumbnail;
         ViewHolder(View itemview){
             super(itemview);
@@ -41,6 +41,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             deadline = itemview.findViewById(R.id.deadline);
             time = itemview.findViewById(R.id.time);
             thumbnail = itemview.findViewById(R.id.thumbnail);
+            price = itemview.findViewById(R.id.price);
         }
     }
     public RecyclerAdapter(ArrayList<posts> itemList, ArrayList<Bitmap> bitmaps){
@@ -64,13 +65,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.deadline.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(itemList.get(position).getDeadline()));
         holder.time.setText(itemList.get(position).getRequiredTime());
         holder.thumbnail.setImageBitmap(bitmaps.get(position));
+        holder.price.setText(itemList.get(position).getPrice()+" P");
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(holder.itemView.getContext(), PostDetailActivity.class);
                 intent.putExtra("id",String.valueOf(holder.id));
                 ContextCompat.startActivity(holder.itemView.getContext(),intent,null);
-                Log.d("test",holder.id+"");
             }
         });
 
