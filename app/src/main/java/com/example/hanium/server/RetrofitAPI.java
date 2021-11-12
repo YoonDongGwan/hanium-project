@@ -13,6 +13,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 import retrofit2.http.Path;
@@ -45,11 +46,14 @@ public interface RetrofitAPI {
 
     @FormUrlEncoded
     @POST("address/check")
-    Call<ServerScope> setScope(@Header("cookie") String cookie, @Field("addressScope") int addressScope);
+    Call<ServerScope> setScope(@Header("Cookie") String cookie, @Field("addressScope") int addressScope);
+
+    @PUT("address/{districtId}")
+    Call<ServerResult> putAddress(@Header("Cookie")String cookie, @Path("districtId")String districtId);
 
     @Multipart
     @POST("post")
-    Call<HashMap<String, String>> post(@Header("cookie") String cookie, @Part MultipartBody.Part Image, @PartMap HashMap<String, RequestBody> data);
+    Call<HashMap<String, String>> post(@Header("Cookie") String cookie, @Part MultipartBody.Part Image, @PartMap HashMap<String, RequestBody> data);
 
     @FormUrlEncoded
     @POST("post/review/{id}")

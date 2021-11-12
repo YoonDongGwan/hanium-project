@@ -1,5 +1,6 @@
 package com.example.hanium.adapters;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,7 +19,7 @@ import com.example.hanium.activities.SetLocationActivity;
 import com.example.hanium.classes.SearchLocation;
 import com.example.hanium.classes.locationinfo;
 import com.example.hanium.classes.posts;
-import com.google.firebase.database.core.Context;
+
 
 import java.util.ArrayList;
 
@@ -28,10 +29,9 @@ public class TextRecyclerAdapter extends RecyclerView.Adapter<TextRecyclerAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView location ;
-
+        String id;
         ViewHolder(View itemView) {
             super(itemView) ;
-
             location = itemView.findViewById(R.id.location) ;
         }
     }
@@ -54,15 +54,15 @@ public class TextRecyclerAdapter extends RecyclerView.Adapter<TextRecyclerAdapte
 
     @Override
     public void onBindViewHolder(TextRecyclerAdapter.ViewHolder holder, int position) {
+        holder.id = itemList.get(position).getDistrictId();
         holder.location.setText(itemList.get(position).getADMNM()) ;
         holder.itemView.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(holder.itemView.getContext(), SetLocationActivity.class);
-                intent.putExtra("location",holder.location.getText().toString());
-                ContextCompat.startActivity(holder.itemView.getContext(),intent,null);
-                Log.d("test",holder.location+"");
+                intent.putExtra("ADMNM",holder.location.getText().toString());
+                intent.putExtra("districtId",holder.id);
+                ((ChangeLocationActivity)holder.itemView.getContext()).setResult(Activity.RESULT_OK, intent);
                 ((ChangeLocationActivity)holder.itemView.getContext()).finish();
 
 

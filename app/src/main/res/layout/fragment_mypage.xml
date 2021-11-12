@@ -87,7 +87,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="연비"
+                android:text="평점"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -107,7 +107,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="km/L"
+                android:text="점"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="italic"
