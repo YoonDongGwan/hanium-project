@@ -8,6 +8,7 @@ import java.util.HashMap;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Header;
@@ -51,6 +52,14 @@ public interface RetrofitAPI {
     @Multipart
     @POST("post")
     Call<HashMap<String, String>> post(@Header("cookie") String cookie,@Part MultipartBody.Part Image, @PartMap HashMap<String, RequestBody> data);
+
+    @FormUrlEncoded
+    @POST("post/review/{id}")
+    Call<ServerResult> setReviewPoint(@Header("Cookie")String cookie, @Path("id")String id, @Field("reviewPoint")int reviewPoint);
+
+    @FormUrlEncoded
+    @POST("address")
+    Call<ServerResult> setAddress(@Header("Cookie")String cookie, @Field("addressScope")int addressScope);
 
     @GET("main")
     Call<HomePostsResult> getPosts(@Header("Cookie")String cookie);
