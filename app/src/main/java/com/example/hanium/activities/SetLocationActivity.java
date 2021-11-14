@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hanium.R;
 import com.example.hanium.server.RetrofitAPI;
+import com.example.hanium.server.ServerResult;
 import com.example.hanium.server.ServerScope;
 
 import okhttp3.OkHttpClient;
@@ -29,16 +30,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class SetLocationActivity extends AppCompatActivity {
     ImageButton add_btn,sub_btn;
     TextView distance_count,baselocation;
-    Button back_btn,changelocation_btn;
-    String location;
+    Button back_btn,changelocation_btn, confirmBtn;
+    String ADMNM, districtId = null;
     int count=1;
-    Intent intent;
     Retrofit retrofit;
     RetrofitAPI retrofitAPI;
     SharedPreferences sharedPreferences;
     String cookie;
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,12 +48,7 @@ public class SetLocationActivity extends AppCompatActivity {
         distance_count.setText(count+"");
         add_btn=findViewById(R.id.add_btn);
         sub_btn=findViewById(R.id.sub_btn);
-
-        intent = getIntent();
-        location = intent.getStringExtra("location");
-
-        baselocation.setText(location);
-        baselocation.setTextSize(15);
+        confirmBtn = findViewById(R.id.setLocationConfirmBtn);
 
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
@@ -72,60 +65,105 @@ public class SetLocationActivity extends AppCompatActivity {
                 .build();
         retrofitAPI = retrofit.create(RetrofitAPI.class);
 
+        getAddress();
 
+        confirmBtn.setOnClickListener(onClickListener);
+        changelocation_btn.setOnClickListener(onClickListener);
+        add_btn.setOnClickListener(onClickListener);
+        sub_btn.setOnClickListener(onClickListener);
+        back_btn.setOnClickListener(onClickListener);
+    }
 
-        changelocation_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                intent=new Intent(getApplicationContext(),ChangeLocationActivity.class);
-                intent.putExtra("key",baselocation.getText().toString());
-                startActivity(intent);
-                finish();
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            switch(view.getId()){
+                case R.id.changlocation_btn:
+                    Intent intent1 = new Intent(getApplicationContext(),ChangeLocationActivity.class);
+                    intent1.putExtra("key",baselocation.getText().toString());
+                    startActivityForResult(intent1,0);
+                    break;
+                case R.id.add_btn:
+                    count++;
+                    distance_count.setText(count+"");
+                    break;
+                case R.id.sub_btn:
+                    if(count>1) {
+                        count--;
+                        distance_count.setText(count + "");
+                    }
+                    break;
+                case R.id.set_location_back:
+                    retrofitAPI.setScope(cookie,Integer.parseInt(distance_count.getText().toString())).enqueue(new Callback<ServerScope>() {
+                        @Override
+                        public void onResponse(Call<ServerScope> call, Response<ServerScope> response) {
+                            if(response.isSuccessful()) {
+                                Log.d("test ", "success");
+                            }else{
+                                Log.d("test ",response.toString());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ServerScope> call, Throwable t) {
+                            Log.d("test ","failure"+t.getMessage());
+                        }
+                    });
+                    Intent intent2 = new Intent();
+                    intent2.putExtra("location", ADMNM);
+                    setResult(RESULT_OK,intent2);
+                    finish();
+                    break;
+                case R.id.setLocationConfirmBtn:
+                    retrofitAPI.setAddressScope(cookie, count).enqueue(new Callback<ServerResult>() {
+                        @Override
+                        public void onResponse(Call<ServerResult> call, Response<ServerResult> response) {
+                            if (response.isSuccessful()){
+                                Log.d("success message",response.body().getMessage());
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<ServerResult> call, Throwable t) {
+                        }
+                    });
+                    setResult(RESULT_OK);
+                    finish();
+                    break;
             }
-        });
-
-        add_btn.setOnClickListener(new View.OnClickListener() {
+        }
+    };
+    private void getAddress(){
+        retrofitAPI.getAddress(cookie).enqueue(new Callback<ServerResult>() {
             @Override
-            public void onClick(View v) {
-                count++;
-                distance_count.setText(count+"");
-            }
-        });
-
-        sub_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(count>1) {
-                    count--;
-                    distance_count.setText(count + "");
+            public void onResponse(Call<ServerResult> call, Response<ServerResult> response) {
+                if (response.isSuccessful()) {
+                    ServerResult result = response.body();
+                    baselocation.setText(result.getData().get("simpleAddress"));
+                    distance_count.setText(result.getData().get("addressScope"));
                 }
             }
-        });
-
-        back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                retrofitAPI.setScope(cookie,Integer.parseInt(distance_count.getText().toString())).enqueue(new Callback<ServerScope>() {
-                    @Override
-                    public void onResponse(Call<ServerScope> call, Response<ServerScope> response) {
-                        if(response.isSuccessful()) {
-                            Log.d("test ", "success");
-                        }else{
-                            Log.d("test ",response.toString());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ServerScope> call, Throwable t) {
-                        Log.d("test ","failure"+t.getMessage());
-                    }
-                });
-                Intent intent2 = new Intent();
-                intent2.putExtra("location",location);
-                setResult(0,intent2);
-                finish();
+            public void onFailure(Call<ServerResult> call, Throwable t) {
             }
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK){
+            String districtId = data.getStringExtra("districtId");
+            retrofitAPI.putAddress(cookie, districtId).enqueue(new Callback<ServerResult>() {
+                @Override
+                public void onResponse(Call<ServerResult> call, Response<ServerResult> response) {
+                    if (response.isSuccessful()){
+                        getAddress();
+                    }
+                }
+                @Override
+                public void onFailure(Call<ServerResult> call, Throwable t) {
+                }
+            });
+        }
+    }
 }

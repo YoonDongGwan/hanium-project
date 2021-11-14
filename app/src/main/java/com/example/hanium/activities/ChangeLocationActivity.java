@@ -63,6 +63,7 @@ public class ChangeLocationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_changelocation);
         search = findViewById(R.id.changelocation_activity_edittext);
         recyclerView = findViewById(R.id.changelocation_activity_recyclerview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(ChangeLocationActivity.this));
         back = findViewById(R.id.changelocation_activity_back);
 
         Intent intent = getIntent();
@@ -78,30 +79,7 @@ public class ChangeLocationActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         retrofitAPI = retrofit.create(RetrofitAPI.class);
-        retrofitAPI.getAddrSearchResult(key,cookie).enqueue(new Callback<LocationinfoResult>() {
-            @Override
-            public void onResponse(Call<LocationinfoResult> call, Response<LocationinfoResult> response) {
-                if(response.isSuccessful()){
-                    list.clear();
-                    for(int i=0;i<response.body().getData().getResult().size();i++)
-                        list.add(response.body().getData().getResult().get(i));
-                     Log.d("te","성공");
-                     recyclerView.setLayoutManager(new LinearLayoutManager(ChangeLocationActivity.this));
-                     TextRecyclerAdapter adapter = new TextRecyclerAdapter(list);
-                     recyclerView.setAdapter(adapter);
-
-                }else{
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<LocationinfoResult> call, Throwable t) {
-                Log.d("tes",t.getMessage().toString());
-                Log.d("test","통신실패");
-            }
-        });
+        getSearchList(key);
 
 
         back.setOnClickListener(new View.OnClickListener() {
@@ -117,14 +95,9 @@ public class ChangeLocationActivity extends AppCompatActivity {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if ((event.getAction() != KeyEvent.ACTION_UP) && keyCode == KeyEvent.KEYCODE_ENTER){
-                    Intent intent = new Intent(ChangeLocationActivity.this, ChangeLocationActivity.class);
-                    intent.putExtra("key",search.getText().toString());
-                    startActivity(intent);
-                    search.clearFocus();
-                    search.setText(null);
-                    finish();
+                    String str = search.getText().toString(); // 검색창에 입력한 값
+                    getSearchList(str);
                     return true;
-
                 }
                 return false;
             }
@@ -132,7 +105,28 @@ public class ChangeLocationActivity extends AppCompatActivity {
 
 
     }
+    private void getSearchList(String key){
+        retrofitAPI.getAddrSearchResult(key,cookie).enqueue(new Callback<LocationinfoResult>() {
+            @Override
+            public void onResponse(Call<LocationinfoResult> call, Response<LocationinfoResult> response) {
+                if(response.isSuccessful()){
+                    list = response.body().getData().getResult();
+                    TextRecyclerAdapter adapter = new TextRecyclerAdapter(list);
+                    recyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                }else{
 
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<LocationinfoResult> call, Throwable t) {
+                Log.d("tes",t.getMessage().toString());
+                Log.d("test","통신실패");
+            }
+        });
+    }
 
 
 

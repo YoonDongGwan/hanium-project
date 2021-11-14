@@ -6,11 +6,11 @@ import java.util.HashMap;
 
 public class ServerResult {
     @SerializedName("success")
-    public String success;
+    private String success;
     @SerializedName("message")
-    public String message;
+    private String message;
     @SerializedName("data")
-    public HashMap<String, String> data;
+    private HashMap<String, String> data;
 
     public String getSuccess() {
         return success;

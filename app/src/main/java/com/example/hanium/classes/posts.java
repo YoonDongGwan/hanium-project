@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import java.util.Date;
 
-public class posts implements Parcelable {
+public class posts{
     private int id;
     private int buyerId;
     private String title;
@@ -185,32 +185,4 @@ public class posts implements Parcelable {
         this.review = review;
     }
 
-    public posts(Parcel in){
-        id = in.readInt();
-        buyerId = in.readInt();
-        title = in.readString();
-    }
-
-    public static final Creator<posts> CREATOR = new Creator<posts>() {
-        @Override
-        public posts createFromParcel(Parcel parcel) {
-            return new posts(parcel);
-        }
-
-        @Override
-        public posts[] newArray(int i) {
-            return new posts[i];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(id);
-        parcel.writeInt(buyerId);
-        parcel.writeString(title);
-    }
 }

@@ -1,6 +1,8 @@
 package com.example.hanium.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -91,5 +93,12 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.framelayout, myErrandFragment).commitAllowingStateLoss();
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            Log.d("test3","test3");
+            mypageFragment.onActivityResult(requestCode, resultCode, data);
+        }
+    }
 }

@@ -22,6 +22,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.hanium.R;
 import com.example.hanium.activities.MainActivity;
@@ -99,9 +100,6 @@ public class mypageFragment extends Fragment {
             location = bundle.getString("location");
         }*/
 
-
-
-
         return v;
     }
     Callback<ServerResult> callback = new Callback<ServerResult>() {
@@ -167,30 +165,11 @@ public class mypageFragment extends Fragment {
         }
     };
 
-
-
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        int request=requestCode&0xffff;
-        if(data!=null) {
-            if (requestCode == 0) {
-                if (resultCode == RESULT_OK) {
-                    Toast.makeText(getContext(), data.getStringExtra("location"), Toast.LENGTH_LONG).show();
-                } else if (resultCode == RESULT_CANCELED) {
-                    String location = data.getStringExtra("location");
-                    Toast.makeText(getContext(), "RESULT_CANCELED : " + location, Toast.LENGTH_SHORT).show();
-                } else {
-
-                }
-
-
-            }
-
-        }else{
-            Log.d("eee","null");
-        }
-
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(this).attach(this).commit();
+        Log.d("test4","test4");
     }
 }
