@@ -1,5 +1,7 @@
 package com.example.hanium.activities;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,9 +26,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SignUpActivity extends AppCompatActivity {
     Retrofit retrofit;
-    RetrofitAPI retrofitFindAPI;
-    EditText signup_email,signup_nickname,signup_name,signup_password,signup_confirm_pwd,signup_phonenumber;
-    Button signup_btn;
+    RetrofitAPI retrofitAPI;
+    EditText signup_email, signup_authenticationnumber, signup_nickname, signup_name, signup_password, signup_confirm_pwd, signup_phonenumber;
+    Button signup_btn, signup_emailsend_btn, signup_authenticationconfirm_btn;
+    String cookie;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,6 +37,9 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
         Button back = findViewById(R.id.signup_back);
         back.setOnClickListener(onClickListener);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        cookie = sharedPreferences.getString("Cookie","");
 
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
@@ -45,36 +51,59 @@ public class SignUpActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(clientBuilder.build())
                 .build();
-        retrofitFindAPI = retrofit.create(RetrofitAPI.class);
+        retrofitAPI = retrofit.create(RetrofitAPI.class);
 
-        signup_email=findViewById(R.id.signup_email);
-        signup_nickname=findViewById(R.id.signup_nickname);
-        signup_name=findViewById(R.id.signup_name);
-        signup_password=findViewById(R.id.signup_password);
-        signup_confirm_pwd=findViewById(R.id.signup_confirm_pwd);
-        signup_phonenumber=findViewById(R.id.signup_phonenumber);
+        signup_email = findViewById(R.id.signup_email);
+        signup_nickname = findViewById(R.id.signup_nickname);
+        signup_name = findViewById(R.id.signup_name);
+        signup_password = findViewById(R.id.signup_password);
+        signup_confirm_pwd = findViewById(R.id.signup_confirm_pwd);
+        signup_phonenumber = findViewById(R.id.signup_phonenumber);
+        signup_authenticationnumber = findViewById(R.id.signup_authenticationnumber);
+        signup_emailsend_btn = findViewById(R.id.signup_emailsend_btn);
+        signup_authenticationconfirm_btn = findViewById(R.id.signup_authenticationconfirm_btn);
 
-
-        signup_btn=findViewById(R.id.signup_btn);
-        signup_btn.setOnClickListener(new View.OnClickListener() {
+        signup_emailsend_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                retrofitFindAPI.signup(signup_email.getText().toString(),signup_nickname.getText().toString(),
-                        signup_name.getText().toString(),signup_password.getText().toString(),
-                        signup_confirm_pwd.getText().toString(),signup_phonenumber.getText().toString()).enqueue(new Callback<HashMap<String, String>>() {
+                retrofitAPI.send(signup_email.getText().toString()).enqueue(new Callback<HashMap<String, String>>() {
                     @Override
                     public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
-                        if (response.isSuccessful()){
-                            Log.d("test","success");
-                        }else{
+                        if (response.isSuccessful()) {
+                            Log.d("test", "success");
+                        } else {
 
-                            Log.d("test1",response.message());
+                            Log.d("test1", response.message());
                         }
                     }
 
                     @Override
                     public void onFailure(Call<HashMap<String, String>> call, Throwable t) {
-                        Log.d("test","failure"+t.getMessage());
+                        Log.d("test", "failure" + t.getMessage());
+                    }
+                });
+            }
+        });
+        signup_btn = findViewById(R.id.signup_btn);
+        signup_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                retrofitAPI.signup(signup_email.getText().toString(), signup_nickname.getText().toString(),
+                        signup_name.getText().toString(), signup_password.getText().toString(),
+                        signup_confirm_pwd.getText().toString(), signup_phonenumber.getText().toString()).enqueue(new Callback<HashMap<String, String>>() {
+                    @Override
+                    public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
+                        if (response.isSuccessful()) {
+                            Log.d("test", "success");
+                        } else {
+
+                            Log.d("test1", response.message());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<HashMap<String, String>> call, Throwable t) {
+                        Log.d("test", "failure" + t.getMessage());
                     }
                 });
             }

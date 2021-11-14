@@ -69,6 +69,10 @@
                 />
 
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <EditText
                     android:layout_width="match_parent"
@@ -76,14 +80,64 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="25dp"
                     android:layout_marginRight="25dp"
-                    android:layout_weight="4"
+
                     android:id="@+id/signup_email"
                     android:background="@drawable/edittext_border"
-                    android:hint="이메일"
+                    android:hint=" 전송을 눌러 인증번호를 받으세요 "
                     android:inputType="text"
                     android:textSize="14sp"
                     android:paddingLeft="5dp"
                     />
+                <Button
+                    android:id="@+id/signup_emailsend_btn"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:text="전송"
+                    android:layout_marginRight="25dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:background="@drawable/login_btn_bg"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="인증번호"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="25dp"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:id="@+id/signup_authenticationnumber"
+                    android:background="@drawable/edittext_border"
+                    android:hint=" 전송된 인증번호 입력"
+                    android:inputType="text"
+                    android:textSize="14sp"
+                    android:paddingLeft="5dp"
+                    />
+                <Button
+                    android:id="@+id/signup_authenticationconfirm_btn"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:text="확인"
+                    android:layout_marginRight="25dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:background="@drawable/login_btn_bg"/>
+            </LinearLayout>
 
 
 
@@ -132,7 +186,7 @@
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
                 android:background="@drawable/edittext_border"
-                android:hint="특수문자 제외 8자 이내"
+                android:hint=" 특수문자 제외 8자 이내"
                 android:inputType="text"
                 android:paddingLeft="5dp"
                 android:textSize="14sp"
@@ -157,7 +211,7 @@
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
                 android:background="@drawable/edittext_border"
-                android:hint="숫자와 영문을 조합하여 8글자 이상"
+                android:hint=" 숫자와 영문을 조합하여 8글자 이상"
                 android:inputType="textPassword"
                 android:paddingLeft="5dp"
                 android:textSize="14sp"
@@ -182,7 +236,7 @@
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
                 android:background="@drawable/edittext_border"
-                android:hint="비밀번호"
+                android:hint=" 비밀번호"
                 android:inputType="textPassword"
                 android:paddingLeft="5dp"
                 android:textSize="14sp"
@@ -206,7 +260,7 @@
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
                 android:background="@drawable/edittext_border"
-                android:hint="-없이 숫자만 입력"
+                android:hint=" -없이 숫자만 입력"
                 android:inputType="phone"
                 android:paddingLeft="5dp"
                 android:textSize="14sp"

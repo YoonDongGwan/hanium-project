@@ -26,7 +26,6 @@ public interface RetrofitAPI {
     @POST("auth/temp")
     Call<HashMap<String, String>> find(@Field("email") String email, @Field("phoneNumber") String phoneNumber);
 
-
     @POST("user/point/refund")
     Call<HashMap<String, String>> refund(@Header("cookie") String cookie, @Field("refundAmount") int refundAmount, @Field("bankName") String bankName,
                                          @Field("account") String account);
@@ -41,6 +40,15 @@ public interface RetrofitAPI {
     Call<HashMap<String, String>> signup(@Field("email") String email, @Field("nickname") String nickname,
                                          @Field("name") String name, @Field("password") String password,
                                          @Field("confirm_pwd") String confirm_pwd, @Field("phoneNumber") String phoneNumber);
+
+    @FormUrlEncoded
+    @POST("auth/send")
+    Call<HashMap<String, String>> send(@Field("email") String email);
+
+    @FormUrlEncoded
+    @POST("auth/confirm")
+    Call<HashMap<String, String>> Confirm(@Header("cookie") String cookie, @Field("email") String email);
+
 
     @FormUrlEncoded
     @POST("address/check")
