@@ -31,14 +31,12 @@ public class MainActivity extends AppCompatActivity {
     ExchaningPointFragment exchaningPointFragment = new ExchaningPointFragment();
     MyErrandFragment myErrandFragment = new MyErrandFragment();
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.framelayout, homeFragment).commitAllowingStateLoss();
-
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomnavi);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -92,13 +90,21 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
         fragmentTransaction.replace(R.id.framelayout, myErrandFragment).commitAllowingStateLoss();
     }
+    public void onClickCompleteModifyBtn(){
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
+        fragmentTransaction.replace(R.id.framelayout, mypageFragment).commitAllowingStateLoss();
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK){
             Log.d("test3","test3");
-            mypageFragment.onActivityResult(requestCode, resultCode, data);
+            if(requestCode==0)
+                mypageFragment.onActivityResult(requestCode, resultCode, data);
+            if(requestCode==1)
+                modifyingProfileFragment.onActivityResult(requestCode, resultCode, data);
         }
     }
 }
