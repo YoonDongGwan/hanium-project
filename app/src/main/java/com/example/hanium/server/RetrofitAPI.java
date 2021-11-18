@@ -1,6 +1,7 @@
 package com.example.hanium.server;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import okhttp3.MultipartBody;
@@ -53,7 +54,7 @@ public interface RetrofitAPI {
 
     @Multipart
     @POST("post")
-    Call<HashMap<String, String>> post(@Header("Cookie") String cookie, @Part MultipartBody.Part Image, @PartMap HashMap<String, RequestBody> data);
+    Call<HashMap<String, String>> addPost(@Header("Cookie") String cookie, @Part("title") RequestBody title, @Part("description") RequestBody description, @Part("price")RequestBody price, @Part("deadline")RequestBody deadline, @Part("requiredTime")RequestBody requiredTime, @Part ArrayList<MultipartBody.Part> Images);
 
     @FormUrlEncoded
     @POST("post/review/{id}")

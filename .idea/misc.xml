@@ -5,6 +5,7 @@
       <map>
         <entry key="app/src/main/res/drawable/top_shadow.xml" value="0.2984375" />
         <entry key="app/src/main/res/layout/activitiy_search.xml" value="0.16145833333333334" />
+        <entry key="app/src/main/res/layout/activity_addpost.xml" value="0.1585144927536232" />
         <entry key="app/src/main/res/layout/activity_changelocation.xml" value="0.19882246376811594" />
         <entry key="app/src/main/res/layout/activity_find.xml" value="0.12604166666666666" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.16032608695652173" />
