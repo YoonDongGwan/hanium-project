@@ -1,7 +1,5 @@
 package com.example.hanium.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,15 +10,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.hanium.R;
 import com.example.hanium.server.RetrofitAPI;
 
-import java.io.IOException;
 import java.util.HashMap;
 
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,12 +43,10 @@ public class LoginActivity extends AppCompatActivity {
         login_email = findViewById(R.id.login_email);
         login_password = findViewById(R.id.login_password);
 
-
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         clientBuilder.addInterceptor(loggingInterceptor);
-
 
         retrofit = new Retrofit.Builder()
                 .baseUrl("http://15.164.145.19:3001/")
@@ -61,7 +56,6 @@ public class LoginActivity extends AppCompatActivity {
         retrofitLoginAPI = retrofit.create(RetrofitAPI.class);
 
     }
-
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override

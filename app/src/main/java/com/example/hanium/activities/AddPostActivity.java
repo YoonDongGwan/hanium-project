@@ -54,12 +54,12 @@ public class AddPostActivity extends AppCompatActivity {
             deadline_mm,requiredTime_HH,requiredTime_MM;
     String requiredTime,deadline;
     File file;
-    InputStream inputStream = null;
     Bitmap bitmap;
     ByteArrayOutputStream byteArrayOutputStream;
     SharedPreferences sharedPreferences;
     String cookie;
 
+    ArrayList<MultipartBody.Part> images = new ArrayList<>();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,11 +93,9 @@ public class AddPostActivity extends AppCompatActivity {
         deadline_DD = findViewById(R.id.deadline_DD);
         deadline_HH = findViewById(R.id.deadline_HH);
         deadline_mm = findViewById(R.id.deadline_mm);
-        deadline = deadline_YYYY.getText().toString() + "-" + deadline_MM.getText().toString() + "-"+deadline_DD.getText().toString()
-                + " " + deadline_HH.getText().toString() + ":" + deadline_mm.getText().toString() + ":00";
+
         requiredTime_HH = findViewById(R.id.requiredTime_HH);
         requiredTime_MM = findViewById(R.id.requiredTime_MM);
-        requiredTime = requiredTime_HH.getText().toString() + "시간" + requiredTime_MM.getText().toString() + "분";
 
         post_btn=findViewById(R.id.post_btn);
         back.setOnClickListener(onClickListener);
@@ -121,14 +119,32 @@ public class AddPostActivity extends AppCompatActivity {
                     finish();
                     break;
                 case R.id.post_btn:
+                    deadline = deadline_YYYY.getText().toString() + "-" + deadline_MM.getText().toString() + "-"+deadline_DD.getText().toString()
+                            + " " + deadline_HH.getText().toString() + ":" + deadline_mm.getText().toString() + ":00";
+                    requiredTime = requiredTime_HH.getText().toString() + "시간" + requiredTime_MM.getText().toString() + "분";
 
-//                    RequestBody bodyTitle = RequestBody.create(title.getText().toString(), MediaType.parse("text/plain"));
-//                    RequestBody bodyDescription = RequestBody.create(description.getText().toString(), MediaType.parse("text/plain"));
-//                    RequestBody bodyPrice = RequestBody.create(price.getText().toString(), MediaType.parse("text/plain"));
-                    RequestBody bodyRequiredTime = RequestBody.create(requiredTime, MediaType.parse("text/plain"));
-                    RequestBody bodyDeadline = RequestBody.create(deadline, MediaType.parse("text/plain"));
-//                    retrofitAPI.addPost(cookie, bodyTitle, bodyDescription, bodyPrice, bodyDeadline, bodyRequiredTime,);
-                    finish();
+                    RequestBody bodyTitle = RequestBody.create(MediaType.parse("text/plain"), title.getText().toString());
+                    RequestBody bodyDescription = RequestBody.create(MediaType.parse("text/plain"), description.getText().toString());
+                    RequestBody bodyPrice = RequestBody.create(MediaType.parse("text/plain"), price.getText().toString());
+                    RequestBody bodyRequiredTime = RequestBody.create(MediaType.parse("text/plain"), requiredTime);
+                    RequestBody bodyDeadline = RequestBody.create(MediaType.parse("text/plain"), deadline);
+
+
+                    Log.d("addPost",deadline);
+                    retrofitAPI.addPost(cookie, bodyTitle, bodyDescription, bodyPrice, bodyDeadline, bodyRequiredTime, images).enqueue(new Callback<HashMap<String, String>>() {
+                        @Override
+                        public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
+                            if (response.isSuccessful()){
+                                Log.d("addPost","success");
+                                finish();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<HashMap<String, String>> call, Throwable t) {
+                            Log.d("addPost","fail");
+                        }
+                    });
                     break;
             }
         }
@@ -142,30 +158,37 @@ public class AddPostActivity extends AppCompatActivity {
                 ArrayList<Uri> list = new ArrayList<>();
                 list.add(null);
                 ClipData clipData = data.getClipData();
-
                 if (clipData != null){
                     for (int i=0; i<clipData.getItemCount(); i++){
-                        list.add(clipData.getItemAt(i).getUri());
-                        file = new File(clipData.getItemAt(i).getUri().getPath());
-                        inputStream = null;
-                        try {
-                            inputStream = getApplicationContext().getContentResolver().openInputStream(clipData.getItemAt(i).getUri());
-                        }catch(IOException e) {
-                            e.printStackTrace();
-                        }
-                        bitmap = BitmapFactory.decodeStream(inputStream);
-                        byteArrayOutputStream = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream);
+                        Uri uri = clipData.getItemAt(i).getUri();
+                        list.add(uri);
+                        addImagesForMultipart(uri);
                     }
                 }
                 else{
-                    list.add(data.getData());
+                    Uri uri = data.getData();
+                    list.add(uri);
+                    addImagesForMultipart(uri);
                 }
                 adapter = new AddImageRecyclerAdapter(list);
                 recyclerView.setAdapter(adapter);
             }
         }
     }
-
+    private void addImagesForMultipart(Uri uri){
+        file = new File(uri.getPath());
+        InputStream inputStream = null;
+        try {
+            inputStream = getApplicationContext().getContentResolver().openInputStream(uri);
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
+        bitmap = BitmapFactory.decodeStream(inputStream);
+        byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray());
+        MultipartBody.Part image = MultipartBody.Part.createFormData("images", file.getName() ,requestBody);
+        images.add(image);
+    }
 
 }

@@ -7,7 +7,7 @@ import java.util.HashMap;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
-import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -29,6 +29,9 @@ public interface RetrofitAPI {
     @POST("auth/temp")
     Call<HashMap<String, String>> find(@Field("email") String email, @Field("phoneNumber") String phoneNumber);
 
+    @Multipart
+    @POST("user/edit")
+    Call<HashMap<String, String>> modify(@Header("Cookie") String cookie, @Part MultipartBody.Part Image, @PartMap HashMap<String, RequestBody> data);
 
     @POST("user/point/refund")
     Call<HashMap<String, String>> refund(@Header("cookie") String cookie, @Field("refundAmount") int refundAmount, @Field("bankName") String bankName,
@@ -46,11 +49,20 @@ public interface RetrofitAPI {
                                          @Field("confirm_pwd") String confirm_pwd, @Field("phoneNumber") String phoneNumber);
 
     @FormUrlEncoded
+    @POST("auth/send")
+    Call<HashMap<String, String>> send(@Field("email") String email);
+
+    @FormUrlEncoded
+    @POST("auth/confirm")
+    Call<HashMap<String, String>> Confirm(@Header("cookie") String cookie, @Field("email") String email);
+
+
+    @FormUrlEncoded
     @POST("address/check")
     Call<ServerScope> setScope(@Header("Cookie") String cookie, @Field("addressScope") int addressScope);
 
     @PUT("address/{districtId}")
-    Call<ServerResult> putAddress(@Header("Cookie")String cookie, @Path("districtId")String districtId);
+    Call<ServerResult> putAddress(@Header("Cookie") String cookie, @Path("districtId") String districtId);
 
     @Multipart
     @POST("post")
@@ -58,11 +70,11 @@ public interface RetrofitAPI {
 
     @FormUrlEncoded
     @POST("post/review/{id}")
-    Call<ServerResult> setReviewPoint(@Header("Cookie")String cookie, @Path("id")String id, @Field("reviewPoint")int reviewPoint);
+    Call<ServerResult> setReviewPoint(@Header("Cookie") String cookie, @Path("id") String id, @Field("reviewPoint") int reviewPoint);
 
     @FormUrlEncoded
     @POST("address")
-    Call<ServerResult> setAddressScope(@Header("Cookie")String cookie, @Field("addressScope")int addressScope);
+    Call<ServerResult> setAddressScope(@Header("Cookie") String cookie, @Field("addressScope") int addressScope);
 
     @GET("main")
     Call<HomePostsResult> getPosts(@Header("Cookie") String cookie);
@@ -97,4 +109,6 @@ public interface RetrofitAPI {
     @GET("address/search")
     Call<LocationinfoResult> getAddrSearchResult(@Query("name") String name, @Header("Cookie") String cookie);
 
+    @DELETE("post/{id}")
+    Call<ServerResult> deletePost(@Header("Cookie")String cookie, @Path("id")String id);
 }

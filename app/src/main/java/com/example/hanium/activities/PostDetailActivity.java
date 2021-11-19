@@ -20,6 +20,7 @@ import com.example.hanium.classes.postInfo;
 import com.example.hanium.classes.sellerInfo;
 import com.example.hanium.server.PostDetailResult;
 import com.example.hanium.server.RetrofitAPI;
+import com.example.hanium.server.ServerResult;
 import com.google.gson.JsonObject;
 
 import java.io.IOException;
@@ -41,19 +42,21 @@ public class PostDetailActivity extends AppCompatActivity {
     ArrayList<String> images = new ArrayList<>();
     ArrayList<Bitmap> bitmaps = new ArrayList<>();
     ViewPager viewPager;
-    Button clent_info_btn, back;
+    Button clent_info_btn, back, delete_btn, edit_btn;
     TextView title, description, price, price2, requiredTime, deadline, createAt, sellingDistrict, nickname;
     Retrofit retrofit;
     RetrofitAPI retrofitAPI;
-
+    String cookie, id, myNickname = "0", sellerNickname = "1";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         Intent intent = getIntent();
-        String id = intent.getStringExtra("id");
+        id = intent.getStringExtra("id");
         viewPager = findViewById(R.id.imageviewpager);
         clent_info_btn = findViewById(R.id.client_info_btn);
+        delete_btn = findViewById(R.id.detail_delete_btn);
+        edit_btn = findViewById(R.id.detail_edit_btn);
         back = findViewById(R.id.detail_back);
         title = findViewById(R.id.detail_title);
         description = findViewById(R.id.detail_description);
@@ -65,19 +68,32 @@ public class PostDetailActivity extends AppCompatActivity {
         sellingDistrict = findViewById(R.id.detail_sellingDistrict);
         nickname = findViewById(R.id.detail_nickname);
         SharedPreferences sharedPreferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
-        String cookie = sharedPreferences.getString("Cookie","");
+        cookie = sharedPreferences.getString("Cookie","");
 
         retrofit = new Retrofit.Builder()
                 .baseUrl("http://15.164.145.19:3001/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         retrofitAPI = retrofit.create(RetrofitAPI.class);
+        retrofitAPI.getUser(cookie).enqueue(new Callback<ServerResult>() {
+            @Override
+            public void onResponse(Call<ServerResult> call, Response<ServerResult> response) {
+                if(response.isSuccessful()){
+                    myNickname = response.body().getData().get("nickname");
+                    Log.d("test",myNickname);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ServerResult> call, Throwable t) {
+
+            }
+        });
         retrofitAPI.getDetail(id,cookie).enqueue(callback);
+
 
         clent_info_btn.setOnClickListener(onClickListener);
         back.setOnClickListener(onClickListener);
-
-
     }
     Callback<PostDetailResult> callback = new Callback<PostDetailResult>() {
         @Override
@@ -85,7 +101,15 @@ public class PostDetailActivity extends AppCompatActivity {
             if (response.isSuccessful()){
                 postInfo postinfo = response.body().getData().getPostInfo();
                 sellerInfo sellerinfo = response.body().getData().getSellerInfo();
-                nickname.setText(sellerinfo.getNickname());
+                sellerNickname = sellerinfo.getNickname();
+                if(myNickname.equals(sellerNickname)) {
+                    edit_btn.setVisibility(View.VISIBLE);
+                    delete_btn.setVisibility(View.VISIBLE);
+                    edit_btn.setOnClickListener(onClickListener);
+                    delete_btn.setOnClickListener(onClickListener);
+                }
+                Log.d("test", sellerNickname);
+                nickname.setText(sellerNickname);
                 title.setText(postinfo.getTitle());
                 Log.d("test",postinfo.getCreatedAt().toString());
                 createAt.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(postinfo.getCreatedAt()));
@@ -100,12 +124,14 @@ public class PostDetailActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         try {
-                            URL url = new URL(images.get(0));
-                            HttpsURLConnection connection = (HttpsURLConnection)url.openConnection();
-                            connection.setDoInput(true);
-                            connection.connect();
-                            InputStream inputStream = connection.getInputStream();
-                            bitmaps.add(BitmapFactory.decodeStream(inputStream));
+                            for(int i = 0; i < images.size(); i++){
+                                URL url = new URL(images.get(i));
+                                HttpsURLConnection connection = (HttpsURLConnection)url.openConnection();
+                                connection.setDoInput(true);
+                                connection.connect();
+                                InputStream inputStream = connection.getInputStream();
+                                bitmaps.add(BitmapFactory.decodeStream(inputStream));
+                            }
                         } catch (MalformedURLException e) {
                             e.printStackTrace();
                         } catch (IOException e) {
@@ -142,6 +168,24 @@ public class PostDetailActivity extends AppCompatActivity {
                 break;
             case R.id.detail_back:
                 finish();
+                break;
+            case R.id.detail_edit_btn:
+                break;
+            case R.id.detail_delete_btn:
+                retrofitAPI.deletePost(cookie, id).enqueue(new Callback<ServerResult>() {
+                    @Override
+                    public void onResponse(Call<ServerResult> call, Response<ServerResult> response) {
+                        if (response.isSuccessful()){
+                            Log.d("test","삭제 성공");
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ServerResult> call, Throwable t) {
+                        Log.d("test",t.getMessage().toString());
+                    }
+                });
                 break;
             }
         }

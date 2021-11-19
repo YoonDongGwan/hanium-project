@@ -1,8 +1,5 @@
 package com.example.hanium.fragments.mypage;
 
-import static android.app.Activity.RESULT_CANCELED;
-import static android.app.Activity.RESULT_OK;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,7 +14,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -52,7 +48,6 @@ public class mypageFragment extends Fragment {
     Retrofit retrofit;
     RetrofitAPI retrofitAPI;
     Bitmap bitmap;
-    String location="";
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -93,12 +88,6 @@ public class mypageFragment extends Fragment {
         exchange_point_btn.setOnClickListener(onClickListener);
         my_errand_btn.setOnClickListener(onClickListener);
         location_change_btn.setOnClickListener(onClickListener);
-
-
-        /*if(!location.equals("")) {
-            Bundle bundle = getArguments();
-            location = bundle.getString("location");
-        }*/
 
         return v;
     }
