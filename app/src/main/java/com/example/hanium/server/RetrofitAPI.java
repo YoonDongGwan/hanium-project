@@ -68,6 +68,10 @@ public interface RetrofitAPI {
     @POST("post")
     Call<HashMap<String, String>> addPost(@Header("Cookie") String cookie, @Part("title") RequestBody title, @Part("description") RequestBody description, @Part("price")RequestBody price, @Part("deadline")RequestBody deadline, @Part("requiredTime")RequestBody requiredTime, @Part ArrayList<MultipartBody.Part> Images);
 
+    @Multipart
+    @POST("post/edit/{id}")
+    Call<HashMap<String, String>> editPost(@Header("Cookie") String cookie, @Path("id")String id, @Part("title") RequestBody title, @Part("description") RequestBody description, @Part("price")RequestBody price, @Part("deadline")RequestBody deadline, @Part("requiredTime")RequestBody requiredTime, @Part ArrayList<MultipartBody.Part> Images);
+
     @FormUrlEncoded
     @POST("post/review/{id}")
     Call<ServerResult> setReviewPoint(@Header("Cookie") String cookie, @Path("id") String id, @Field("reviewPoint") int reviewPoint);

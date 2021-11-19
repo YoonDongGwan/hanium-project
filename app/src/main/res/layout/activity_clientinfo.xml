@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/popuptitle"
+        android:id="@+id/popupTitle"
         android:text="&lt; 회원 정보 &gt;"
         android:textColor="@color/black"
         android:textStyle="bold"
@@ -28,7 +28,7 @@
     <ImageView
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:id="@+id/chat_profile"
+        android:id="@+id/clientInfo_profile"
         android:background="#656565"
         android:layout_marginLeft="30dp"
         ></ImageView>
@@ -42,7 +42,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="너굴맨"
+            android:id="@+id/clientInfo_nickname"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="15sp"
@@ -51,7 +51,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="부천 상동"
+            android:id="@+id/clientInfo_simpleAddress"
             android:textColor="@color/black"
             android:textSize="12sp"
             ></TextView>
@@ -78,7 +78,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="연비"
+            android:text="평점"
             android:textColor="@color/black"
             android:textSize="14sp"
             android:textStyle="bold"
@@ -86,7 +86,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="4.23"
+                android:id="@+id/clientInfo_mannerPoint"
                 android:textColor="#ff6565"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -97,7 +97,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="km/L"
+                android:text="점"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="italic"
@@ -119,7 +119,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="3"
+                android:id="@+id/clientInfo_sellCount"
                 android:textColor="#ff6565"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -152,7 +152,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="10"
+                android:id="@+id/clientInfo_buyCount"
                 android:textColor="#ff6565"
                 android:textSize="14sp"
                 android:textStyle="bold"

@@ -1,16 +1,19 @@
 package com.example.hanium.activities;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
@@ -21,7 +24,6 @@ import com.example.hanium.classes.sellerInfo;
 import com.example.hanium.server.PostDetailResult;
 import com.example.hanium.server.RetrofitAPI;
 import com.example.hanium.server.ServerResult;
-import com.google.gson.JsonObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,11 +44,12 @@ public class PostDetailActivity extends AppCompatActivity {
     ArrayList<String> images = new ArrayList<>();
     ArrayList<Bitmap> bitmaps = new ArrayList<>();
     ViewPager viewPager;
-    Button clent_info_btn, back, delete_btn, edit_btn;
+    Button client_info_btn, back, delete_btn, edit_btn;
     TextView title, description, price, price2, requiredTime, deadline, createAt, sellingDistrict, nickname;
     Retrofit retrofit;
     RetrofitAPI retrofitAPI;
-    String cookie, id, myNickname = "0", sellerNickname = "1";
+    String cookie, id, myNickname = "0", sellerNickname = "1", mannerPoint, profileImages, simpleAddress, sellCount, buyCount;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +57,7 @@ public class PostDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
         viewPager = findViewById(R.id.imageviewpager);
-        clent_info_btn = findViewById(R.id.client_info_btn);
+        client_info_btn = findViewById(R.id.client_info_btn);
         delete_btn = findViewById(R.id.detail_delete_btn);
         edit_btn = findViewById(R.id.detail_edit_btn);
         back = findViewById(R.id.detail_back);
@@ -80,19 +83,15 @@ public class PostDetailActivity extends AppCompatActivity {
             public void onResponse(Call<ServerResult> call, Response<ServerResult> response) {
                 if(response.isSuccessful()){
                     myNickname = response.body().getData().get("nickname");
-                    Log.d("test",myNickname);
                 }
             }
-
             @Override
             public void onFailure(Call<ServerResult> call, Throwable t) {
-
             }
         });
         retrofitAPI.getDetail(id,cookie).enqueue(callback);
 
-
-        clent_info_btn.setOnClickListener(onClickListener);
+        client_info_btn.setOnClickListener(onClickListener);
         back.setOnClickListener(onClickListener);
     }
     Callback<PostDetailResult> callback = new Callback<PostDetailResult>() {
@@ -108,10 +107,8 @@ public class PostDetailActivity extends AppCompatActivity {
                     edit_btn.setOnClickListener(onClickListener);
                     delete_btn.setOnClickListener(onClickListener);
                 }
-                Log.d("test", sellerNickname);
                 nickname.setText(sellerNickname);
                 title.setText(postinfo.getTitle());
-                Log.d("test",postinfo.getCreatedAt().toString());
                 createAt.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(postinfo.getCreatedAt()));
                 price.setText(postinfo.getPrice()+"P");
                 price2.setText(postinfo.getPrice()+"P");
@@ -147,15 +144,33 @@ public class PostDetailActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                mannerPoint = sellerinfo.getMannerPoint();
+                profileImages = sellerinfo.getProfileImages();
+                simpleAddress = sellerinfo.getSimpleAdrress();
+                sellCount = String.valueOf(sellerinfo.getSellCount());
+                buyCount = String.valueOf(sellerinfo.getBuyCount());
             }else{
-                Log.d("test",response.toString());
+                AlertDialog.Builder builder = new AlertDialog.Builder(PostDetailActivity.this);
+                builder.setMessage("이미 삭제된 게시물입니다.").setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface dialogInterface) {
+                        alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(Color.rgb(255,65,65));
+                    }
+                });
+                alertDialog.show();
             }
         }
 
         @Override
         public void onFailure(Call<PostDetailResult> call, Throwable t) {
-            Log.d("test",call.toString());
-            Log.d("test",t.getMessage().toString());
+
         }
     };
     View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -164,12 +179,27 @@ public class PostDetailActivity extends AppCompatActivity {
             switch (v.getId()){
             case R.id.client_info_btn:
                 Intent intent = new Intent(getApplicationContext(),ClientInfoPopUp.class);
+                intent.putExtra("nickname", sellerNickname);
+                intent.putExtra("mannerPoint", mannerPoint);
+                intent.putExtra("profileImages", profileImages);
+                intent.putExtra("simpleAddress", simpleAddress);
+                intent.putExtra("sellCount", sellCount);
+                intent.putExtra("buyCount", buyCount);
                 startActivity(intent);
                 break;
             case R.id.detail_back:
                 finish();
                 break;
             case R.id.detail_edit_btn:
+                Intent intent1 = new Intent(getApplicationContext(), EditPostActivity.class);
+                intent1.putExtra("id", id);
+                intent1.putExtra("title", title.getText().toString());
+                intent1.putExtra("deadline", deadline.getText().toString());
+                intent1.putExtra("requiredTime", requiredTime.getText().toString());
+                intent1.putExtra("price", price.getText().toString());
+                intent1.putExtra("description", description.getText().toString());
+                startActivity(intent1);
+                finish();
                 break;
             case R.id.detail_delete_btn:
                 retrofitAPI.deletePost(cookie, id).enqueue(new Callback<ServerResult>() {
