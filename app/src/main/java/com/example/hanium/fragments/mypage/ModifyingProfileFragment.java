@@ -191,7 +191,9 @@ public class ModifyingProfileFragment extends Fragment {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == 1) {
                 Uri returnUri = data.getData();
+                Log.d("test",returnUri.toString());
                 file = new File(returnUri.getPath());
+                Log.d("test",returnUri.getPath());
                 InputStream inputStream = null;
                 try {
                     inputStream =getContext().getContentResolver().openInputStream(returnUri);

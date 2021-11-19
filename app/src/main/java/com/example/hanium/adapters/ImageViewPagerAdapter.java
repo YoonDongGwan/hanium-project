@@ -44,21 +44,21 @@ public class ImageViewPagerAdapter extends PagerAdapter {
         View view = inflater.inflate(R.layout.viewpager_item,container,false);
         ImageView imageView = view.findViewById(R.id.postdetail_imageview);
         imageView.setImageBitmap(bitmaps.get(position));
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(container.getContext(), OnClickImageActivity.class);
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                for (int i = 0; i < bitmaps.size(); i++){
-                    Bitmap bitmap = bitmaps.get(i);
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                    byte[] byteArray = stream.toByteArray();
-                    intent.putExtra("bitmap"+i,byteArray);
-                }
-                intent.putExtra("size",bitmaps.size());
-                ContextCompat.startActivity(container.getContext(),intent,null);
-            }
-        });
+//        imageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(container.getContext(), OnClickImageActivity.class);
+//                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//                for (int i = 0; i < bitmaps.size(); i++){
+//                    Bitmap bitmap = bitmaps.get(i);
+//                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+//                    byte[] byteArray = stream.toByteArray();
+//                    intent.putExtra("bitmap"+i,byteArray);
+//                }
+//                intent.putExtra("size",bitmaps.size());
+//                ContextCompat.startActivity(container.getContext(),intent,null);
+//            }
+//        });
         container.addView(view);
         return view;
     }

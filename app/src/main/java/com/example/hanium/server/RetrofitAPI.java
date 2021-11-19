@@ -1,11 +1,13 @@
 package com.example.hanium.server;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -69,7 +71,7 @@ public interface RetrofitAPI {
 
     @Multipart
     @POST("post")
-    Call<HashMap<String, String>> post(@Header("Cookie") String cookie, @Part MultipartBody.Part Image, @PartMap HashMap<String, RequestBody> data);
+    Call<HashMap<String, String>> addPost(@Header("Cookie") String cookie, @Part("title") RequestBody title, @Part("description") RequestBody description, @Part("price")RequestBody price, @Part("deadline")RequestBody deadline, @Part("requiredTime")RequestBody requiredTime, @Part ArrayList<MultipartBody.Part> Images);
 
     @FormUrlEncoded
     @POST("post/review/{id}")
@@ -112,4 +114,6 @@ public interface RetrofitAPI {
     @GET("address/search")
     Call<LocationinfoResult> getAddrSearchResult(@Query("name") String name, @Header("Cookie") String cookie);
 
+    @DELETE("post/{id}")
+    Call<ServerResult> deletePost(@Header("Cookie")String cookie, @Path("id")String id);
 }

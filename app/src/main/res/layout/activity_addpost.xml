@@ -136,6 +136,8 @@
             <EditText
                 android:layout_width="50dp"
                 android:layout_height="30dp"
+                android:inputType="number"
+                android:gravity="right"
                 android:id="@+id/deadline_YYYY"
                 android:background="@drawable/edittext_border"
                 ></EditText>
@@ -151,6 +153,8 @@
             <EditText
                 android:layout_width="50dp"
                 android:layout_height="30dp"
+                android:inputType="number"
+                android:gravity="right"
                 android:id="@+id/deadline_MM"
                 android:background="@drawable/edittext_border"
                 android:layout_marginLeft="50dp"
@@ -167,6 +171,8 @@
             <EditText
                 android:layout_width="50dp"
                 android:layout_height="30dp"
+                android:inputType="number"
+                android:gravity="right"
                 android:id="@+id/deadline_DD"
                 android:background="@drawable/edittext_border"
                 android:layout_marginLeft="50dp"
@@ -192,6 +198,8 @@
             <EditText
                 android:layout_width="50dp"
                 android:layout_height="30dp"
+                android:inputType="number"
+                android:gravity="right"
                 android:id="@+id/deadline_HH"
                 android:background="@drawable/edittext_border"
                 ></EditText>
@@ -207,6 +215,8 @@
             <EditText
                 android:layout_width="50dp"
                 android:layout_height="30dp"
+                android:inputType="number"
+                android:gravity="right"
                 android:id="@+id/deadline_mm"
                 android:background="@drawable/edittext_border"
                 android:layout_marginLeft="50dp"
@@ -242,7 +252,9 @@
             <EditText
                 android:layout_width="50dp"
                 android:layout_height="30dp"
+                android:gravity="right"
                 android:id="@+id/requiredTime_HH"
+                android:inputType="number"
                 android:background="@drawable/edittext_border"
                 ></EditText>
             <TextView
@@ -257,6 +269,8 @@
             <EditText
                 android:layout_width="50dp"
                 android:layout_height="30dp"
+                android:gravity="right"
+                android:inputType="number"
                 android:id="@+id/requiredTime_MM"
                 android:background="@drawable/edittext_border"
                 android:layout_marginLeft="37dp"

@@ -45,6 +45,28 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     ></TextView>
+                <Button
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:id="@+id/detail_edit_btn"
+                    android:background="@drawable/ic_baseline_edit_24"
+                    android:layout_marginRight="24dp"
+                    android:visibility="gone"
+                    app:layout_constraintRight_toLeftOf="@id/detail_delete_btn"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    ></Button>
+                <Button
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:id="@+id/detail_delete_btn"
+                    android:background="@drawable/ic_baseline_delete_24"
+                    android:layout_marginRight="12dp"
+                    android:visibility="gone"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    ></Button>
             </androidx.constraintlayout.widget.ConstraintLayout>
     <ScrollView
         android:layout_width="match_parent"
@@ -115,7 +137,6 @@
                 android:id="@+id/detail_title"
                 android:textSize="17sp"
                 android:textStyle="bold"
-                android:text="강아지 산책해주세요"
                 android:textColor="@color/black"
                 android:layout_marginTop="10dp"
                 ></TextView>
@@ -142,7 +163,6 @@
                 android:id="@+id/detail_price"
                 android:textSize="16sp"
                 android:textColor="#ff6565"
-                android:text="15,000P"
                 android:textStyle="bold"
                 android:layout_marginLeft="100dp"
                 android:layout_marginBottom="10dp"
