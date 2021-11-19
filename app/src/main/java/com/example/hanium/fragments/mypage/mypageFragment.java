@@ -23,6 +23,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.hanium.R;
 import com.example.hanium.activities.MainActivity;
 import com.example.hanium.activities.SetLocationActivity;
+import com.example.hanium.activities.SettingActivity;
 import com.example.hanium.server.RetrofitAPI;
 import com.example.hanium.server.ServerResult;
 
@@ -40,7 +41,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class mypageFragment extends Fragment {
-    Button modify_profile_btn, exchange_point_btn, my_errand_btn;
+    Button modify_profile_btn, exchange_point_btn, my_errand_btn, setting_btn;
     ImageButton location_change_btn;
     TextView nickname, simpleAddress, mannerPoint, cash;
     ImageView profile;
@@ -48,6 +49,7 @@ public class mypageFragment extends Fragment {
     Retrofit retrofit;
     RetrofitAPI retrofitAPI;
     Bitmap bitmap;
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -60,7 +62,6 @@ public class mypageFragment extends Fragment {
         mainActivity = null;
     }
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -68,15 +69,16 @@ public class mypageFragment extends Fragment {
         modify_profile_btn = v.findViewById(R.id.modify_profile_btn);
         exchange_point_btn = v.findViewById(R.id.exchange_point_btn);
         my_errand_btn = v.findViewById(R.id.my_errand_btn);
-        location_change_btn=v.findViewById(R.id.location_change_btn);
+        location_change_btn = v.findViewById(R.id.location_change_btn);
         profile = v.findViewById(R.id.mypage_profile);
         nickname = v.findViewById(R.id.nickname);
         simpleAddress = v.findViewById(R.id.simpleAddress);
         mannerPoint = v.findViewById(R.id.mannerPoint);
         cash = v.findViewById(R.id.cash);
+        setting_btn=v.findViewById(R.id.setting_btn);
 
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
-        String cookie = sharedPreferences.getString("Cookie","");
+        String cookie = sharedPreferences.getString("Cookie", "");
 
         retrofit = new Retrofit.Builder()
                 .baseUrl("http://15.164.145.19:3001/")
@@ -88,19 +90,21 @@ public class mypageFragment extends Fragment {
         exchange_point_btn.setOnClickListener(onClickListener);
         my_errand_btn.setOnClickListener(onClickListener);
         location_change_btn.setOnClickListener(onClickListener);
+        setting_btn.setOnClickListener(onClickListener);
 
         return v;
     }
+
     Callback<ServerResult> callback = new Callback<ServerResult>() {
         @Override
         public void onResponse(Call<ServerResult> call, Response<ServerResult> response) {
-            if(response.isSuccessful()){
-                Thread thread = new Thread(){
+            if (response.isSuccessful()) {
+                Thread thread = new Thread() {
                     @Override
                     public void run() {
                         try {
                             URL url = new URL(response.body().getData().get("profileImageURI"));
-                            HttpsURLConnection connection = (HttpsURLConnection)url.openConnection();
+                            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
                             connection.setDoInput(true);
                             connection.connect();
                             InputStream inputStream = connection.getInputStream();
@@ -123,21 +127,21 @@ public class mypageFragment extends Fragment {
                 simpleAddress.setText(response.body().getData().get("simpleAddress"));
                 mannerPoint.setText(response.body().getData().get("mannerPoint"));
                 cash.setText(response.body().getData().get("cash"));
-            }else{
-                Log.d("test",response.toString());
+            } else {
+                Log.d("test", response.toString());
             }
         }
 
         @Override
         public void onFailure(Call<ServerResult> call, Throwable t) {
-            Log.d("test","통신 실패");
+            Log.d("test", "통신 실패");
         }
     };
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            switch (v.getId()){
+            switch (v.getId()) {
                 case R.id.modify_profile_btn:
                     mainActivity.onClickModifyBtn();
                     break;
@@ -148,7 +152,10 @@ public class mypageFragment extends Fragment {
                     mainActivity.onClickErrandBtn();
                     break;
                 case R.id.location_change_btn:
-                    getActivity().startActivityForResult(new Intent(getContext(), SetLocationActivity.class),0);
+                    getActivity().startActivityForResult(new Intent(getContext(), SetLocationActivity.class), 0);
+                    break;
+                case R.id.setting_btn:
+                    startActivity(new Intent(getContext(), SettingActivity.class));
                     break;
             }
         }
@@ -159,6 +166,6 @@ public class mypageFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.detach(this).attach(this).commit();
-        Log.d("test4","test4");
+        Log.d("test4", "test4");
     }
 }
