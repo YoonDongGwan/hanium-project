@@ -125,7 +125,8 @@ public class ModifyingProfileFragment extends Fragment {
                         @Override
                         public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
                             if (response.isSuccessful()){
-
+                                mainActivity.onClickCompleteModifyBtn();
+                                modify_profile_password.setText("");
                             }else{
 
                                 Log.d("test1",response.message());
@@ -137,7 +138,7 @@ public class ModifyingProfileFragment extends Fragment {
 
                         }
                     });
-                    mainActivity.onClickCompleteModifyBtn();
+
                     break;
             }
         }

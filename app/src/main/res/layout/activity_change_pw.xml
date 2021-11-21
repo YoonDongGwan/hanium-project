@@ -31,6 +31,7 @@
             android:textStyle="bold"></TextView>
 
         <EditText
+            android:id="@+id/current_pwd"
             android:layout_width="280dp"
             android:layout_height="30dp"
             android:layout_marginTop="10dp"
@@ -49,6 +50,7 @@
             android:textStyle="bold"></TextView>
 
         <EditText
+            android:id="@+id/new_password"
             android:layout_width="280dp"
             android:layout_height="30dp"
             android:layout_marginTop="10dp"
@@ -67,6 +69,7 @@
             android:textStyle="bold"></TextView>
 
         <EditText
+            android:id="@+id/new_password_confirm"
             android:layout_width="280dp"
             android:layout_height="30dp"
             android:layout_marginTop="10dp"
@@ -76,6 +79,7 @@
             android:textSize="14dp"></EditText>
 
         <Button
+            android:id="@+id/complete_change_pwd_btn"
             android:layout_width="202dp"
             android:layout_height="31dp"
             android:layout_gravity="center_horizontal"

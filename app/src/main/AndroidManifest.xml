@@ -3,7 +3,7 @@
     package="com.example.hanium">
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/app_logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -26,10 +26,12 @@
         <activity android:name=".activities.SetLocationActivity"></activity>
         <activity android:name=".activities.ChangeLocationActivity"></activity>
         <activity android:name=".activities.EditPostActivity"></activity>
+        <activity android:name=".activities.SettingActivity"></activity>
         <activity android:name=".activities.ChangePWPopup" android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"></activity>
         <activity android:name=".activities.findPopup" android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"></activity>
         <activity android:name=".activities.ClientInfoPopUp" android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"></activity>
         <activity android:name=".activities.ReviewPopup" android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"></activity>
     </application>
+
     <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>

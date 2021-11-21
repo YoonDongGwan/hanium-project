@@ -8,14 +8,15 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
+        android:background="#ffffff"
         android:gravity="center_vertical"
         >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="부름부름"
-            android:textSize="18sp"
-            android:textStyle="italic"/>
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/app_logo_white_v2"
+            />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="30dp"
@@ -23,7 +24,7 @@
             android:background="@drawable/edittext_border"
             android:backgroundTint="#E0E0E0"
             android:layout_marginRight="10dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="10dp"
             android:drawableLeft="@drawable/ic_baseline_search_24"
             android:hint="검색"
             android:textStyle="bold"
