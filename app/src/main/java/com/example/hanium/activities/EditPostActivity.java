@@ -21,14 +21,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hanium.R;
 import com.example.hanium.adapters.AddImageRecyclerAdapter;
+import com.example.hanium.adapters.ImageViewPagerAdapter;
 import com.example.hanium.server.RetrofitAPI;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -55,6 +60,8 @@ public class EditPostActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     String cookie, id;
     ArrayList<MultipartBody.Part> images = new ArrayList<>();
+    ArrayList<String> urlList = null;
+    ArrayList<Bitmap> bitmaps = new ArrayList<>();
     Intent intent;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,6 +90,42 @@ public class EditPostActivity extends AppCompatActivity {
         deadline = intent.getStringExtra("deadline");
         requiredTime = intent.getStringExtra("requiredTime").replace("시간","").replace("분","");
         String[] requiredTimeArray = requiredTime.split(" ");
+
+        urlList = intent.getStringArrayListExtra("images");
+        bitmaps.add(null);
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                try {
+                    for(int i = 0; i < urlList.size(); i++){
+                        URL url = new URL(urlList.get(i));
+                        HttpsURLConnection connection = (HttpsURLConnection)url.openConnection();
+                        connection.setDoInput(true);
+                        connection.connect();
+                        InputStream inputStream = connection.getInputStream();
+                        bitmap = BitmapFactory.decodeStream(inputStream);
+                        bitmaps.add(bitmap);
+                        byteArrayOutputStream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream);
+                        RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray());
+                        MultipartBody.Part image = MultipartBody.Part.createFormData("images", "image",requestBody);
+                        images.add(image);
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        thread.start();
+        try {
+            thread.join();
+            adapter = new AddImageRecyclerAdapter(null, bitmaps);
+            recyclerView.setAdapter(adapter);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         title.setText(intent.getStringExtra("title"));
         description.setText(intent.getStringExtra("description"));
@@ -121,6 +164,9 @@ public class EditPostActivity extends AppCompatActivity {
                     startActivityForResult(intent,1);
                     break;
                 case R.id.editPost_back:
+                    Intent intent1 = new Intent(EditPostActivity.this, PostDetailActivity.class);
+                    intent1.putExtra("id", id);
+                    startActivity(intent1);
                     finish();
                     break;
                 case R.id.editPost_btn:
@@ -138,6 +184,9 @@ public class EditPostActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
                             if(response.isSuccessful()) {
+                                Intent intent1 = new Intent(EditPostActivity.this, PostDetailActivity.class);
+                                intent1.putExtra("id", id);
+                                startActivity(intent1);
                                 finish();
                             }
                         }
@@ -147,6 +196,7 @@ public class EditPostActivity extends AppCompatActivity {
 
                         }
                     });
+
                     break;
             }
         }
@@ -159,6 +209,7 @@ public class EditPostActivity extends AppCompatActivity {
                 ArrayList<Uri> list = new ArrayList<>();
                 list.add(null);
                 ClipData clipData = data.getClipData();
+                images.clear();
                 if (clipData != null){
                     for (int i=0; i<clipData.getItemCount(); i++){
                         Uri uri = clipData.getItemAt(i).getUri();
@@ -167,11 +218,12 @@ public class EditPostActivity extends AppCompatActivity {
                     }
                 }
                 else{
+                    Log.d("test","2");
                     Uri uri = data.getData();
                     list.add(uri);
                     addImagesForMultipart(uri);
                 }
-                adapter = new AddImageRecyclerAdapter(list);
+                adapter = new AddImageRecyclerAdapter(list, null);
                 recyclerView.setAdapter(adapter);
             }
         }

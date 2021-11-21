@@ -170,7 +170,7 @@ public class AddPostActivity extends AppCompatActivity {
                     list.add(uri);
                     addImagesForMultipart(uri);
                 }
-                adapter = new AddImageRecyclerAdapter(list);
+                adapter = new AddImageRecyclerAdapter(list, null);
                 recyclerView.setAdapter(adapter);
             }
         }

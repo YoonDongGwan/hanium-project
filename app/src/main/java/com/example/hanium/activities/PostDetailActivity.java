@@ -198,6 +198,7 @@ public class PostDetailActivity extends AppCompatActivity {
                 intent1.putExtra("requiredTime", requiredTime.getText().toString());
                 intent1.putExtra("price", price.getText().toString());
                 intent1.putExtra("description", description.getText().toString());
+                intent1.putStringArrayListExtra("images", images);
                 startActivity(intent1);
                 finish();
                 break;
