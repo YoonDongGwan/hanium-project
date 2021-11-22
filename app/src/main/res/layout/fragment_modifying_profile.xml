@@ -59,13 +59,13 @@
             android:layout_height="105dp"
             android:src="@drawable/shoppingbag"/>
         <Button
-            android:id="@+id/findpicture_btn"
+            android:id="@+id/modify_image_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@drawable/border_button"
             android:backgroundTint="#55808080"
-            android:text="사진찾기"
+            android:text="사진 변경"
             android:textColor="#ff0000"
             android:textStyle="bold"
             android:textSize="15sp"/>

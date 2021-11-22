@@ -26,6 +26,7 @@
         <activity android:name=".activities.SetLocationActivity"></activity>
         <activity android:name=".activities.ChangeLocationActivity"></activity>
         <activity android:name=".activities.SettingActivity"></activity>
+        <activity android:name=".activities.ChangeImageActivity" android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"></activity>
         <activity android:name=".activities.ChangePWPopup" android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"></activity>
         <activity android:name=".activities.findPopup" android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"></activity>
         <activity android:name=".activities.ClientInfoPopUp" android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"></activity>

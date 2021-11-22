@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.hanium.R;
+import com.example.hanium.activities.ChangeImageActivity;
 import com.example.hanium.activities.MainActivity;
 import com.example.hanium.server.RetrofitAPI;
 import com.example.hanium.server.ServerResult;
@@ -48,7 +49,7 @@ public class ModifyingProfileFragment extends Fragment {
     Button back_btn;
     MainActivity mainActivity;
     ImageView modify_profile_image;
-    Button findpicture_btn, modify_profile_complete_btn;
+    Button modify_image_btn, modify_profile_complete_btn;
     EditText modify_profile_name, modify_profile_nickname, modify_profile_phonenum,modify_profile_password;
     Bitmap bitmap;
     Retrofit retrofit;
@@ -76,8 +77,8 @@ public class ModifyingProfileFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_modifying_profile, container, false);
         back_btn = v.findViewById(R.id.modify_profile_back);
         back_btn.setOnClickListener(onClickListener);
-        findpicture_btn = v.findViewById(R.id.findpicture_btn);
-        findpicture_btn.setOnClickListener(onClickListener);
+        modify_image_btn = v.findViewById(R.id.modify_image_btn);
+        modify_image_btn.setOnClickListener(onClickListener);
         modify_profile_complete_btn = v.findViewById(R.id.modify_profile_complete_btn);
         modify_profile_complete_btn.setOnClickListener(onClickListener);
         modify_profile_image = v.findViewById(R.id.modify_profile_image);
@@ -106,11 +107,12 @@ public class ModifyingProfileFragment extends Fragment {
                 case R.id.modify_profile_back:
                     mainActivity.onClickBackBtn();
                     break;
-                case R.id.findpicture_btn:
-                    Intent intent = new Intent();
+                case R.id.modify_image_btn:
+                    startActivity(new Intent(getContext(), ChangeImageActivity.class));
+                    /*Intent intent = new Intent();
                     intent.setType("image/*");
                     intent.setAction(Intent.ACTION_GET_CONTENT);
-                    getActivity().startActivityForResult(intent, 1);
+                    getActivity().startActivityForResult(intent, 1);*/
                     break;
                 case R.id.modify_profile_complete_btn:
                     RequestBody body_nickname = RequestBody.create(MediaType.parse("text/plain"),modify_profile_nickname.getText().toString());

@@ -33,6 +33,9 @@ public interface RetrofitAPI {
     @POST("user/edit")
     Call<HashMap<String, String>> modify(@Header("Cookie") String cookie, @Part MultipartBody.Part Image, @PartMap HashMap<String, RequestBody> data);
 
+    @PUT("user/edit/image")
+    Call<HashMap<String, String>> setBasicImage(@Header("Cookie") String cookie);
+
     @FormUrlEncoded
     @PUT("user/edit/pwd")
     Call<HashMap<String, String>> changePW(@Header("Cookie") String cookie, @Field("password") String password,
