@@ -63,36 +63,39 @@ public class LogFirstFragment extends Fragment {
         retrofitAPI.getAllHistory(cookie).enqueue(new Callback<AllHistoryResponse>() {
             @Override
             public void onResponse(Call<AllHistoryResponse> call, Response<AllHistoryResponse> response) {
-                if (response.isSuccessful()){
-                    buyerUsage = response.body().getData().getBuyerUsage();
-                    for (int i = 0; i < buyerUsage.size(); i++){
-                        url_list.add(buyerUsage.get(i).getThumbnail());
-                    }Thread thread = new Thread(){
-                        @Override
-                        public void run() {
-                            try {
-                                for(int i = 0; i < url_list.size(); i++){
-                                    URL url = new URL(url_list.get(i));
-                                    HttpsURLConnection connection = (HttpsURLConnection)url.openConnection();
-                                    connection.setDoInput(true);
-                                    connection.connect();
-                                    InputStream inputStream = connection.getInputStream();
-                                    bitmaps.add(BitmapFactory.decodeStream(inputStream));
-                                }
-                            } catch (MalformedURLException e) {
-                                e.printStackTrace();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                if (response.isSuccessful()) {
+                    if (response.body().getData() != null) {
+                        buyerUsage = response.body().getData().getBuyerUsage();
+                        for (int i = 0; i < buyerUsage.size(); i++) {
+                            url_list.add(buyerUsage.get(i).getThumbnail());
                         }
-                    };
-                    thread.start();
-                    try {
-                        thread.join();
-                        adapter = new RecyclerAdapter(buyerUsage, bitmaps);
-                        recyclerView.setAdapter(adapter);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        Thread thread = new Thread() {
+                            @Override
+                            public void run() {
+                                try {
+                                    for (int i = 0; i < url_list.size(); i++) {
+                                        URL url = new URL(url_list.get(i));
+                                        HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+                                        connection.setDoInput(true);
+                                        connection.connect();
+                                        InputStream inputStream = connection.getInputStream();
+                                        bitmaps.add(BitmapFactory.decodeStream(inputStream));
+                                    }
+                                } catch (MalformedURLException e) {
+                                    e.printStackTrace();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        };
+                        thread.start();
+                        try {
+                            thread.join();
+                            adapter = new RecyclerAdapter(buyerUsage, bitmaps);
+                            recyclerView.setAdapter(adapter);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
