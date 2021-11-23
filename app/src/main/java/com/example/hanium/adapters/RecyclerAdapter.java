@@ -105,7 +105,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     }
                 });
                 holder0.review.setVisibility(View.VISIBLE);
-                Log.d("reviewpoint",itemList.get(position).getReview()+"점");
                 holder0.review.setText(itemList.get(position).getReview()+"점");
                 holder0.review.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -127,8 +126,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public int getItemViewType(int position) {
         String status = itemList.get(position).getStatus();
         switch (status){
-            case "basic":
-                return 0;
             case "proceed":
                 return 1;
             case "end":

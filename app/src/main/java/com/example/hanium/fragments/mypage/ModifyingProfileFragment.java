@@ -108,12 +108,9 @@ public class ModifyingProfileFragment extends Fragment {
                     mainActivity.onClickBackBtn();
                     break;
                 case R.id.modify_image_btn:
-                    startActivity(new Intent(getContext(), ChangeImageActivity.class));
-                    /*Intent intent = new Intent();
-                    intent.setType("image/*");
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                    getActivity().startActivityForResult(intent, 1);*/
+                    getActivity().startActivityForResult(new Intent(getContext(), ChangeImageActivity.class), 2);
                     break;
+
                 case R.id.modify_profile_complete_btn:
                     RequestBody body_nickname = RequestBody.create(MediaType.parse("text/plain"),modify_profile_nickname.getText().toString());
                     RequestBody body_name = RequestBody.create(MediaType.parse("text/plain"),modify_profile_name.getText().toString());

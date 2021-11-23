@@ -21,6 +21,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             ></ImageView>
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <!--
     <ImageView
         android:layout_width="20dp"
         android:layout_height="20dp"
@@ -29,4 +30,5 @@
         app:layout_constraintTop_toTopOf="parent"
         android:src="@drawable/ic_baseline_remove_circle_24"
         ></ImageView>
+    -->
 </androidx.constraintlayout.widget.ConstraintLayout>

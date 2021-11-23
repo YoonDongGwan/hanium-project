@@ -111,6 +111,7 @@
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="italic"
+                android:layout_marginRight="3dp"
                 ></TextView>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -204,16 +205,20 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical">
+
             <Button
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:background="@drawable/circle"
+                android:background="@drawable/ic_baseline_notifications_24"
+                android:backgroundTint="#F6E54A"
                 android:layout_gravity="center"
                 />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="공지사항"
+                android:textColor="@color/black"
                 android:textSize="17sp"
                 android:textStyle="bold"
                 android:layout_gravity="center"/>
@@ -227,12 +232,14 @@
             <Button
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:background="@drawable/circle"
+                android:background="@drawable/ic_baseline_help_24"
+                android:backgroundTint="#2196F3"
                 android:layout_gravity="center" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="FAQ"
+                android:textColor="@color/black"
                 android:textSize="17sp"
                 android:textStyle="bold"
                 android:layout_gravity="center"/>
@@ -245,12 +252,14 @@
             <Button
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:background="@drawable/circle"
+                android:background="@drawable/ic_baseline_menu_book_24"
+                android:backgroundTint="#8BC34A"
                 android:layout_gravity="center"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="가이드라인"
+                android:textColor="@color/black"
                 android:textSize="17sp"
                 android:textStyle="bold"
                 android:layout_gravity="center"/>
@@ -264,12 +273,14 @@
                 android:id="@+id/setting_btn"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:background="@drawable/circle"
+                android:background="@drawable/ic_baseline_settings_24"
+                android:backgroundTint="#7C7C7C"
                 android:layout_gravity="center"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="환경설정"
+                android:textColor="@color/black"
                 android:textSize="17sp"
                 android:textStyle="bold"
                 android:layout_gravity="center"/>

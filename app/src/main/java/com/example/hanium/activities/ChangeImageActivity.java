@@ -2,6 +2,7 @@ package com.example.hanium.activities;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -52,6 +53,12 @@ public class ChangeImageActivity extends Activity {
         @Override
         public void onClick(View v) {
             switch (v.getId()){
+                case R.id.find_image:
+                    Intent intent = new Intent();
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(intent, 1);
+                    setResult(2,intent);
                 case R.id.change_basic_image:
                     retrofitAPI.setBasicImage(cookie).enqueue(new Callback<HashMap<String, String>>() {
                         @Override

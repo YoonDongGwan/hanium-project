@@ -35,11 +35,9 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-        Button back = findViewById(R.id.signup_back);
-        back.setOnClickListener(onClickListener);
+        Button back_btn = findViewById(R.id.signup_back_btn);
+        back_btn.setOnClickListener(onClickListener);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
-        cookie = sharedPreferences.getString("Cookie","");
 
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
@@ -61,60 +59,85 @@ public class SignUpActivity extends AppCompatActivity {
         signup_phonenumber = findViewById(R.id.signup_phonenumber);
         signup_authenticationnumber = findViewById(R.id.signup_authenticationnumber);
         signup_emailsend_btn = findViewById(R.id.signup_emailsend_btn);
+        signup_emailsend_btn.setOnClickListener(onClickListener);
         signup_authenticationconfirm_btn = findViewById(R.id.signup_authenticationconfirm_btn);
-
-        signup_emailsend_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                retrofitAPI.send(signup_email.getText().toString()).enqueue(new Callback<HashMap<String, String>>() {
-                    @Override
-                    public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
-                        if (response.isSuccessful()) {
-                            Log.d("test", "success");
-                        } else {
-
-                            Log.d("test1", response.message());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<HashMap<String, String>> call, Throwable t) {
-                        Log.d("test", "failure" + t.getMessage());
-                    }
-                });
-            }
-        });
+        signup_authenticationconfirm_btn.setOnClickListener(onClickListener);
         signup_btn = findViewById(R.id.signup_btn);
-        signup_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                retrofitAPI.signup(signup_email.getText().toString(), signup_nickname.getText().toString(),
-                        signup_name.getText().toString(), signup_password.getText().toString(),
-                        signup_confirm_pwd.getText().toString(), signup_phonenumber.getText().toString()).enqueue(new Callback<HashMap<String, String>>() {
-                    @Override
-                    public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
-                        if (response.isSuccessful()) {
-                            Log.d("test", "success");
-                        } else {
+        signup_btn.setOnClickListener(onClickListener);
 
-                            Log.d("test1", response.message());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<HashMap<String, String>> call, Throwable t) {
-                        Log.d("test", "failure" + t.getMessage());
-                    }
-                });
-            }
-        });
     }
-
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            finish();
+            switch(v.getId()){
+                case R.id.signup_back_btn:
+                    finish();
+                    break;
+                case R.id.signup_emailsend_btn:
+                    retrofitAPI.send(signup_email.getText().toString()).enqueue(new Callback<HashMap<String, String>>() {
+                        @Override
+                        public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
+                            if (response.isSuccessful()) {
+                                Log.d("test", "success");
+                                Log.d("test",response.headers().get("Set-Cookie"));
+                                SharedPreferences sharedPreferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("Cookie",response.headers().get("Set-Cookie"));
+                                editor.commit();
+                                cookie = sharedPreferences.getString("Cookie","");
+                            } else {
+                                Log.d("test1", response.message());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<HashMap<String, String>> call, Throwable t) {
+                            Log.d("test", "failure" + t.getMessage());
+                        }
+                    });
+                    break;
+                case R.id.signup_authenticationconfirm_btn:
+                    retrofitAPI.confirm(cookie,signup_authenticationnumber.getText().toString()).enqueue(new Callback<HashMap<String, String>>() {
+                        @Override
+                        public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
+                            if (response.isSuccessful()) {
+                                signup_btn.setEnabled(true);
+                                Log.d("test", "success");
+                            } else {
+
+                                Log.d("test1", response.message());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<HashMap<String, String>> call, Throwable t) {
+                            Log.d("test", "failure" + t.getMessage());
+                        }
+                    });
+                    break;
+                case R.id.signup_btn:
+                    retrofitAPI.signup(signup_email.getText().toString(), signup_nickname.getText().toString(),
+                            signup_name.getText().toString(), signup_password.getText().toString(),
+                            signup_confirm_pwd.getText().toString(), signup_phonenumber.getText().toString()).enqueue(new Callback<HashMap<String, String>>() {
+                        @Override
+                        public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
+                            if (response.isSuccessful()) {
+                                Log.d("test", "success");
+                                finish();
+                            } else {
+
+                                Log.d("test1", response.message());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<HashMap<String, String>> call, Throwable t) {
+                            Log.d("test", "failure" + t.getMessage());
+                        }
+                    });
+                    break;
+            }
         }
     };
 }

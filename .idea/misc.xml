@@ -10,12 +10,14 @@
         <entry key="app/src/main/res/layout/activity_change_pw.xml" value="0.14947916666666666" />
         <entry key="app/src/main/res/layout/activity_changeimage.xml" value="0.14947916666666666" />
         <entry key="app/src/main/res/layout/activity_changelocation.xml" value="0.19882246376811594" />
+        <entry key="app/src/main/res/layout/activity_delete_membership.xml" value="0.2056159420289855" />
         <entry key="app/src/main/res/layout/activity_detail.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_find.xml" value="0.12604166666666666" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.16032608695652173" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_setlocation.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/activity_signup.xml" value="0.15489130434782608" />
+        <entry key="app/src/main/res/layout/activity_setting.xml" value="0.161231884057971" />
+        <entry key="app/src/main/res/layout/activity_signup.xml" value="0.25" />
         <entry key="app/src/main/res/layout/addpost_recyclerview_item.xml" value="0.19429347826086957" />
         <entry key="app/src/main/res/layout/bottomsheetdialog.xml" value="0.12552083333333333" />
         <entry key="app/src/main/res/layout/changelocation_recyclerview_item.xml" value="0.19429347826086957" />

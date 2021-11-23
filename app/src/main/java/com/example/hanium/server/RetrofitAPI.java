@@ -11,6 +11,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -62,8 +63,7 @@ public interface RetrofitAPI {
 
     @FormUrlEncoded
     @POST("auth/confirm")
-    Call<HashMap<String, String>> Confirm(@Header("cookie") String cookie, @Field("email") String email);
-
+    Call<HashMap<String, String>> confirm(@Header("cookie") String cookie, @Field("secret") String secret);
 
     @FormUrlEncoded
     @POST("address/check")
@@ -74,7 +74,11 @@ public interface RetrofitAPI {
 
     @Multipart
     @POST("post")
-    Call<HashMap<String, String>> addPost(@Header("Cookie") String cookie, @Part("title") RequestBody title, @Part("description") RequestBody description, @Part("price")RequestBody price, @Part("deadline")RequestBody deadline, @Part("requiredTime")RequestBody requiredTime, @Part ArrayList<MultipartBody.Part> Images);
+    Call<HashMap<String, String>> addPost(@Header("Cookie") String cookie, @Part("title") RequestBody title, @Part("description") RequestBody description, @Part("price") RequestBody price, @Part("deadline") RequestBody deadline, @Part("requiredTime") RequestBody requiredTime, @Part ArrayList<MultipartBody.Part> Images);
+
+    @Multipart
+    @POST("post/edit/{id}")
+    Call<HashMap<String, String>> editPost(@Header("Cookie") String cookie, @Path("id") String id, @Part("title") RequestBody title, @Part("description") RequestBody description, @Part("price") RequestBody price, @Part("deadline") RequestBody deadline, @Part("requiredTime") RequestBody requiredTime, @Part ArrayList<MultipartBody.Part> Images);
 
     @FormUrlEncoded
     @POST("post/review/{id}")
@@ -118,5 +122,9 @@ public interface RetrofitAPI {
     Call<LocationinfoResult> getAddrSearchResult(@Query("name") String name, @Header("Cookie") String cookie);
 
     @DELETE("post/{id}")
-    Call<ServerResult> deletePost(@Header("Cookie")String cookie, @Path("id")String id);
+    Call<ServerResult> deletePost(@Header("Cookie") String cookie, @Path("id") String id);
+
+    @FormUrlEncoded
+    @HTTP(method = "DELETE",hasBody = true,path = "user/delete")
+    Call<HashMap<String, String>> deleteMembership(@Header("Cookie") String cookie,@Field("password") String password);
 }

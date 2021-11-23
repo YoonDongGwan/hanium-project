@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch(v.getId()){
                 case R.id.login_btn:
-                    retrofitLoginAPI.login(/*login_email.getText().toString(),login_password.getText().toString()*/"cjfwnd123zz@gmail.com","1234asdf@").enqueue(new Callback<HashMap<String, String>>() {
+                    retrofitLoginAPI.login(login_email.getText().toString(),login_password.getText().toString()/*"cjfwnd123zz@gmail.com","1234asdf@"*/).enqueue(new Callback<HashMap<String, String>>() {
                         @Override
                         public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
                             if (response.isSuccessful()){
