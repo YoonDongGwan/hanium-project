@@ -31,6 +31,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.TimeZone;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -100,6 +101,8 @@ public class PostDetailActivity extends AppCompatActivity {
             if (response.isSuccessful()){
                 postInfo postinfo = response.body().getData().getPostInfo();
                 sellerInfo sellerinfo = response.body().getData().getSellerInfo();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                dateFormat.setTimeZone(TimeZone.getTimeZone("Etc/GMT"));
                 sellerNickname = sellerinfo.getNickname();
                 if(myNickname.equals(sellerNickname)) {
                     edit_btn.setVisibility(View.VISIBLE);
@@ -109,11 +112,11 @@ public class PostDetailActivity extends AppCompatActivity {
                 }
                 nickname.setText(sellerNickname);
                 title.setText(postinfo.getTitle());
-                createAt.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(postinfo.getCreatedAt()));
+                createAt.setText(dateFormat.format(postinfo.getCreatedAt()));
                 price.setText(postinfo.getPrice()+"P");
                 price2.setText(postinfo.getPrice()+"P");
                 sellingDistrict.setText(postinfo.getSellingDistrict());
-                deadline.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(postinfo.getDeadline()));
+                deadline.setText(dateFormat.format(postinfo.getDeadline()));
                 requiredTime.setText(postinfo.getRequiredTime());
                 description.setText(postinfo.getDescription());
                 images = postinfo.getPostImages();
@@ -189,6 +192,7 @@ public class PostDetailActivity extends AppCompatActivity {
                 break;
             case R.id.detail_back:
                 finish();
+                PostDetailActivity.this.overridePendingTransition(R.anim.enter_from_left, R.anim.exit_to_right);
                 break;
             case R.id.detail_edit_btn:
                 Intent intent1 = new Intent(getApplicationContext(), EditPostActivity.class);
@@ -200,6 +204,7 @@ public class PostDetailActivity extends AppCompatActivity {
                 intent1.putExtra("description", description.getText().toString());
                 intent1.putStringArrayListExtra("images", images);
                 startActivity(intent1);
+                overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
                 finish();
                 break;
             case R.id.detail_delete_btn:

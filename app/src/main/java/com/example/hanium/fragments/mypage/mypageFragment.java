@@ -166,6 +166,5 @@ public class mypageFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.detach(this).attach(this).commit();
-        Log.d("test4", "test4");
     }
 }

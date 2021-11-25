@@ -14,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.hanium.activities.ChangeLocationActivity;
+import com.example.hanium.activities.MainActivity;
 import com.example.hanium.activities.PostDetailActivity;
 import com.example.hanium.R;
 import com.example.hanium.activities.ReviewPopup;
@@ -25,17 +27,18 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.TimeZone;
 
 import javax.net.ssl.HttpsURLConnection;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     ArrayList<posts> itemList;
     ArrayList<Bitmap> bitmaps;
-    public class ViewHolder0 extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder{
         int id;
         TextView title,destination,deadline,time,price,review;
         ImageView thumbnail;
-        ViewHolder0(View itemview){
+        ViewHolder(View itemview){
             super(itemview);
             title = itemview.findViewById(R.id.title);
             destination = itemview.findViewById(R.id.destination);
@@ -53,69 +56,47 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        switch (viewType){
-            case 0:
-            case 1:
-            case 2:
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item, parent, false);
-            RecyclerAdapter.ViewHolder0 viewHolder = new RecyclerAdapter.ViewHolder0(view);
-            return viewHolder;
-        }
-        return null;
+            RecyclerAdapter.ViewHolder viewHolder = new RecyclerAdapter.ViewHolder(view);
+        return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewholder, int position) {
+        ViewHolder holder = (ViewHolder) viewholder;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Etc/GMT"));
+        holder.id = itemList.get(position).getId();
+        holder.title.setText(itemList.get(position).getTitle());
+        holder.destination.setText(itemList.get(position).getSimpleAddress());
+        holder.deadline.setText(dateFormat.format(itemList.get(position).getDeadline()));
+        holder.time.setText(itemList.get(position).getRequiredTime());
+        holder.thumbnail.setImageBitmap(bitmaps.get(position));
+        holder.price.setText(itemList.get(position).getPrice() + " P");
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(holder.itemView.getContext(), PostDetailActivity.class);
+                intent.putExtra("id", String.valueOf(holder.id));
+                ContextCompat.startActivity(holder.itemView.getContext(), intent, null);
+                ((MainActivity)holder.itemView.getContext()).overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
+            }
+        });
         String status = itemList.get(position).getStatus();
-        switch(status) {
-            case "basic":
-            case "proceed":
-            ViewHolder0 holder = (ViewHolder0) viewholder;
-            holder.id = itemList.get(position).getId();
-            holder.title.setText(itemList.get(position).getTitle());
-            holder.destination.setText(itemList.get(position).getSimpleAddress());
-            holder.deadline.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(itemList.get(position).getDeadline()));
-            holder.time.setText(itemList.get(position).getRequiredTime());
-            holder.thumbnail.setImageBitmap(bitmaps.get(position));
-            holder.price.setText(itemList.get(position).getPrice() + " P");
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
+        if(status.equals("end")) {
+            holder.review.setVisibility(View.VISIBLE);
+            holder.review.setText(itemList.get(position).getReview() + "점");
+            holder.review.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(holder.itemView.getContext(), PostDetailActivity.class);
-                    intent.putExtra("id", String.valueOf(holder.id));
+                public void onClick(View view) {
+                    Intent intent = new Intent(holder.itemView.getContext(), ReviewPopup.class);
+                    intent.putExtra("id", holder.id + "");
                     ContextCompat.startActivity(holder.itemView.getContext(), intent, null);
                 }
             });
-            break;
-            case "end":
-                ViewHolder0 holder0 = (ViewHolder0) viewholder;
-                holder0.id = itemList.get(position).getId();
-                holder0.title.setText(itemList.get(position).getTitle());
-                holder0.destination.setText(itemList.get(position).getSimpleAddress());
-                holder0.deadline.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(itemList.get(position).getDeadline()));
-                holder0.time.setText(itemList.get(position).getRequiredTime());
-                holder0.thumbnail.setImageBitmap(bitmaps.get(position));
-                holder0.price.setText(itemList.get(position).getPrice() + " P");
-                holder0.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(holder0.itemView.getContext(), PostDetailActivity.class);
-                        intent.putExtra("id", String.valueOf(holder0.id));
-                        ContextCompat.startActivity(holder0.itemView.getContext(), intent, null);
-                    }
-                });
-                holder0.review.setVisibility(View.VISIBLE);
-                holder0.review.setText(itemList.get(position).getReview()+"점");
-                holder0.review.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(holder0.itemView.getContext(), ReviewPopup.class);
-                        intent.putExtra("id",holder0.id+"");
-                        ContextCompat.startActivity(holder0.itemView.getContext(), intent, null);
-                    }
-                });
+            }
         }
-    }
+
 
     @Override
     public int getItemCount() {
@@ -124,14 +105,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemViewType(int position) {
-        String status = itemList.get(position).getStatus();
-        switch (status){
-            case "proceed":
-                return 1;
-            case "end":
-                return 2;
-            default:
-                return 0;
+        return position;
         }
     }
-}
+
