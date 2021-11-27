@@ -24,12 +24,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
     FragmentManager fragmentManager = getSupportFragmentManager();
     homeFragment homeFragment = new homeFragment();
-    chatFragment chatFragment = new chatFragment();
-    logFragment logFragment = new logFragment();
-    mypageFragment mypageFragment = new mypageFragment();
-    ModifyingProfileFragment modifyingProfileFragment = new ModifyingProfileFragment();
-    ExchaningPointFragment exchaningPointFragment = new ExchaningPointFragment();
-    MyErrandFragment myErrandFragment = new MyErrandFragment();
+    chatFragment chatFragment;
+    logFragment logFragment;
+    mypageFragment mypageFragment;
+    ModifyingProfileFragment modifyingProfileFragment;
+    ExchaningPointFragment exchaningPointFragment;
+    MyErrandFragment myErrandFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,17 +46,65 @@ public class MainActivity extends AppCompatActivity {
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 switch (item.getItemId()) {
                     case R.id.home:
-                        transaction.replace(R.id.framelayout, homeFragment).commitAllowingStateLoss();
+                        if(homeFragment == null){
+                            homeFragment = new homeFragment();
+                            fragmentManager.beginTransaction().add(R.id.framelayout, homeFragment).commit();
+                        }else{
+                            fragmentManager.beginTransaction().show(homeFragment).commit();
+                        }
+                        if(chatFragment != null) fragmentManager.beginTransaction().hide(chatFragment).commit();
+                        if(logFragment != null) fragmentManager.beginTransaction().hide(logFragment).commit();
+                        if(mypageFragment != null) fragmentManager.beginTransaction().hide(mypageFragment).commit();
+                        if(modifyingProfileFragment != null) fragmentManager.beginTransaction().hide(modifyingProfileFragment).commit();
+                        if(exchaningPointFragment != null) fragmentManager.beginTransaction().hide(exchaningPointFragment).commit();
+                        if(myErrandFragment != null) fragmentManager.beginTransaction().hide(myErrandFragment).commit();
+//                        transaction.replace(R.id.framelayout, homeFragment).commitAllowingStateLoss();
                         break;
 
                     case R.id.chat:
-                        transaction.replace(R.id.framelayout, chatFragment).commitAllowingStateLoss();
+                        if(chatFragment == null){
+                            chatFragment = new chatFragment();
+                            fragmentManager.beginTransaction().add(R.id.framelayout, chatFragment).commit();
+                        }else{
+                            fragmentManager.beginTransaction().show(chatFragment).commit();
+                        }
+                        if(homeFragment != null) fragmentManager.beginTransaction().hide(homeFragment).commit();
+                        if(logFragment != null) fragmentManager.beginTransaction().hide(logFragment).commit();
+                        if(mypageFragment != null) fragmentManager.beginTransaction().hide(mypageFragment).commit();
+                        if(modifyingProfileFragment != null) fragmentManager.beginTransaction().hide(modifyingProfileFragment).commit();
+                        if(exchaningPointFragment != null) fragmentManager.beginTransaction().hide(exchaningPointFragment).commit();
+                        if(myErrandFragment != null) fragmentManager.beginTransaction().hide(myErrandFragment).commit();
+//                        transaction.replace(R.id.framelayout, chatFragment).commitAllowingStateLoss();
                         break;
                     case R.id.log:
-                        transaction.replace(R.id.framelayout, logFragment).commitAllowingStateLoss();
+                        if(logFragment == null){
+                            logFragment = new logFragment();
+                            fragmentManager.beginTransaction().add(R.id.framelayout, logFragment).commit();
+                        }else{
+                            fragmentManager.beginTransaction().show(logFragment).commit();
+                        }
+                        if(homeFragment != null) fragmentManager.beginTransaction().hide(homeFragment).commit();
+                        if(chatFragment != null) fragmentManager.beginTransaction().hide(chatFragment).commit();
+                        if(mypageFragment != null) fragmentManager.beginTransaction().hide(mypageFragment).commit();
+                        if(modifyingProfileFragment != null) fragmentManager.beginTransaction().hide(modifyingProfileFragment).commit();
+                        if(exchaningPointFragment != null) fragmentManager.beginTransaction().hide(exchaningPointFragment).commit();
+                        if(myErrandFragment != null) fragmentManager.beginTransaction().hide(myErrandFragment).commit();
+//                        transaction.replace(R.id.framelayout, logFragment).commitAllowingStateLoss();
                         break;
                     case R.id.mypage:
-                        transaction.replace(R.id.framelayout, mypageFragment).commitAllowingStateLoss();
+                        if(mypageFragment == null){
+                            mypageFragment = new mypageFragment();
+                            fragmentManager.beginTransaction().add(R.id.framelayout, mypageFragment).commit();
+                        }else{
+                            fragmentManager.beginTransaction().show(mypageFragment).commit();
+                        }
+                        if(homeFragment != null) fragmentManager.beginTransaction().hide(homeFragment).commit();
+                        if(chatFragment != null) fragmentManager.beginTransaction().hide(chatFragment).commit();
+                        if(logFragment != null) fragmentManager.beginTransaction().hide(logFragment).commit();
+                        if(modifyingProfileFragment != null) fragmentManager.beginTransaction().hide(modifyingProfileFragment).commit();
+                        if(exchaningPointFragment != null) fragmentManager.beginTransaction().hide(exchaningPointFragment).commit();
+                        if(myErrandFragment != null) fragmentManager.beginTransaction().hide(myErrandFragment).commit();
+//                        transaction.replace(R.id.framelayout, mypageFragment).commitAllowingStateLoss();
                         break;
                 }
 
@@ -70,37 +118,56 @@ public class MainActivity extends AppCompatActivity {
     public void onClickModifyBtn() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
-        fragmentTransaction.replace(R.id.framelayout, modifyingProfileFragment).commitAllowingStateLoss();
+        modifyingProfileFragment = new ModifyingProfileFragment();
+        fragmentTransaction.add(R.id.framelayout, modifyingProfileFragment).commit();
+        fragmentManager.beginTransaction().hide(mypageFragment).commit();
     }
 
     public void onClickBackBtn() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right);
-        fragmentTransaction.replace(R.id.framelayout, mypageFragment).commitAllowingStateLoss();
+        fragmentTransaction.show(mypageFragment).commit();
+        if(modifyingProfileFragment != null){
+            fragmentManager.beginTransaction().hide(modifyingProfileFragment).commit();
+            modifyingProfileFragment = null;
+        }
+        if(exchaningPointFragment != null){
+            fragmentManager.beginTransaction().hide(exchaningPointFragment).commit();
+            exchaningPointFragment = null;
+        }
+        if(myErrandFragment != null) {
+            fragmentManager.beginTransaction().hide(myErrandFragment).commit();
+            myErrandFragment = null;
+        }
     }
 
     public void onClickExchangeBtn() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
-        fragmentTransaction.replace(R.id.framelayout, exchaningPointFragment).commitAllowingStateLoss();
+        exchaningPointFragment = new ExchaningPointFragment();
+        fragmentTransaction.add(R.id.framelayout, exchaningPointFragment).commit();
+        fragmentManager.beginTransaction().hide(mypageFragment).commit();
     }
 
     public void onClickErrandBtn() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
-        fragmentTransaction.replace(R.id.framelayout, myErrandFragment).commitAllowingStateLoss();
+        myErrandFragment = new MyErrandFragment();
+        fragmentTransaction.add(R.id.framelayout, myErrandFragment).commit();
+        fragmentManager.beginTransaction().hide(mypageFragment).commit();
     }
     public void onClickCompleteModifyBtn(){
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
-        fragmentTransaction.replace(R.id.framelayout, mypageFragment).commitAllowingStateLoss();
+        fragmentManager.beginTransaction().show(mypageFragment).commit();
+        fragmentManager.beginTransaction().hide(modifyingProfileFragment).commit();
+        modifyingProfileFragment = null;
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK){
-            Log.d("test3","test3");
             if(requestCode==0)
                 mypageFragment.onActivityResult(requestCode, resultCode, data);
             if(requestCode==2)

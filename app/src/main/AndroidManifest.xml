@@ -27,7 +27,11 @@
         <activity android:name=".activities.ChangeLocationActivity"></activity>
         <activity android:name=".activities.EditPostActivity"></activity>
         <activity android:name=".activities.SettingActivity"></activity>
+<<<<<<< HEAD
         <activity android:name=".activities.DeleteMemberPopup" android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"></activity>
+=======
+        <activity android:name=".activities.ChatRoomActivity"></activity>
+>>>>>>> 08612a166ad60a5220bd4d7dc817b8b887a47a9f
         <activity android:name=".activities.ChangePWPopup" android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"></activity>
         <activity android:name=".activities.findPopup" android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"></activity>
         <activity android:name=".activities.ClientInfoPopUp" android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"></activity>

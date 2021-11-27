@@ -121,6 +121,9 @@ public interface RetrofitAPI {
     @GET("address/search")
     Call<LocationinfoResult> getAddrSearchResult(@Query("name") String name, @Header("Cookie") String cookie);
 
+    @GET("chat/rooms")
+    Call<ChatRoomsResponse> getChatRooms(@Header("Cookie")String cookie);
+
     @DELETE("post/{id}")
     Call<ServerResult> deletePost(@Header("Cookie") String cookie, @Path("id") String id);
 

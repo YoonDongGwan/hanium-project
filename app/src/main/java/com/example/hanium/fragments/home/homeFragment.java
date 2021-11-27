@@ -15,8 +15,10 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.hanium.activities.AddPostActivity;
 import com.example.hanium.R;
@@ -54,11 +56,13 @@ public class homeFragment extends Fragment {
     RecyclerAdapter adapter;
     Retrofit retrofit;
     RetrofitAPI retrofitAPI;
+    SwipeRefreshLayout swipeRefreshLayout;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_home, container, false);
+        swipeRefreshLayout = v.findViewById(R.id.swipeRefreshLayout);
         recyclerView = v.findViewById(R.id.homeRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
@@ -69,54 +73,16 @@ public class homeFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         retrofitAPI = retrofit.create(RetrofitAPI.class);
-        retrofitAPI.getPosts(cookie).enqueue(new Callback<HomePostsResult>() {
-            @Override
-            public void onResponse(Call<HomePostsResult> call, Response<HomePostsResult> response) {
-                if (response.isSuccessful()){
-                    post_list = response.body().getData();
-                    for (int i=0; i< post_list.size(); i++) {
-                        url_list.add(response.body().getData().get(i).getThumbnail());
-                    }
-                    Thread thread = new Thread(){
-                        @Override
-                        public void run() {
-                            try {
-                                for(int i = 0; i < url_list.size(); i++){
-                                    URL url = new URL(url_list.get(i));
-                                    HttpsURLConnection connection = (HttpsURLConnection)url.openConnection();
-                                    connection.setDoInput(true);
-                                    connection.connect();
-                                    InputStream inputStream = connection.getInputStream();
-                                    bitmaps.add(BitmapFactory.decodeStream(inputStream));
-                                }
-                            } catch (MalformedURLException e) {
-                                e.printStackTrace();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    };
-                    thread.start();
-                    try {
-                        thread.join();
-                        adapter = new RecyclerAdapter(post_list, bitmaps);
-                        recyclerView.setAdapter(adapter);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }else{
-                    Log.d("test",response.toString());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<HomePostsResult> call, Throwable t) {
-                    Log.d("test","실패");
-            }
-        });
+        retrofitAPI.getPosts(cookie).enqueue(callback);
 
 //        recyclerView.addOnScrollListener(onScrollListener);
-
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                retrofitAPI.getPosts(cookie).enqueue(callback);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
         add_btn = v.findViewById(R.id.home_add_post_btn);
         search = v.findViewById(R.id.home_search_edittext);
         add_btn.setOnClickListener(new View.OnClickListener() {
@@ -142,6 +108,53 @@ public class homeFragment extends Fragment {
         });
         return v;
     }
+    Callback<HomePostsResult> callback = new Callback<HomePostsResult>() {
+        @Override
+        public void onResponse(Call<HomePostsResult> call, Response<HomePostsResult> response) {
+            if (response.isSuccessful()){
+                url_list.clear();
+                bitmaps.clear();
+                post_list = response.body().getData();
+                for (int i=0; i< post_list.size(); i++) {
+                    url_list.add(response.body().getData().get(i).getThumbnail());
+                }
+                Thread thread = new Thread(){
+                    @Override
+                    public void run() {
+                        try {
+                            for(int i = 0; i < url_list.size(); i++){
+                                URL url = new URL(url_list.get(i));
+                                HttpsURLConnection connection = (HttpsURLConnection)url.openConnection();
+                                connection.setDoInput(true);
+                                connection.connect();
+                                InputStream inputStream = connection.getInputStream();
+                                bitmaps.add(BitmapFactory.decodeStream(inputStream));
+                            }
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                thread.start();
+                try {
+                    thread.join();
+                    adapter = new RecyclerAdapter(post_list, bitmaps);
+                    recyclerView.setAdapter(adapter);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }else{
+                Log.d("test",response.toString());
+            }
+        }
+
+        @Override
+        public void onFailure(Call<HomePostsResult> call, Throwable t) {
+            Log.d("test","실패");
+        }
+    };
 //    RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
 //        @Override
 //        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {

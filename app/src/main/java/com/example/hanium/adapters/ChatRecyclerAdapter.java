@@ -1,21 +1,26 @@
 package com.example.hanium.adapters;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hanium.R;
-import com.example.hanium.classes.chatinf;
+import com.example.hanium.activities.ChatRoomActivity;
+import com.example.hanium.activities.ReviewPopup;
+import com.example.hanium.classes.ChatRoomInformation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class ChatRecyclerAdapter extends RecyclerView.Adapter<ChatRecyclerAdapter.ViewHolder>{
-    List<chatinf> list;
+    ArrayList<ChatRoomInformation> list;
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView nickname, message;
         ViewHolder(View itemview){
@@ -24,7 +29,7 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<ChatRecyclerAdapte
             message = itemview.findViewById(R.id.chat_message);
         }
     }
-    public ChatRecyclerAdapter(List<chatinf> list){
+    public ChatRecyclerAdapter(ArrayList<ChatRoomInformation> list){
         this.list = list;
     }
 
@@ -38,12 +43,23 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<ChatRecyclerAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ChatRecyclerAdapter.ViewHolder holder, int position) {
-        holder.nickname.setText(list.get(position).getNickname());
-        holder.message.setText(list.get(position).getMessage());
+        holder.message.setText(list.get(position).getLastChat());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(holder.itemView.getContext(), ChatRoomActivity.class);
+                ContextCompat.startActivity(holder.itemView.getContext(), intent, null);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 }

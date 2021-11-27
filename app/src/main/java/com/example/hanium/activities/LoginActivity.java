@@ -9,12 +9,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hanium.R;
+import com.example.hanium.classes.ErrorBody;
 import com.example.hanium.server.RetrofitAPI;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import okhttp3.OkHttpClient;
@@ -66,8 +71,6 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
                             if (response.isSuccessful()){
-                                Log.d("test","success");
-                                Log.d("test",response.headers().get("Set-Cookie"));
                                 SharedPreferences sharedPreferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("Cookie",response.headers().get("Set-Cookie"));
@@ -76,7 +79,13 @@ public class LoginActivity extends AppCompatActivity {
                                 startActivity(intent);
                                 finish();
                             }else{
-                            Log.d("test",response.toString());
+                                try {
+                                    Gson gson = new GsonBuilder().create();
+                                    ErrorBody errorBody = gson.fromJson(response.errorBody().string(), ErrorBody.class);
+                                    Toast.makeText(getApplicationContext(), errorBody.getMessage(), Toast.LENGTH_SHORT).show();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
 

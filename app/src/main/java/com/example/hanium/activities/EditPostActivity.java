@@ -167,6 +167,7 @@ public class EditPostActivity extends AppCompatActivity {
                     Intent intent1 = new Intent(EditPostActivity.this, PostDetailActivity.class);
                     intent1.putExtra("id", id);
                     startActivity(intent1);
+                    overridePendingTransition(R.anim.enter_from_left, R.anim.exit_to_right);
                     finish();
                     break;
                 case R.id.editPost_btn:
@@ -179,7 +180,6 @@ public class EditPostActivity extends AppCompatActivity {
                     RequestBody bodyPrice = RequestBody.create(MediaType.parse("text/plain"), price.getText().toString());
                     RequestBody bodyRequiredTime = RequestBody.create(MediaType.parse("text/plain"), requiredTime);
                     RequestBody bodyDeadline = RequestBody.create(MediaType.parse("text/plain"), deadline);
-
                     retrofitAPI.editPost(cookie, id, bodyTitle, bodyDescription, bodyPrice, bodyDeadline, bodyRequiredTime, images).enqueue(new Callback<HashMap<String, String>>() {
                         @Override
                         public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
@@ -187,6 +187,7 @@ public class EditPostActivity extends AppCompatActivity {
                                 Intent intent1 = new Intent(EditPostActivity.this, PostDetailActivity.class);
                                 intent1.putExtra("id", id);
                                 startActivity(intent1);
+                                overridePendingTransition(R.anim.enter_from_left, R.anim.exit_to_right);
                                 finish();
                             }
                         }
