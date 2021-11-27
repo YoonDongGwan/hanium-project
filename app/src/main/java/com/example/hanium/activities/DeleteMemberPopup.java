@@ -4,17 +4,21 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
 import com.example.hanium.R;
+import com.example.hanium.classes.ErrorBody;
 import com.example.hanium.server.RetrofitAPI;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import retrofit2.Call;
@@ -48,8 +52,15 @@ public class DeleteMemberPopup extends Activity {
                     @Override
                     public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
                         if (response.isSuccessful()){
-                            Log.d("ss","success");
-
+                            Toast.makeText(getApplicationContext(),"회원 탈퇴되었습니다.", Toast.LENGTH_SHORT).show();
+                        }else{
+                            try {
+                                Gson gson = new GsonBuilder().create();
+                                ErrorBody errorBody = gson.fromJson(response.errorBody().string(), ErrorBody.class);
+                                Toast.makeText(getApplicationContext(), errorBody.getMessage(), Toast.LENGTH_SHORT).show();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
 

@@ -33,6 +33,7 @@
             android:layout_width="280dp"
             android:layout_height="30dp"
             android:hint="이메일을 입력해주세요"
+            android:textColor="@color/black"
             android:textSize="14dp"
             android:background="@drawable/edittext_border"
             android:id="@+id/find_email"
@@ -51,6 +52,7 @@
         <EditText
             android:layout_width="280dp"
             android:layout_height="30dp"
+            android:textColor="@color/black"
             android:hint="-없이 숫자만 입력"
             android:textSize="14dp"
             android:background="@drawable/edittext_border"

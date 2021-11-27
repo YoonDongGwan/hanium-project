@@ -7,13 +7,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hanium.R;
+import com.example.hanium.classes.ErrorBody;
 import com.example.hanium.server.RetrofitAPI;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import okhttp3.OkHttpClient;
@@ -79,15 +84,20 @@ public class SignUpActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
                             if (response.isSuccessful()) {
-                                Log.d("test", "success");
-                                Log.d("test",response.headers().get("Set-Cookie"));
+                                Toast.makeText(getApplicationContext(),"이메일 전송을 성공하였습니다.", Toast.LENGTH_SHORT).show();
                                 SharedPreferences sharedPreferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("Cookie",response.headers().get("Set-Cookie"));
                                 editor.commit();
                                 cookie = sharedPreferences.getString("Cookie","");
                             } else {
-                                Log.d("test1", response.message());
+                                try {
+                                    Gson gson = new GsonBuilder().create();
+                                    ErrorBody errorBody = gson.fromJson(response.errorBody().string(), ErrorBody.class);
+                                    Toast.makeText(getApplicationContext(), errorBody.getMessage(), Toast.LENGTH_SHORT).show();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
 
@@ -102,11 +112,17 @@ public class SignUpActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
                             if (response.isSuccessful()) {
-                                //signup_btn.setEnabled(true);
-                                Log.d("test", "success");
+                                signup_btn.setEnabled(true);
+                                signup_btn.setVisibility(View.VISIBLE);
+                                Toast.makeText(getApplicationContext(),"인증에 성공하였습니다.", Toast.LENGTH_SHORT).show();
                             } else {
-
-                                Log.d("test1", response.message());
+                                try {
+                                    Gson gson = new GsonBuilder().create();
+                                    ErrorBody errorBody = gson.fromJson(response.errorBody().string(), ErrorBody.class);
+                                    Toast.makeText(getApplicationContext(), errorBody.getMessage(), Toast.LENGTH_SHORT).show();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
 
@@ -126,7 +142,13 @@ public class SignUpActivity extends AppCompatActivity {
                                 Log.d("test", "success");
                                 finish();
                             } else {
-
+                                try {
+                                    Gson gson = new GsonBuilder().create();
+                                    ErrorBody errorBody = gson.fromJson(response.errorBody().string(), ErrorBody.class);
+                                    Toast.makeText(getApplicationContext(), errorBody.getMessage(), Toast.LENGTH_SHORT).show();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
 
 
                             }

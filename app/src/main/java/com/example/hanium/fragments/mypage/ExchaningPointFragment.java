@@ -16,15 +16,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.hanium.activities.MainActivity;
 import com.example.hanium.R;
+import com.example.hanium.activities.MainActivity;
 import com.example.hanium.server.RetrofitAPI;
-
-import org.json.JSONObject;
 
 import java.util.HashMap;
 
-import okhttp3.CookieJar;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -124,14 +121,15 @@ public class ExchaningPointFragment extends Fragment {
                         public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
                             if (response.isSuccessful()){
                                 Log.d("test","success");
+                                Toast.makeText(getContext(),"충전 신청하였습니다.",Toast.LENGTH_SHORT).show();
                             }else{
                                 Log.d("test1",response.message());
+                                Toast.makeText(getContext(),"aa",Toast.LENGTH_SHORT).show();
                             }
                         }
 
                         @Override
                         public void onFailure(Call<HashMap<String, String>> call, Throwable t) {
-                            Log.d("test","failure"+t.getMessage());
                         }
                     });
                     break;
@@ -142,6 +140,7 @@ public class ExchaningPointFragment extends Fragment {
                         public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
                             if (response.isSuccessful()) {
                                 Log.d("test", "success");
+                                Toast.makeText(getContext(),"환급 신청하였습니다.",Toast.LENGTH_SHORT).show();
                             }else{
                                 Log.d("test",response.message());
                             }

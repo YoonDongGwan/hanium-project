@@ -170,9 +170,10 @@ public class MainActivity extends AppCompatActivity {
         if(resultCode == RESULT_OK){
             if(requestCode==0)
                 mypageFragment.onActivityResult(requestCode, resultCode, data);
-            if(requestCode==2)
+            if(requestCode==2) {
                 Log.d("test5", "test5");
                 modifyingProfileFragment.onActivityResult(requestCode, resultCode, data);
+            }
         }
     }
 }
