@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -102,7 +103,7 @@ public class SignUpActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
                             if (response.isSuccessful()) {
-                                signup_btn.setEnabled(true);
+                                //signup_btn.setEnabled(true);
                                 Log.d("test", "success");
                             } else {
 
@@ -126,8 +127,10 @@ public class SignUpActivity extends AppCompatActivity {
                                 Log.d("test", "success");
                                 finish();
                             } else {
+                                Toast.makeText(getApplicationContext(),response.errorBody().string()., Toast.LENGTH_LONG).show();
 
-                                Log.d("test1", response.message());
+
+
                             }
                         }
 

@@ -1,7 +1,9 @@
 package com.example.hanium.fragments.mypage;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -20,7 +22,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.hanium.R;
-import com.example.hanium.activities.ChangeImageActivity;
 import com.example.hanium.activities.MainActivity;
 import com.example.hanium.server.RetrofitAPI;
 import com.example.hanium.server.ServerResult;
@@ -50,7 +51,7 @@ public class ModifyingProfileFragment extends Fragment {
     MainActivity mainActivity;
     ImageView modify_profile_image;
     Button modify_image_btn, modify_profile_complete_btn;
-    EditText modify_profile_name, modify_profile_nickname, modify_profile_phonenum,modify_profile_password;
+    EditText modify_profile_name, modify_profile_nickname, modify_profile_phonenum, modify_profile_password;
     Bitmap bitmap;
     Retrofit retrofit;
     RetrofitAPI retrofitAPI;
@@ -85,7 +86,7 @@ public class ModifyingProfileFragment extends Fragment {
         modify_profile_name = v.findViewById(R.id.modify_profile_name);
         modify_profile_nickname = v.findViewById(R.id.modify_profile_nickname);
         modify_profile_phonenum = v.findViewById(R.id.modify_profile_phonenum);
-        modify_profile_password=v.findViewById(R.id.modify_profile_password);
+        modify_profile_password = v.findViewById(R.id.modify_profile_password);
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
         cookie = sharedPreferences.getString("Cookie", "");
         retrofit = new Retrofit.Builder()
@@ -95,7 +96,7 @@ public class ModifyingProfileFragment extends Fragment {
         retrofitAPI = retrofit.create(RetrofitAPI.class);
         retrofitAPI.getModify(cookie).enqueue(callback);
 
-        map=new HashMap<>();
+        map = new HashMap<>();
 
         return v;
     }
@@ -108,27 +109,56 @@ public class ModifyingProfileFragment extends Fragment {
                     mainActivity.onClickBackBtn();
                     break;
                 case R.id.modify_image_btn:
-                    getActivity().startActivityForResult(new Intent(getContext(), ChangeImageActivity.class), 2);
+                    final CharSequence[] oItems = {"사진 찾기", "기본 이미지 변경"};
+
+                    AlertDialog.Builder oDialog = new AlertDialog.Builder(getContext(),
+                            android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
+
+                    oDialog.setTitle("사진 변경")
+                            .setItems(oItems, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if (which == 0) {
+                                        Intent intent = new Intent();
+                                        intent.setType("image/*");
+                                        intent.setAction(Intent.ACTION_GET_CONTENT);
+                                        startActivityForResult(intent, 2);
+                                    } else {
+                                        retrofitAPI.setBasicImage(cookie).enqueue(new Callback<HashMap<String, String>>() {
+                                            @Override
+                                            public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
+
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<HashMap<String, String>> call, Throwable t) {
+
+                                            }
+                                        });
+                                    }
+                                }
+                            }).setCancelable(false)
+                            .show();
                     break;
 
                 case R.id.modify_profile_complete_btn:
-                    RequestBody body_nickname = RequestBody.create(MediaType.parse("text/plain"),modify_profile_nickname.getText().toString());
-                    RequestBody body_name = RequestBody.create(MediaType.parse("text/plain"),modify_profile_name.getText().toString());
-                    RequestBody body_phoneNum = RequestBody.create(MediaType.parse("text/plain"),modify_profile_phonenum.getText().toString());
+                    RequestBody body_nickname = RequestBody.create(MediaType.parse("text/plain"), modify_profile_nickname.getText().toString());
+                    RequestBody body_name = RequestBody.create(MediaType.parse("text/plain"), modify_profile_name.getText().toString());
+                    RequestBody body_phoneNum = RequestBody.create(MediaType.parse("text/plain"), modify_profile_phonenum.getText().toString());
                     RequestBody body_password = RequestBody.create(MediaType.parse("text/plain"), modify_profile_password.getText().toString());
                     map.put("nickname", body_nickname);
                     map.put("name", body_name);
                     map.put("phoneNumber", body_phoneNum);
                     map.put("password", body_password);
-                    retrofitAPI.modify(cookie,uploadFile,map).enqueue(new Callback<HashMap<String, String>>() {
+                    retrofitAPI.modify(cookie, uploadFile, map).enqueue(new Callback<HashMap<String, String>>() {
                         @Override
                         public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
-                            if (response.isSuccessful()){
+                            if (response.isSuccessful()) {
                                 mainActivity.onClickCompleteModifyBtn();
                                 modify_profile_password.setText("");
-                            }else{
+                            } else {
 
-                                Log.d("test1",response.message());
+                                Log.d("test1", response.message());
                             }
                         }
 
@@ -187,15 +217,14 @@ public class ModifyingProfileFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d("test6", "test6");
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == 1) {
+            if(requestCode==2) {
                 Uri returnUri = data.getData();
-                Log.d("test",returnUri.toString());
                 file = new File(returnUri.getPath());
-                Log.d("test",returnUri.getPath());
                 InputStream inputStream = null;
                 try {
-                    inputStream =getContext().getContentResolver().openInputStream(returnUri);
+                    inputStream = getContext().getContentResolver().openInputStream(returnUri);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -203,7 +232,7 @@ public class ModifyingProfileFragment extends Fragment {
                 byteArrayOutputStream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream);
                 RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray());
-                uploadFile = MultipartBody.Part.createFormData("image", file.getName() ,requestBody);
+                uploadFile = MultipartBody.Part.createFormData("image", file.getName(), requestBody);
                 modify_profile_image.setImageBitmap(bitmap);
             }
         }

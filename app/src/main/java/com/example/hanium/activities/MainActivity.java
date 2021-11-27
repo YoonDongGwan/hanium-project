@@ -103,7 +103,8 @@ public class MainActivity extends AppCompatActivity {
             Log.d("test3","test3");
             if(requestCode==0)
                 mypageFragment.onActivityResult(requestCode, resultCode, data);
-            if(requestCode==1)
+            if(requestCode==2)
+                Log.d("test5", "test5");
                 modifyingProfileFragment.onActivityResult(requestCode, resultCode, data);
         }
     }
