@@ -68,7 +68,7 @@ public class SettingActivity extends AppCompatActivity {
                         public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
                             if (response.isSuccessful()) {
                                 Intent intent= new Intent(SettingActivity.this, LoginActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent);
                             } else {
                                 Log.d("test ", response.toString());
@@ -86,6 +86,7 @@ public class SettingActivity extends AppCompatActivity {
                     break;
                 case R.id.setting_back_btn:
                     finish();
+                    overridePendingTransition(R.anim.enter_from_left, R.anim.exit_to_right);
                     break;
             }
         }

@@ -85,9 +85,8 @@ public class ChangeLocationActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(),SetLocationActivity.class);
-                startActivity(intent);
                 finish();
+                overridePendingTransition(R.anim.enter_from_left, R.anim.exit_to_right);
             }
         });
 

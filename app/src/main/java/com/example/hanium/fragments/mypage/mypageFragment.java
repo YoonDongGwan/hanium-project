@@ -153,9 +153,11 @@ public class mypageFragment extends Fragment {
                     break;
                 case R.id.location_change_btn:
                     getActivity().startActivityForResult(new Intent(getContext(), SetLocationActivity.class), 0);
+                    getActivity().overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
                     break;
                 case R.id.setting_btn:
                     startActivity(new Intent(getContext(), SettingActivity.class));
+                    getActivity().overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
                     break;
             }
         }

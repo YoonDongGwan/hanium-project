@@ -82,6 +82,7 @@ public class SetLocationActivity extends AppCompatActivity {
                     Intent intent1 = new Intent(getApplicationContext(),ChangeLocationActivity.class);
                     intent1.putExtra("key",baselocation.getText().toString());
                     startActivityForResult(intent1,0);
+                    overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
                     break;
                 case R.id.add_btn:
                     count++;
@@ -113,6 +114,7 @@ public class SetLocationActivity extends AppCompatActivity {
                     intent2.putExtra("location", ADMNM);
                     setResult(RESULT_OK,intent2);
                     finish();
+                    overridePendingTransition(R.anim.enter_from_left, R.anim.exit_to_right);
                     break;
                 case R.id.setLocationConfirmBtn:
                     retrofitAPI.setAddressScope(cookie, count).enqueue(new Callback<ServerResult>() {
@@ -128,6 +130,7 @@ public class SetLocationActivity extends AppCompatActivity {
                     });
                     setResult(RESULT_OK);
                     finish();
+                    overridePendingTransition(R.anim.enter_from_left, R.anim.exit_to_right);
                     break;
             }
         }

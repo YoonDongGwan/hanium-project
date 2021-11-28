@@ -2,6 +2,7 @@ package com.example.hanium.activities;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -53,6 +54,9 @@ public class DeleteMemberPopup extends Activity {
                     public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
                         if (response.isSuccessful()){
                             Toast.makeText(getApplicationContext(),"회원 탈퇴되었습니다.", Toast.LENGTH_SHORT).show();
+                            Intent intent= new Intent(DeleteMemberPopup.this, LoginActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
                         }else{
                             try {
                                 Gson gson = new GsonBuilder().create();

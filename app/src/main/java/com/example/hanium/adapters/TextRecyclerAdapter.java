@@ -57,6 +57,7 @@ public class TextRecyclerAdapter extends RecyclerView.Adapter<TextRecyclerAdapte
                 intent.putExtra("districtId",holder.id);
                 ((ChangeLocationActivity)holder.itemView.getContext()).setResult(Activity.RESULT_OK, intent);
                 ((ChangeLocationActivity)holder.itemView.getContext()).finish();
+                ((ChangeLocationActivity)holder.itemView.getContext()).overridePendingTransition(R.anim.enter_from_left, R.anim.exit_to_right);
             }
         });
 
