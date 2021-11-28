@@ -18,8 +18,12 @@ import androidx.fragment.app.Fragment;
 
 import com.example.hanium.R;
 import com.example.hanium.activities.MainActivity;
+import com.example.hanium.classes.ErrorBody;
 import com.example.hanium.server.RetrofitAPI;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import okhttp3.OkHttpClient;
@@ -30,7 +34,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ExchaningPointFragment extends Fragment {
+public class ExchangingPointFragment extends Fragment {
     Button back_btn,charge_btn,refund_btn;
     TextView currentCash;
     EditText charge_bank,charge_account,charge_amount,refund_bank,refund_account,refund_amount;
@@ -115,42 +119,60 @@ public class ExchaningPointFragment extends Fragment {
                     mainActivity.onClickBackBtn();
                     break;
                 case R.id.charge_btn:
-                    retrofitAPI.charge(cookie,Integer.parseInt(charge_amount.getText().toString()),charge_bank.getText().toString(),
-                            charge_account.getText().toString()).enqueue(new Callback<HashMap<String, String>>() {
-                        @Override
-                        public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
-                            if (response.isSuccessful()){
-                                Log.d("test","success");
-                                Toast.makeText(getContext(),"충전 신청하였습니다.",Toast.LENGTH_SHORT).show();
-                            }else{
-                                Log.d("test1",response.message());
-                                Toast.makeText(getContext(),"aa",Toast.LENGTH_SHORT).show();
+                    if (charge_amount.getText().toString().equals("")) {
+                        Toast.makeText(getContext(), "충전하실 계좌의 정보를 모두 정확히 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    }else {
+                        retrofitAPI.charge(cookie, Integer.parseInt(charge_amount.getText().toString()), charge_bank.getText().toString(),
+                                charge_account.getText().toString()).enqueue(new Callback<HashMap<String, String>>() {
+                            @Override
+                            public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
+                                if (response.isSuccessful()) {
+                                    Toast.makeText(getContext(), "충전 신청하였습니다.", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    try {
+                                        Gson gson = new GsonBuilder().create();
+                                        ErrorBody errorBody = gson.fromJson(response.errorBody().string(), ErrorBody.class);
+                                        Toast.makeText(getContext(), errorBody.getMessage(), Toast.LENGTH_SHORT).show();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
                             }
-                        }
 
-                        @Override
-                        public void onFailure(Call<HashMap<String, String>> call, Throwable t) {
-                        }
-                    });
+                            @Override
+                            public void onFailure(Call<HashMap<String, String>> call, Throwable t) {
+                            }
+                        });
+                    }
                     break;
                 case R.id.refund_btn:
-                    retrofitAPI.refund(cookie,Integer.parseInt(refund_amount.getText().toString()),refund_bank.getText().toString(),
-                            refund_account.getText().toString()).enqueue(new Callback<HashMap<String, String>>() {
-                        @Override
-                        public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
-                            if (response.isSuccessful()) {
-                                Log.d("test", "success");
-                                Toast.makeText(getContext(),"환급 신청하였습니다.",Toast.LENGTH_SHORT).show();
-                            }else{
-                                Log.d("test",response.message());
+                    if (refund_amount.getText().toString().equals("")) {
+                        Toast.makeText(getContext(), "환급받을 계좌의 정보를 모두 정확히 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    }else {
+                        retrofitAPI.refund(cookie, Integer.parseInt(refund_amount.getText().toString()), refund_bank.getText().toString(),
+                                refund_account.getText().toString()).enqueue(new Callback<HashMap<String, String>>() {
+                            @Override
+                            public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
+                                if (response.isSuccessful()) {
+                                    Toast.makeText(getContext(), "환급 신청하였습니다.", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    try {
+                                        Gson gson = new GsonBuilder().create();
+                                        ErrorBody errorBody = gson.fromJson(response.errorBody().string(), ErrorBody.class);
+                                        Toast.makeText(getContext(), errorBody.getMessage(), Toast.LENGTH_SHORT).show();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
                             }
-                        }
 
-                        @Override
-                        public void onFailure(Call<HashMap<String, String>> call, Throwable t) {
-                                Log.d("test",t.getMessage().toString());
-                        }
-                    });
+                            @Override
+                            public void onFailure(Call<HashMap<String, String>> call, Throwable t) {
+                                Log.d("test", t.getMessage().toString());
+                            }
+                        });
+                    }
+                    break;
 
             }
 

@@ -217,7 +217,6 @@ public class ModifyingProfileFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("test6", "test6");
         if (resultCode == Activity.RESULT_OK) {
             if(requestCode==2) {
                 Uri returnUri = data.getData();

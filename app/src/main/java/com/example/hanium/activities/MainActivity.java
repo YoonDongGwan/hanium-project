@@ -15,7 +15,7 @@ import com.example.hanium.R;
 import com.example.hanium.fragments.chat.chatFragment;
 import com.example.hanium.fragments.home.homeFragment;
 import com.example.hanium.fragments.log.logFragment;
-import com.example.hanium.fragments.mypage.ExchaningPointFragment;
+import com.example.hanium.fragments.mypage.ExchangingPointFragment;
 import com.example.hanium.fragments.mypage.ModifyingProfileFragment;
 import com.example.hanium.fragments.mypage.MyErrandFragment;
 import com.example.hanium.fragments.mypage.mypageFragment;
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     logFragment logFragment;
     mypageFragment mypageFragment;
     ModifyingProfileFragment modifyingProfileFragment;
-    ExchaningPointFragment exchaningPointFragment;
+    ExchangingPointFragment exchangingPointFragment;
     MyErrandFragment myErrandFragment;
 
     @Override
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                         if(logFragment != null) fragmentManager.beginTransaction().hide(logFragment).commit();
                         if(mypageFragment != null) fragmentManager.beginTransaction().hide(mypageFragment).commit();
                         if(modifyingProfileFragment != null) fragmentManager.beginTransaction().hide(modifyingProfileFragment).commit();
-                        if(exchaningPointFragment != null) fragmentManager.beginTransaction().hide(exchaningPointFragment).commit();
+                        if(exchangingPointFragment != null) fragmentManager.beginTransaction().hide(exchangingPointFragment).commit();
                         if(myErrandFragment != null) fragmentManager.beginTransaction().hide(myErrandFragment).commit();
 //                        transaction.replace(R.id.framelayout, homeFragment).commitAllowingStateLoss();
                         break;
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                         if(logFragment != null) fragmentManager.beginTransaction().hide(logFragment).commit();
                         if(mypageFragment != null) fragmentManager.beginTransaction().hide(mypageFragment).commit();
                         if(modifyingProfileFragment != null) fragmentManager.beginTransaction().hide(modifyingProfileFragment).commit();
-                        if(exchaningPointFragment != null) fragmentManager.beginTransaction().hide(exchaningPointFragment).commit();
+                        if(exchangingPointFragment != null) fragmentManager.beginTransaction().hide(exchangingPointFragment).commit();
                         if(myErrandFragment != null) fragmentManager.beginTransaction().hide(myErrandFragment).commit();
 //                        transaction.replace(R.id.framelayout, chatFragment).commitAllowingStateLoss();
                         break;
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                         if(chatFragment != null) fragmentManager.beginTransaction().hide(chatFragment).commit();
                         if(mypageFragment != null) fragmentManager.beginTransaction().hide(mypageFragment).commit();
                         if(modifyingProfileFragment != null) fragmentManager.beginTransaction().hide(modifyingProfileFragment).commit();
-                        if(exchaningPointFragment != null) fragmentManager.beginTransaction().hide(exchaningPointFragment).commit();
+                        if(exchangingPointFragment != null) fragmentManager.beginTransaction().hide(exchangingPointFragment).commit();
                         if(myErrandFragment != null) fragmentManager.beginTransaction().hide(myErrandFragment).commit();
 //                        transaction.replace(R.id.framelayout, logFragment).commitAllowingStateLoss();
                         break;
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                         if(chatFragment != null) fragmentManager.beginTransaction().hide(chatFragment).commit();
                         if(logFragment != null) fragmentManager.beginTransaction().hide(logFragment).commit();
                         if(modifyingProfileFragment != null) fragmentManager.beginTransaction().hide(modifyingProfileFragment).commit();
-                        if(exchaningPointFragment != null) fragmentManager.beginTransaction().hide(exchaningPointFragment).commit();
+                        if(exchangingPointFragment != null) fragmentManager.beginTransaction().hide(exchangingPointFragment).commit();
                         if(myErrandFragment != null) fragmentManager.beginTransaction().hide(myErrandFragment).commit();
 //                        transaction.replace(R.id.framelayout, mypageFragment).commitAllowingStateLoss();
                         break;
@@ -131,9 +131,9 @@ public class MainActivity extends AppCompatActivity {
             fragmentManager.beginTransaction().hide(modifyingProfileFragment).commit();
             modifyingProfileFragment = null;
         }
-        if(exchaningPointFragment != null){
-            fragmentManager.beginTransaction().hide(exchaningPointFragment).commit();
-            exchaningPointFragment = null;
+        if(exchangingPointFragment != null){
+            fragmentManager.beginTransaction().hide(exchangingPointFragment).commit();
+            exchangingPointFragment = null;
         }
         if(myErrandFragment != null) {
             fragmentManager.beginTransaction().hide(myErrandFragment).commit();
@@ -144,8 +144,8 @@ public class MainActivity extends AppCompatActivity {
     public void onClickExchangeBtn() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
-        exchaningPointFragment = new ExchaningPointFragment();
-        fragmentTransaction.add(R.id.framelayout, exchaningPointFragment).commit();
+        exchangingPointFragment = new ExchangingPointFragment();
+        fragmentTransaction.add(R.id.framelayout, exchangingPointFragment).commit();
         fragmentManager.beginTransaction().hide(mypageFragment).commit();
     }
 

@@ -41,7 +41,7 @@ public interface RetrofitAPI {
     @PUT("user/edit/pwd")
     Call<HashMap<String, String>> changePW(@Header("Cookie") String cookie, @Field("password") String password,
                                            @Field("confirm_pwd") String confirm_pwd, @Field("current_pwd") String current_pwd);
-
+    @FormUrlEncoded
     @POST("user/point/refund")
     Call<HashMap<String, String>> refund(@Header("cookie") String cookie, @Field("refundAmount") int refundAmount, @Field("bankName") String bankName,
                                          @Field("account") String account);
